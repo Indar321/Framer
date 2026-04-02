@@ -3,108 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Link in Bio</title>
+    <title>Indrajeet Pista</title>
     <style>
+        /* Replicating Framer's default Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         :root {
-            --bg-color: #0f0f0f;
-            --text-color: #ffffff;
-            --button-bg: #1e1e1e;
-            --button-hover: #2a2a2a;
-            --accent: #5e6ad2;
+            --bg: #050505;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.55);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 2px solid var(--button-bg);
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        p.bio {
-            font-size: 15px;
-            color: #a0a0a0;
-            margin-bottom: 30px;
-        }
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .link-btn {
-            background-color: var(--button-bg);
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 16px 20px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            background-color: var(--bg);
+            color: var(--text-primary);
             display: flex;
             justify-content: center;
+            min-height: 100vh;
+            padding: 80px 20px;
+            /* Subtle Framer-style background glow */
+            background-image: radial-gradient(circle at 50% 0%, rgba(40, 40, 40, 0.6) 0%, transparent 60%);
+        }
+
+        .framer-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            border: 1px solid transparent;
+            gap: 32px;
+            /* Framer's signature smooth entrance */
+            animation: framerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .link-btn:hover {
-            background-color: var(--button-hover);
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.1);
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
         }
 
-        /* Smooth fade-in animation, typical of Framer sites */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            object-fit: cover;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 280px;
+            line-height: 1.5;
+        }
+
+        .links-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .framer-link {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            backdrop-filter: blur(12px);
+            /* Mimicking Framer's Spring Physics */
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .framer-link:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .framer-link:active {
+            transform: scale(0.97);
+            transition: all 0.1s ease;
+        }
+
+        .link-icon {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+
+        @keyframes framerAppear {
+            0% { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
-        
-        <h1>Indrajeet Pisda</h1>
-        <p class="bio">Digital Designer & Developer 👋</p>
+    <div class="framer-container">
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/150" alt="Indrajeet Pista" class="avatar">
+            <div>
+                <h1 class="title">Indrajeet Pista</h1>
+                <p class="subtitle">Graphic Design, Branding & Web Development</p>
+            </div>
+        </div>
 
-        <div class="links">
-            <a href="#" class="link-btn">My Portfolio</a>
-            <a href="#" class="link-btn">Instagram</a>
-            <a href="#" class="link-btn">Twitter / X</a>
-            <a href="#" class="link-btn">Contact Me</a>
+        <div class="links-wrapper">
+            <a href="#" class="framer-link">
+                Digital Trade
+                <svg class="link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+            <a href="#" class="framer-link">
+                Virox Streetwear
+                <svg class="link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
+            <a href="#" class="framer-link">
+                Athrex Energy Pvt. Ltd.
+                <svg class="link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </a>
         </div>
     </div>
 
