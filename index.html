@@ -201,7 +201,9 @@
         /* --- HERO VIEW --- */
         .hero { height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; padding: 0 5%; position: relative; overflow: hidden; border-bottom: 1px solid var(--border-color); width: 100%; }
         .hero-bg-wrapper { position: absolute; right: 0; top: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
-        .hero-bg { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; opacity: 0.4; filter: grayscale(100%) contrast(1.2); transform: scale(1.1); }
+        
+        /* FIX: Scaling and centering to perfectly hide parallax tearing edges */
+        .hero-bg { width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0.4; filter: grayscale(100%) contrast(1.2); }
         @media(min-width: 1024px) { .hero-bg-wrapper { width: 60%; border-left: 1px solid var(--border-color); } }
         
         .hero-content { position: relative; z-index: 2; width: 100%; mix-blend-mode: difference; }
@@ -295,9 +297,10 @@
         @media(min-width: 1024px) { .sidebar-block { padding: 50px; } }
         .sidebar-block:last-child { border-bottom: none; }
 
+        /* FIX: Ensure the profile image container doesn't overflow or clip badly on parallax */
         .profile-img-wrap { width: 100%; height: 400px; overflow: hidden; border: 1px solid var(--border-color); position: relative; }
         @media(min-width: 1024px) { .profile-img-wrap { height: 500px; } }
-        .profile-img { width: 100%; height: 120%; object-fit: cover; filter: grayscale(100%); transform: translateY(0); }
+        .profile-img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: grayscale(100%); transform: scale(1.15); /* Provide bleed area for parallax */ }
         
         /* --- FOOTER FIXED ALIGNMENT --- */
         footer { background: #000; padding: 80px 5% 40px; border-top: 1px solid var(--border-color); margin-top: auto; position: relative; width: 100%; z-index: 10; display: flex; flex-direction: column; align-items: center;}
@@ -335,7 +338,12 @@
             .nav-links { position: fixed; top: 0; left: -100%; width: 100%; max-width: 400px; height: 100vh; background: var(--secondary-bg); border-right: 1px solid var(--border-color); flex-direction: column; justify-content: center; align-items: flex-start; z-index: 90000; transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1); gap: 20px; padding: 0 30px; }
             .nav-links.active { left: 0; }
             
-            .nav-links a { font-size: 1.5rem; width: 100%; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; opacity: 0; transform: translateX(-20px); transition: opacity 0.4s, transform 0.4s, padding-left 0.3s ease, color 0.3s; position: relative; color: var(--muted-text); }
+            .nav-links a { 
+                font-size: 1.5rem; width: 100%; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; 
+                opacity: 0; transform: translateX(-20px); transition: opacity 0.4s, transform 0.4s, padding-left 0.3s ease, color 0.3s;
+                position: relative;
+                color: var(--muted-text);
+            }
             .nav-links.active a { opacity: 1; transform: translateX(0); }
             
             .nav-links.active a:nth-child(1) { transition-delay: 0.1s; }
@@ -396,7 +404,7 @@
             
             <section class="hero">
                 <div class="hero-bg-wrapper reveal-scale">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop" class="hero-bg parallax" data-speed="0.3" alt="Digital Trade Web Architecture Concept">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop" class="hero-bg parallax" data-speed="0.1" alt="Digital Trade Web Architecture Concept">
                 </div>
                 <div class="container">
                     <div class="hero-content">
@@ -481,7 +489,7 @@
                             </div>
                         </div>
                         <div class="reveal-right profile-img-wrap hover-invert">
-                            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop" class="profile-img parallax" data-speed="0.15" alt="Digital Trade Studio Workspace in Dantewada">
+                            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop" class="profile-img parallax" data-speed="0.1" alt="Digital Trade Studio Workspace in Dantewada">
                         </div>
                     </div>
                 </div>
@@ -931,7 +939,7 @@
                 <div class="footer-brand reveal-up">
                     <h3>DIGITAL<span>.</span>TRADE</h3>
                     <p>A minimalist design and development agency engineering future-proof brand architectures.</p>
-                    <div class="terminal-block" style="padding: 20px; font-size: 0.75rem; color: var(--neon-yellow); border-color: #333; background: #050505;">
+                    <div class="terminal-block hover-invert" style="padding: 20px; font-size: 0.75rem; color: var(--neon-yellow); border-color: #333; background: #050505;">
                         > SYSTEM_CHECK: CREATIVE_OK<br>> SERVER_NODE: DANTEWADA_HQ<br>> LATENCY: 0.0ms<br>> STATUS: ACTIVE<span class="blink">_</span>
                     </div>
                 </div>
@@ -966,24 +974,25 @@
                     </ul>
                 </div>
 
-                <div class="footer-links reveal-up" style="transition-delay: 0.4s;">
+                <div class="footer-links reveal-up hover-invert" style="transition-delay: 0.4s;">
                     <h4>Global Network</h4>
                     <p style="color: var(--muted-text); font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">Operating from Dantewada. Deploying globally.</p>
                     <div style="width: 100%; height: 120px; border: 1px solid #333; overflow: hidden; opacity: 0.6; pointer-events: none;">
                         <iframe 
-                            src="https://maps.google.com/maps?q=Teknaar+Chowk,+Dantewada,+Chhattisgarh&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                            src="https://maps.google.com/maps?q=Dantewada,%20Chhattisgarh&t=&z=13&ie=UTF8&iwloc=&output=embed" 
                             width="100%" 
                             height="100%" 
                             style="border:0; filter: grayscale(100%) invert(100%) contrast(1.2);"
-                            title="Digital Trade Headquarters Map">
+                            title="Digital Trade Headquarters Map"
+                            loading="lazy">
                         </iframe>
                     </div>
                 </div>
             </div>
 
             <div class="footer-bottom reveal-up">
-                <p>&copy; 2026 DIGITAL TRADE. ALL RIGHTS RESERVED.</p>
-                <p>ARCHITECT: INDRAJEET PISTA | BUILD 9950</p>
+                <p>© 2026 DIGITAL TRADE. ALL RIGHTS RESERVED.</p>
+                <p>ARCHITECT: INDRAJEET PISTA | BUILD 1.0.0</p>
             </div>
         </div>
     </footer>
@@ -1055,9 +1064,18 @@
             if (!isTouchDevice) {
                 window.addEventListener('scroll', () => {
                     const scrollY = window.scrollY;
+                    
                     document.querySelectorAll('.parallax').forEach(el => {
-                        const speed = el.getAttribute('data-speed') || 0.2;
-                        el.style.transform = `translateY(${scrollY * speed}px)`;
+                        const speed = parseFloat(el.getAttribute('data-speed')) || 0.1;
+                        
+                        // Professional parallax math relative to viewport center
+                        const parent = el.parentElement;
+                        const rect = parent.getBoundingClientRect();
+                        const elementCenter = rect.top + (rect.height / 2);
+                        const viewportCenter = window.innerHeight / 2;
+                        const distance = elementCenter - viewportCenter;
+                        
+                        el.style.transform = `translateY(${distance * speed}px) scale(1.15)`;
                     });
                 });
             }
@@ -1152,11 +1170,14 @@
 
             document.querySelectorAll('.nav-trigger').forEach(trigger => {
                 trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('data-target');
-                    if(document.getElementById(targetId) && document.getElementById(targetId).classList.contains('active')){ closeMobileNav(); return; }
-                    navigateTo(targetId);
-                    history.pushState(null, null, `#${targetId.replace('view-', '')}`);
+                    // Only prevent default if it's an internal link
+                    if(this.getAttribute('target') !== '_blank') {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('data-target');
+                        if(document.getElementById(targetId) && document.getElementById(targetId).classList.contains('active')){ closeMobileNav(); return; }
+                        navigateTo(targetId);
+                        history.pushState(null, null, `#${targetId.replace('view-', '')}`);
+                    }
                 });
             });
 
