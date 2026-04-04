@@ -16,11 +16,11 @@
         :root {
             --bg-color: #ffffff;
             --text-color: #000000;
-            --muted-bg: #f0f0f0;
+            --muted-bg: #f4f4f4;
             --muted-text: #666666;
             --font-heading: 'Space Grotesk', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            --transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
             --header-height: 80px;
         }
 
@@ -30,32 +30,32 @@
             padding: 0; 
         }
         
-        /* STRICT OVERFLOW CONTROL TO FIX MOBILE CUT-OFF */
+        /* STRICT OVERFLOW CONTROL */
         html, body {
-            max-width: 100%;
-            width: 100%;
+            max-width: 100vw;
             overflow-x: hidden;
-            scroll-behavior: smooth; 
+            scroll-behavior: auto; /* Switched to auto for instant glitch routing */
             font-size: 16px; 
             -webkit-tap-highlight-color: transparent;
+            background-color: var(--bg-color); 
+            color: var(--text-color);
         }
         
         body {
-            background-color: var(--bg-color); 
-            color: var(--text-color);
             font-family: var(--font-heading); 
             line-height: 1.6;
             cursor: none; 
             background-image: 
                 linear-gradient(#e0e0e0 1px, transparent 1px),
                 linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-size: 50px 50px;
         }
 
         body.no-scroll { overflow: hidden; }
+        body.glitch-flash { filter: invert(1) hue-rotate(180deg); }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); border-left: 2px solid var(--text-color); }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); border-left: 3px solid var(--text-color); }
         ::-webkit-scrollbar-thumb { background: var(--text-color); }
 
         a, button { cursor: none; color: inherit; text-decoration: none; border: none; outline: none; background: none;}
@@ -64,10 +64,10 @@
         ul { list-style: none; }
 
         /* ==========================================
-           2. ADVANCED CANVAS CURSOR & EFFECTS
+           2. ADVANCED CANVAS CURSOR & GLITCH EFFECTS
            ========================================== */
         #cursor-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 999999; mix-blend-mode: difference;
         }
 
@@ -77,45 +77,54 @@
             pointer-events: none; z-index: 999999; mix-blend-mode: difference;
             transition: width 0.2s, height 0.2s, border-radius 0.2s;
         }
-        .custom-cursor-dot.active { width: 40px; height: 40px; border-radius: 0; }
+        .custom-cursor-dot.active { width: 45px; height: 45px; border-radius: 0; }
 
-        .page-transition {
-            position: fixed; inset: 0; background: var(--text-color); z-index: 100000;
-            transform: translateY(100%); transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            border-top: 10px solid #fff; border-bottom: 10px solid #fff;
-        }
-        .page-transition.active { transform: translateY(0); }
-        .page-transition.exit { transform: translateY(-100%); }
-
-        .glitch-text { position: relative; display: inline-block; }
+        /* Glitch Text Core */
+        .glitch-text { position: relative; display: inline-block; font-weight: 800; }
         .glitch-text::before, .glitch-text::after {
             content: attr(data-text); position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; background: inherit; opacity: 0;
+            width: 100%; height: 100%; background: inherit; opacity: 0; pointer-events: none;
         }
         .glitch-text:hover::before {
-            left: 4px; text-shadow: -2px 0 var(--text-color); background: var(--bg-color);
-            animation: glitch-anim 0.3s infinite linear alternate-reverse; opacity: 1; z-index: -1;
+            left: 3px; text-shadow: -2px 0 var(--text-color); background: var(--bg-color);
+            animation: glitch-anim 0.2s infinite linear alternate-reverse; opacity: 1; z-index: -1;
         }
         .glitch-text:hover::after {
-            left: -4px; text-shadow: 2px 0 var(--text-color); background: var(--bg-color);
-            animation: glitch-anim2 0.2s infinite linear alternate-reverse; opacity: 1; z-index: -1;
+            left: -3px; text-shadow: 2px 0 var(--text-color); background: var(--bg-color);
+            animation: glitch-anim2 0.3s infinite linear alternate-reverse; opacity: 1; z-index: -1;
         }
-        @keyframes glitch-anim { 0% { clip-path: inset(10% 0 30% 0); } 50% { clip-path: inset(50% 0 10% 0); } 100% { clip-path: inset(80% 0 5% 0); } }
-        @keyframes glitch-anim2 { 0% { clip-path: inset(20% 0 60% 0); } 50% { clip-path: inset(10% 0 80% 0); } 100% { clip-path: inset(50% 0 30% 0); } }
+        @keyframes glitch-anim { 0% { clip-path: inset(20% 0 80% 0); } 50% { clip-path: inset(60% 0 10% 0); } 100% { clip-path: inset(10% 0 50% 0); } }
+        @keyframes glitch-anim2 { 0% { clip-path: inset(10% 0 60% 0); } 50% { clip-path: inset(30% 0 20% 0); } 100% { clip-path: inset(80% 0 5% 0); } }
+
+        /* Image & Button Glitch */
+        .img-glitch:hover { animation: img-shake 0.3s infinite; filter: contrast(150%) saturate(0) invert(0.1); }
+        .btn-glitch:hover { animation: img-shake 0.2s infinite; background: var(--text-color); color: #fff;}
+        @keyframes img-shake {
+            0% { transform: translate(2px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
 
         /* ==========================================
-           3. HEADER & STRICT SQUARE NAV
+           3. HEADER & STRICT NAV
            ========================================== */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
             display: flex; justify-content: space-between; align-items: center; padding: 0 4%;
             z-index: 90000; background: var(--bg-color);
-            border-bottom: 4px solid var(--text-color);
+            border-bottom: 5px solid var(--text-color);
             transition: var(--transition);
         }
 
-        .logo { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; }
+        .logo { font-size: 2.8rem; font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
 
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-link {
@@ -124,11 +133,11 @@
         }
         .nav-link::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px;
-            background: var(--text-color); transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            background: var(--text-color); transform: scaleX(0); transform-origin: right; transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
         }
         .nav-link:hover::after, .nav-link.active-link::after { transform: scaleX(1); transform-origin: left; }
 
-        .header-actions { display: flex; gap: 10px; align-items: center; }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
         .btn-action {
             font-family: var(--font-mono); font-weight: 800; font-size: 1rem;
             padding: 10px 20px; border: 4px solid var(--text-color); background: #fff;
@@ -136,20 +145,18 @@
         }
         .magnetic-btn:hover { background: var(--text-color); color: #fff; transform: translate(4px, 4px); box-shadow: 0 0 0 transparent; }
 
-        /* Square Brutalist Mobile Icons */
         .mobile-icon-btn, .mobile-toggle { 
-            display: none; width: 45px; height: 45px; border: 4px solid var(--text-color); 
+            display: none; width: 50px; height: 50px; border: 4px solid var(--text-color); 
             background: #fff; position: relative; z-index: 90001; 
             justify-content: center; align-items: center; transition: var(--transition);
         }
-        .mobile-icon-btn:active, .mobile-toggle:active { background: var(--text-color); color: #fff;}
         
-        .mobile-toggle span { position: absolute; left: 6px; height: 4px; background: var(--text-color); transition: var(--transition); pointer-events: none; width: 25px;}
-        .mobile-toggle span:nth-child(1) { top: 11px; }
-        .mobile-toggle span:nth-child(2) { top: 21px; }
+        .mobile-toggle span { position: absolute; left: 8px; height: 5px; background: var(--text-color); transition: var(--transition); pointer-events: none; width: 26px;}
+        .mobile-toggle span:nth-child(1) { top: 12px; }
+        .mobile-toggle span:nth-child(2) { top: 24px; }
         
-        .mobile-toggle.active { background: var(--text-color); }
-        .mobile-toggle.active span { background: #fff; top: 16px; left: 8px; width: 21px;}
+        .mobile-toggle.active { background: var(--bg-color); border-color: var(--text-color); }
+        .mobile-toggle.active span { background: var(--text-color); top: 18px; left: 8px; width: 26px;}
         .mobile-toggle.active span:nth-child(1) { transform: rotate(45deg); }
         .mobile-toggle.active span:nth-child(2) { transform: rotate(-45deg); }
 
@@ -159,175 +166,174 @@
         main { padding-top: var(--header-height); min-height: 100vh; width: 100%;}
         
         .view-section { display: none; opacity: 0; width: 100%; }
-        .view-section.active { display: block; animation: pixelReveal 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
-        @keyframes pixelReveal {
-            0% { opacity: 0; filter: blur(10px) contrast(200%); transform: translateY(20px); }
-            50% { opacity: 1; filter: blur(5px) contrast(150%); }
-            100% { opacity: 1; filter: blur(0) contrast(100%); transform: translateY(0); }
+        .view-section.active { display: block; animation: brutalReveal 0.4s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+        @keyframes brutalReveal {
+            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .section-padding { padding: 80px 5%; width: 100%; }
-        @media(min-width: 768px) { .section-padding { padding: 100px 5%; } }
+        @media(min-width: 768px) { .section-padding { padding: 120px 5%; } }
 
-        .section-title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; line-height: 1; margin-bottom: 40px; text-transform: uppercase; letter-spacing: -2px; border-bottom: 6px solid var(--text-color); padding-bottom: 15px;}
-        .text-body { font-size: 1.15rem; margin-bottom: 25px; line-height: 1.7; max-width: 900px; font-weight: 500; }
+        .section-title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; line-height: 1; margin-bottom: 40px; text-transform: uppercase; letter-spacing: -2px; border-bottom: 8px solid var(--text-color); padding-bottom: 15px;}
+        .text-body { font-size: 1.2rem; margin-bottom: 30px; line-height: 1.7; max-width: 900px; font-weight: 600; font-family: var(--font-mono);}
 
-        .primary-btn { display: inline-block; padding: 20px 40px; background: var(--text-color); color: #fff; font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 rgba(0,0,0,0.2); transition: var(--transition); text-transform: uppercase; text-align: center;}
+        .primary-btn { display: inline-block; padding: 25px 45px; background: var(--text-color); color: #fff; font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; border: 5px solid var(--text-color); box-shadow: 10px 10px 0 rgba(0,0,0,0.15); transition: var(--transition); text-transform: uppercase; text-align: center;}
         .primary-btn:hover { transform: translate(6px, 6px); box-shadow: 0 0 0 transparent; background: #fff; color: var(--text-color);}
         
-        .outline-btn { display: inline-block; padding: 20px 40px; background: #fff; color: var(--text-color); font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--text-color); transition: var(--transition); text-transform: uppercase; text-align: center;}
+        .outline-btn { display: inline-block; padding: 25px 45px; background: #fff; color: var(--text-color); font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; border: 5px solid var(--text-color); box-shadow: 8px 8px 0 var(--text-color); transition: var(--transition); text-transform: uppercase; text-align: center;}
         .outline-btn:hover { transform: translate(6px, 6px); box-shadow: 0 0 0 transparent; background: var(--text-color); color: #fff;}
 
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; width: 100%;}
-        @media(min-width: 768px) { .grid-layout { gap: 50px; } }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; width: 100%;}
+        @media(min-width: 768px) { .grid-layout { gap: 60px; } }
 
-        .form-group { margin-bottom: 25px; width: 100%; }
-        .form-label { display: block; text-transform: uppercase; font-family: var(--font-mono); font-size: 1rem; font-weight: 800; margin-bottom: 10px; }
-        .form-input { width: 100%; padding: 18px; background: #fff; border: 4px solid var(--text-color); color: var(--text-color); font-size: 1.1rem; font-family: var(--font-heading); font-weight: 700; transition: var(--transition); box-shadow: 6px 6px 0 var(--muted-bg); border-radius: 0; -webkit-appearance: none;}
-        .form-input:focus { box-shadow: 8px 8px 0 var(--text-color); }
+        .form-group { margin-bottom: 30px; width: 100%; }
+        .form-label { display: block; text-transform: uppercase; font-family: var(--font-mono); font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; }
+        .form-input { width: 100%; padding: 20px; background: #fff; border: 5px solid var(--text-color); color: var(--text-color); font-size: 1.2rem; font-family: var(--font-heading); font-weight: 700; transition: var(--transition); box-shadow: 8px 8px 0 var(--muted-bg); border-radius: 0; -webkit-appearance: none;}
+        .form-input:focus { box-shadow: 10px 10px 0 var(--text-color); outline: none; }
 
-        .accordion-item { border: 4px solid var(--text-color); margin-bottom: 20px; background: #fff; box-shadow: 6px 6px 0 var(--text-color); transition: var(--transition);}
-        .accordion-btn { width: 100%; text-align: left; padding: 25px 20px; font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase;}
-        .accordion-btn:hover { background: var(--text-color); color: #fff; padding-left: 30px;}
-        .accordion-content { max-height: 0; overflow: hidden; padding: 0 20px; transition: max-height 0.4s ease; background: var(--muted-bg);}
-        .accordion-item.active { box-shadow: 0 0 0 transparent; transform: translate(6px, 6px);}
-        .accordion-item.active .accordion-content { max-height: 800px; padding-bottom: 25px; border-top: 4px dashed var(--text-color); padding-top: 20px;}
+        .accordion-item { border: 5px solid var(--text-color); margin-bottom: 25px; background: #fff; box-shadow: 8px 8px 0 var(--text-color); transition: var(--transition);}
+        .accordion-btn { width: 100%; text-align: left; padding: 30px 25px; font-family: var(--font-heading); font-weight: 800; font-size: 1.4rem; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase;}
+        .accordion-btn:hover { background: var(--text-color); color: #fff; padding-left: 35px;}
+        .accordion-content { max-height: 0; overflow: hidden; padding: 0 25px; transition: max-height 0.4s ease; background: var(--muted-bg);}
+        .accordion-item.active { box-shadow: 0 0 0 transparent; transform: translate(8px, 8px);}
+        .accordion-item.active .accordion-content { max-height: 800px; padding-bottom: 30px; border-top: 5px dashed var(--text-color); padding-top: 25px;}
 
         /* ==========================================
            5. HERO & MARQUEE
            ========================================== */
-        .hero { display: grid; grid-template-columns: 1fr; min-height: calc(100vh - var(--header-height)); border-bottom: 6px solid var(--text-color); width: 100%;}
+        .hero { display: grid; grid-template-columns: 1fr; min-height: calc(100vh - var(--header-height)); border-bottom: 8px solid var(--text-color); width: 100%;}
         @media(min-width: 1024px) { .hero { grid-template-columns: 1.2fr 1fr; } }
         
-        .hero-text-box { padding: 10% 5%; display: flex; flex-direction: column; justify-content: center; border-right: 6px solid var(--text-color); }
-        .hero-title { font-size: clamp(4rem, 11vw, 10rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 30px; letter-spacing: -3px;}
+        .hero-text-box { padding: 10% 5%; display: flex; flex-direction: column; justify-content: center; border-right: 8px solid var(--text-color); }
+        .hero-title { font-size: clamp(4.5rem, 11vw, 13rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 30px; letter-spacing: -4px;}
         
         .hero-img-box { position: relative; background: var(--text-color); overflow: hidden; min-height: 40vh;}
-        .hero-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: transform 1.2s, filter 1.2s, opacity 1.2s;}
-        .hero-img-box:hover img { transform: scale(1.05); filter: grayscale(0%); opacity: 1;}
+        .hero-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: transform 1.2s;}
+        .hero-img-box:hover img { transform: scale(1.05); opacity: 1;}
         
-        .hero-badge { position: absolute; bottom: 20px; right: 20px; width: 120px; height: 120px; border: 4px dashed #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-family: var(--font-mono); font-weight: 800; font-size: 0.9rem; animation: spin 15s linear infinite; text-align: center; backdrop-filter: blur(8px); background: rgba(0,0,0,0.5);}
+        .hero-badge { position: absolute; bottom: 30px; right: 30px; width: 160px; height: 160px; border: 5px dashed #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-family: var(--font-mono); font-weight: 800; font-size: 1.2rem; animation: spin 10s linear infinite; text-align: center; backdrop-filter: blur(8px); background: rgba(0,0,0,0.5);}
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .marquee-container { width: 100%; overflow: hidden; padding: 40px 0; display: block; box-sizing: border-box;}
-        .marquee { background: var(--text-color); color: #fff; padding: 25px 0; white-space: nowrap; border-top: 4px solid var(--text-color); border-bottom: 4px solid var(--text-color); transform: rotate(-2deg) scale(1.05); box-shadow: 0 10px 0 rgba(0,0,0,0.15); width: 100%;}
-        .marquee-content { display: inline-block; font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; animation: scrollMarquee 20s linear infinite; text-transform: uppercase;}
+        .marquee-container { width: 100%; overflow: hidden; padding: 60px 0; display: block; box-sizing: border-box;}
+        .marquee { background: var(--text-color); color: #fff; padding: 30px 0; white-space: nowrap; border-top: 6px solid var(--text-color); border-bottom: 6px solid var(--text-color); transform: rotate(-2deg) scale(1.05); box-shadow: 0 15px 0 rgba(0,0,0,0.15); width: 100%;}
+        .marquee-content { display: inline-block; font-family: var(--font-mono); font-size: 2.2rem; font-weight: 800; animation: scrollMarquee 20s linear infinite; text-transform: uppercase;}
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* ==========================================
            6. SHOP ASSETS
            ========================================== */
-        .filter-bar { display: flex; gap: 15px; margin-bottom: 40px; overflow-x: auto; padding-bottom: 10px; width: 100%;}
+        .filter-bar { display: flex; gap: 15px; margin-bottom: 50px; overflow-x: auto; padding-bottom: 15px; width: 100%;}
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-btn { font-family: var(--font-mono); font-size: 1rem; font-weight: 800; padding: 12px 20px; border: 4px solid var(--text-color); background: #fff; transition: var(--transition); white-space: nowrap; text-transform: uppercase;}
-        .filter-btn:hover, .filter-btn.active { background: var(--text-color); color: #fff; transform: translateY(-4px); box-shadow: 6px 6px 0 var(--muted-bg);}
+        .filter-btn { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; padding: 15px 25px; border: 5px solid var(--text-color); background: #fff; transition: var(--transition); white-space: nowrap; text-transform: uppercase;}
+        .filter-btn:hover, .filter-btn.active { background: var(--text-color); color: #fff; transform: translateY(-5px); box-shadow: 8px 8px 0 var(--muted-bg);}
 
-        .product-card { border: 6px solid var(--text-color); padding: 20px; background: #fff; box-shadow: 10px 10px 0 var(--text-color); transition: var(--transition); display: flex; flex-direction: column;}
-        .product-card:hover { transform: translate(-6px, -6px); box-shadow: 16px 16px 0 var(--text-color); }
+        .product-card { border: 8px solid var(--text-color); padding: 25px; background: #fff; box-shadow: 12px 12px 0 var(--text-color); transition: var(--transition); display: flex; flex-direction: column;}
+        .product-card:hover { transform: translate(-8px, -8px); box-shadow: 20px 20px 0 var(--text-color); }
         
-        .product-img { width: 100%; height: 350px; background: var(--muted-bg); border: 4px solid var(--text-color); margin-bottom: 20px; position: relative; overflow: hidden;}
-        @media(min-width: 768px) { .product-img { height: 420px; } }
+        .product-img { width: 100%; height: 400px; background: var(--muted-bg); border: 5px solid var(--text-color); margin-bottom: 25px; position: relative; overflow: hidden;}
+        @media(min-width: 768px) { .product-img { height: 480px; } }
         .product-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease;}
         .product-img img.hover-img { opacity: 0; transform: scale(1.1); transition: opacity 0.4s ease, transform 0.4s ease;}
         .product-card:hover .product-img img.base-img { opacity: 0; }
         .product-card:hover .product-img img.hover-img { opacity: 1; transform: scale(1); filter: grayscale(0%);}
 
-        .product-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 10px;}
-        .product-name { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; line-height: 1.2;}
-        .product-price { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; background: var(--text-color); color: #fff; padding: 4px 10px; border: 2px solid var(--text-color);}
+        .product-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; gap: 15px;}
+        .product-name { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; line-height: 1.2; letter-spacing: -1px;}
+        .product-price { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; background: var(--text-color); color: #fff; padding: 6px 12px; border: 4px solid var(--text-color);}
 
-        .btn-add { width: 100%; font-family: var(--font-mono); font-size: 1rem; font-weight: 800; padding: 15px; border: 4px solid var(--text-color); background: #fff; transition: var(--transition); text-transform: uppercase; box-shadow: 4px 4px 0 var(--text-color); margin-top: auto;}
-        .btn-add:hover { background: var(--text-color); color: #fff; transform: translate(4px,4px); box-shadow: 0 0 0 transparent;}
+        .btn-add { width: 100%; font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; padding: 20px; border: 5px solid var(--text-color); background: #fff; transition: var(--transition); text-transform: uppercase; box-shadow: 6px 6px 0 var(--text-color); margin-top: auto; text-align: center;}
 
         /* ==========================================
            7. PRODUCT DETAIL
            ========================================== */
-        .pd-layout { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 1400px; margin: 0 auto; width: 100%;}
-        @media(min-width: 1024px) { .pd-layout { grid-template-columns: 1.2fr 1fr; gap: 60px;} }
+        .pd-layout { display: grid; grid-template-columns: 1fr; gap: 50px; max-width: 1500px; margin: 0 auto; width: 100%;}
+        @media(min-width: 1024px) { .pd-layout { grid-template-columns: 1.2fr 1fr; gap: 80px;} }
         
-        .pd-images img { width: 100%; border: 6px solid var(--text-color); margin-bottom: 20px; box-shadow: 10px 10px 0 var(--text-color); }
+        .pd-images img { width: 100%; border: 8px solid var(--text-color); margin-bottom: 30px; box-shadow: 12px 12px 0 var(--text-color); }
         
-        .pd-info { position: sticky; top: 100px; border: 6px solid var(--text-color); padding: 30px; background: #fff; box-shadow: 12px 12px 0 var(--text-color);}
-        @media(min-width: 768px) { .pd-info { padding: 50px; border-width: 8px; box-shadow: 15px 15px 0 var(--text-color);} }
-        .pd-info h1 { font-size: clamp(2rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; text-transform: uppercase; margin-bottom: 15px; letter-spacing: -1px;}
-        .pd-price { font-family: var(--font-mono); font-size: 2.2rem; font-weight: 800; border-bottom: 4px solid var(--text-color); padding-bottom: 15px; display: block; margin-bottom: 25px;}
+        .pd-info { position: sticky; top: 120px; border: 8px solid var(--text-color); padding: 40px; background: #fff; box-shadow: 15px 15px 0 var(--text-color);}
+        @media(min-width: 768px) { .pd-info { padding: 60px; border-width: 10px; box-shadow: 20px 20px 0 var(--text-color);} }
+        .pd-info h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -2px;}
+        .pd-price { font-family: var(--font-mono); font-size: 2.5rem; font-weight: 800; border-bottom: 5px solid var(--text-color); padding-bottom: 20px; display: block; margin-bottom: 30px;}
         
-        .size-selector { display: flex; gap: 10px; margin: 20px 0 40px 0; flex-wrap: wrap;}
-        .size-btn { width: 60px; height: 60px; border: 4px solid var(--text-color); font-family: var(--font-mono); font-weight: 800; font-size: 1.2rem; background: #fff; transition: var(--transition); box-shadow: 4px 4px 0 var(--muted-bg);}
-        @media(min-width: 768px) { .size-btn { width: 70px; height: 70px; font-size: 1.4rem; } }
-        .size-btn.active { background: var(--text-color); color: #fff; box-shadow: 4px 4px 0 var(--text-color); transform: translate(-2px,-2px);}
-        .size-btn:hover:not(.active) { background: var(--text-color); color: #fff; transform: translate(2px,2px); box-shadow: 0 0 0 transparent;}
+        .size-selector { display: flex; gap: 15px; margin: 30px 0 50px 0; flex-wrap: wrap;}
+        .size-btn { width: 70px; height: 70px; border: 5px solid var(--text-color); font-family: var(--font-mono); font-weight: 800; font-size: 1.5rem; background: #fff; transition: var(--transition); box-shadow: 6px 6px 0 var(--muted-bg);}
+        @media(min-width: 768px) { .size-btn { width: 85px; height: 85px; font-size: 1.8rem; } }
+        .size-btn.active { background: var(--text-color); color: #fff; box-shadow: 6px 6px 0 var(--text-color); transform: translate(-3px,-3px);}
+        .size-btn:hover:not(.active) { background: var(--text-color); color: #fff; transform: translate(3px,3px); box-shadow: 0 0 0 transparent;}
 
         /* ==========================================
-           8. TEXT & MISC PAGES
+           8. TEXT, JOURNAL, & MISC PAGES
            ========================================== */
-        .text-layout { max-width: 1000px; margin: 0 auto; background: #fff; padding: 40px 20px; border: 6px solid var(--text-color); box-shadow: 15px 15px 0 var(--text-color); width: 100%; overflow: hidden; box-sizing: border-box;}
-        @media(min-width: 768px){ .text-layout { padding: 60px; border-width: 8px; box-shadow: 20px 20px 0 var(--text-color); } }
+        .text-layout { max-width: 1200px; margin: 0 auto; background: #fff; padding: 50px 25px; border: 8px solid var(--text-color); box-shadow: 18px 18px 0 var(--text-color); width: 100%; box-sizing: border-box;}
+        @media(min-width: 768px){ .text-layout { padding: 80px; border-width: 10px; box-shadow: 25px 25px 0 var(--text-color); } }
 
-        .journal-card { border: 6px solid var(--text-color); padding: 25px; background: #fff; box-shadow: 10px 10px 0 var(--text-color); transition: var(--transition);}
-        .journal-card:hover { transform: translate(-6px,-6px); box-shadow: 16px 16px 0 var(--text-color); background: var(--text-color); color: #fff;}
-        .journal-card img { height: 250px; width: 100%; border: 4px solid var(--text-color); margin-bottom: 20px;}
-        @media(min-width: 768px) { .journal-card img { height: 350px; } }
-        .journal-tag { font-family: var(--font-mono); font-size: 0.9rem; padding: 4px 12px; border: 2px solid var(--text-color); display: inline-block; margin-bottom: 15px; background: #fff; color: var(--text-color); font-weight: 800;}
-        .journal-card h3 { font-size: 1.8rem; font-weight: 800; text-transform: uppercase; line-height: 1.2;}
+        .journal-card { border: 8px solid var(--text-color); padding: 30px; background: #fff; box-shadow: 12px 12px 0 var(--text-color); transition: var(--transition);}
+        .journal-card:hover { transform: translate(-8px,-8px); box-shadow: 20px 20px 0 var(--text-color); background: var(--text-color); color: #fff;}
+        .journal-card img { height: 300px; width: 100%; border: 5px solid var(--text-color); margin-bottom: 25px;}
+        @media(min-width: 768px) { .journal-card img { height: 450px; } }
+        .journal-tag { font-family: var(--font-mono); font-size: 1rem; padding: 6px 15px; border: 3px solid var(--text-color); display: inline-block; margin-bottom: 20px; background: #fff; color: var(--text-color); font-weight: 800;}
+        .journal-card h3 { font-size: 2.2rem; font-weight: 800; text-transform: uppercase; line-height: 1.2;}
 
-        .data-block { border: 6px solid var(--text-color); padding: 30px; background: #fff; margin-bottom: 30px; box-shadow: 8px 8px 0 var(--text-color); transition: var(--transition);}
-        .data-block:hover { transform: translateY(-4px); background: var(--text-color); color: #fff;}
-        .data-block h3 { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; border-bottom: 3px dashed var(--text-color); padding-bottom: 10px; margin-bottom: 20px;}
+        .data-block { border: 8px solid var(--text-color); padding: 40px; background: #fff; margin-bottom: 40px; box-shadow: 12px 12px 0 var(--text-color); transition: var(--transition);}
+        .data-block:hover { transform: translateY(-6px); background: var(--text-color); color: #fff;}
+        .data-block h3 { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; border-bottom: 4px dashed var(--text-color); padding-bottom: 15px; margin-bottom: 25px;}
         .data-block:hover h3 { border-color: #fff; }
 
-        .checkout-grid { display: grid; grid-template-columns: 1fr; gap: 40px; width: 100%;}
-        @media (min-width: 1024px) { .checkout-grid { grid-template-columns: 1.5fr 1fr; gap: 60px; } }
-        .order-summary { background: #fff; padding: 30px; border: 6px solid var(--text-color); box-shadow: 10px 10px 0 var(--text-color); height: fit-content; width: 100%; box-sizing: border-box;}
-        .summary-item { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 3px dashed var(--text-color); padding-bottom: 20px; font-weight: 800; font-size: 1.1rem; font-family: var(--font-heading); text-transform: uppercase;}
-
-        .lux-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; text-align: left; border: 4px solid var(--text-color); background: #fff;}
-        .lux-table th, .lux-table td { padding: 15px; border-bottom: 2px solid var(--text-color); border-right: 2px solid var(--text-color); font-family: var(--font-mono); font-size: 0.9rem;}
-        .lux-table th { background: var(--text-color); color: #fff; text-transform: uppercase; font-weight: 800;}
+        .checkout-grid { display: grid; grid-template-columns: 1fr; gap: 50px; width: 100%;}
+        @media (min-width: 1024px) { .checkout-grid { grid-template-columns: 1.5fr 1fr; gap: 80px; } }
+        .order-summary { background: #fff; padding: 40px; border: 8px solid var(--text-color); box-shadow: 15px 15px 0 var(--text-color); height: fit-content; width: 100%; box-sizing: border-box;}
+        .summary-item { display: flex; justify-content: space-between; margin-bottom: 25px; border-bottom: 4px dashed var(--text-color); padding-bottom: 25px; font-weight: 800; font-size: 1.3rem; font-family: var(--font-heading); text-transform: uppercase;}
 
         /* ==========================================
-           11. CART DRAWER & TOASTS
+           9. CART DRAWER & TOASTS
            ========================================== */
-        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 95000; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(5px);}
-        .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 500px; height: 100vh; background: #fff; z-index: 96000; border-left: 6px solid var(--text-color); transition: right 0.5s cubic-bezier(0.19, 1, 0.22, 1); display: flex; flex-direction: column; box-shadow: -15px 0 0 #fff;}
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 95000; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(8px);}
+        .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 550px; height: 100vh; background: #fff; z-index: 96000; border-left: 8px solid var(--text-color); transition: right 0.5s cubic-bezier(0.19, 1, 0.22, 1); display: flex; flex-direction: column; box-shadow: -20px 0 0 #fff;}
         body.cart-open .cart-overlay { opacity: 1; visibility: visible; }
         body.cart-open .cart-drawer { right: 0; }
 
-        .cart-header { padding: 30px; border-bottom: 6px solid var(--text-color); display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h2 { font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -1px;}
+        .cart-header { padding: 40px; border-bottom: 8px solid var(--text-color); display: flex; justify-content: space-between; align-items: center; background: #fff; }
+        .cart-header h2 { font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: -2px;}
         
-        .cart-items { flex-grow: 1; overflow-y: auto; padding: 30px; background-image: linear-gradient(#e0e0e0 1px, transparent 1px), linear-gradient(90deg, #e0e0e0 1px, transparent 1px); background-size: 40px 40px;}
-        .cart-item-card { display: flex; gap: 15px; background: #fff; border: 4px solid var(--text-color); padding: 15px; margin-bottom: 25px; box-shadow: 8px 8px 0 var(--text-color);}
-        .cart-item-card img { width: 80px; height: 100px; border: 3px solid var(--text-color);}
-        .cart-controls { display: flex; align-items: center; border: 3px solid var(--text-color); margin-top: 10px;}
-        .cart-controls button { width: 35px; height: 35px; font-weight: 800; font-size: 1.2rem; transition: var(--transition);}
+        .cart-items { flex-grow: 1; overflow-y: auto; padding: 40px; background-image: linear-gradient(#e0e0e0 1px, transparent 1px), linear-gradient(90deg, #e0e0e0 1px, transparent 1px); background-size: 50px 50px;}
+        .cart-item-card { display: flex; gap: 20px; background: #fff; border: 6px solid var(--text-color); padding: 20px; margin-bottom: 35px; box-shadow: 12px 12px 0 var(--text-color);}
+        .cart-item-card img { width: 100px; height: 130px; border: 4px solid var(--text-color);}
+        .cart-controls { display: flex; align-items: center; border: 4px solid var(--text-color); margin-top: 15px;}
+        .cart-controls button { width: 45px; height: 45px; font-weight: 800; font-size: 1.5rem; transition: var(--transition);}
         .cart-controls button:hover { background: var(--text-color); color: #fff;}
-        .cart-controls span { width: 35px; text-align: center; font-family: var(--font-mono); font-weight: 800; font-size: 1rem; border-left: 3px solid var(--text-color); border-right: 3px solid var(--text-color); background: var(--muted-bg);}
+        .cart-controls span { width: 45px; text-align: center; font-family: var(--font-mono); font-weight: 800; font-size: 1.2rem; border-left: 4px solid var(--text-color); border-right: 4px solid var(--text-color); background: var(--muted-bg);}
 
-        .cart-footer { padding: 30px; border-top: 6px solid var(--text-color); background: #fff; }
-        .cart-total { display: flex; justify-content: space-between; font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; font-family: var(--font-mono);}
+        .cart-footer { padding: 40px; border-top: 8px solid var(--text-color); background: #fff; }
+        .cart-total { display: flex; justify-content: space-between; font-size: 2.5rem; font-weight: 800; margin-bottom: 30px; font-family: var(--font-mono);}
 
-        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 15px; pointer-events: none; }
-        .toast { background: var(--text-color); color: #fff; padding: 15px 25px; font-family: var(--font-mono); font-weight: 800; font-size: 0.9rem; border: 3px solid #fff; box-shadow: -6px 6px 0 #000; text-transform: uppercase; transform: translateX(150%); transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 99999; display: flex; flex-direction: column; gap: 20px; pointer-events: none; }
+        .toast { background: var(--text-color); color: #fff; padding: 25px 35px; font-family: var(--font-mono); font-weight: 800; font-size: 1.1rem; border: 4px solid #fff; box-shadow: -8px 8px 0 #000; text-transform: uppercase; transform: translateX(150%); transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
         .toast.show { transform: translateX(0); }
 
         /* ==========================================
-           12. MOBILE OVERRIDES
+           10. MOBILE OVERRIDES (FULL WIDTH MENU)
            ========================================== */
         @media(max-width: 1024px) {
             #nav-menu {
-                position: fixed; top: 0; left: -100%; width: 100%; max-width: 100vw; height: 100vh;
-                background: #fff; border-right: none;
-                flex-direction: column; justify-content: center; align-items: flex-start;
+                position: fixed; top: 0; left: -100vw; width: 100vw; height: 100vh;
+                background: #000; border: none; /* Changed to Black */
+                flex-direction: column; justify-content: center; align-items: center;
                 z-index: 90000; transition: left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-                gap: 20px; padding: 0 30px; box-shadow: none;
-                background-image: linear-gradient(#e0e0e0 1px, transparent 1px), linear-gradient(90deg, #e0e0e0 1px, transparent 1px); background-size: 40px 40px;
-                display: flex; overflow-y: auto;
+                gap: 20px; padding: 0 5vw; box-shadow: none;
+                display: flex; overflow-y: auto; overflow-x: hidden;
             }
             #nav-menu.active { left: 0; }
-            #nav-menu .nav-link { font-size: 1.8rem; padding: 15px; width: 100%; border: 4px solid var(--text-color); background: #fff; box-shadow: 6px 6px 0 var(--text-color); }
+            #nav-menu .nav-link { 
+                font-size: 2.2rem; padding: 15px; width: 100%; max-width: 400px;
+                border: 4px solid #fff; background: #000; color: #fff; 
+                box-shadow: 6px 6px 0 #fff; text-align: center; 
+            }
             #nav-menu .nav-link::after { display: none; }
-            #nav-menu .nav-link:hover, #nav-menu .nav-link.active-link { background: var(--text-color); color: #fff; transform: translate(4px,4px); box-shadow: 0 0 0 transparent; }
+            #nav-menu .nav-link:hover, #nav-menu .nav-link.active-link { 
+                background: #fff; color: #000; transform: translate(4px,4px); box-shadow: 0 0 0 transparent; 
+            }
             
             .header-actions .btn-action { display: none; }
             .mobile-icon-btn { display: flex; }
@@ -336,34 +342,34 @@
         @media(min-width: 1025px) { .mobile-icon-btn { display: none !important; } }
 
         /* ==========================================
-           13. FOOTER (SCREENSHOT ACCURATE)
+           11. FOOTER (EXPANDED)
            ========================================== */
-        footer { background: #000; color: #fff; padding: 60px 5% 40px; border-top: 10px solid #fff; width: 100%; box-sizing: border-box; overflow: hidden;}
-        .footer-grid { display: flex; flex-direction: column; gap: 40px; margin-bottom: 50px; width: 100%;}
-        @media(min-width: 768px) { .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; } }
+        footer { background: #000; color: #fff; padding: 100px 5% 50px; border-top: 15px solid #fff; width: 100vw; overflow-x: hidden; box-sizing: border-box;}
+        .footer-grid { display: flex; flex-direction: column; gap: 50px; margin-bottom: 80px; width: 100%;}
+        @media(min-width: 768px) { .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; } }
+        @media(min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr; gap: 50px; } }
         
-        .footer-logo { font-size: 3rem; font-weight: 800; line-height: 1; margin-bottom: 20px; letter-spacing: -1px; text-transform: uppercase;}
-        .footer-title { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; border-bottom: 2px solid #fff; padding-bottom: 10px; display: inline-block; color: #fff;}
+        .footer-logo { font-size: 4rem; font-weight: 800; line-height: 1; margin-bottom: 25px; letter-spacing: -2px; text-transform: uppercase;}
+        .footer-title { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; margin-bottom: 25px; border-bottom: 3px solid #fff; padding-bottom: 10px; display: inline-block; color: #fff;}
         .footer-links li { margin-bottom: 15px; font-weight: 800; font-size: 1.1rem; text-transform: uppercase;}
         .footer-links a { transition: transform 0.3s; display: inline-block;}
         .footer-links a:hover { transform: translateX(8px); color: #ccc;}
         
-        /* Specific Footer Newsletter Form Match to Screenshot */
-        .footer-newsletter-wrapper { margin-top: 15px; width: 100%; max-width: 400px;}
-        .newsletter-input-group { display: flex; border: 4px solid #fff; background: #000; width: 100%; align-items: stretch; height: 55px;}
-        .newsletter-input { flex-grow: 1; padding: 0 15px; color: #fff; font-family: var(--font-mono); font-size: 1rem; background: transparent; border: none; outline: none; text-transform: uppercase;}
-        .newsletter-input::placeholder { color: #666; }
-        .newsletter-btn { width: 55px; background: #fff; color: #000; font-weight: 800; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; border-left: 4px solid #000; transition: var(--transition); cursor: pointer;}
-        .newsletter-btn:active { background: #ccc; }
+        .footer-newsletter-wrapper { margin-top: 20px; width: 100%; max-width: 400px;}
+        .newsletter-input-group { display: flex; border: 4px solid #fff; background: #000; width: 100%; align-items: stretch;}
+        .newsletter-input { flex-grow: 1; padding: 18px 15px; color: #fff; font-family: var(--font-mono); font-size: 1.1rem; background: transparent; border: none; outline: none;}
+        .newsletter-input::placeholder { color: #666; text-transform: uppercase; }
+        .newsletter-btn { padding: 0 20px; background: #fff; color: #000; font-weight: 800; font-size: 1.8rem; display: flex; justify-content: center; align-items: center; border-left: 4px solid #000; cursor: pointer;}
+        .newsletter-btn:hover { background: #ccc; }
 
-        .footer-bottom { border-top: 2px dashed #444; padding-top: 30px; display: flex; flex-direction: column; gap: 20px; font-family: var(--font-mono); font-size: 0.9rem; color: #aaa; font-weight: 700; width: 100%;}
+        .footer-bottom { border-top: 3px dashed #444; padding-top: 40px; display: flex; flex-direction: column; gap: 25px; font-family: var(--font-mono); font-size: 1rem; color: #aaa; font-weight: 700; width: 100%;}
         @media(min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
         
-        .footer-bottom-links { display: flex; gap: 20px; flex-wrap: wrap; }
+        .footer-bottom-links { display: flex; gap: 25px; flex-wrap: wrap; }
         .footer-bottom-links a { color: #fff; transition: var(--transition); text-transform: uppercase;}
         .footer-bottom-links a:hover { color: #ccc;}
         
-        .footer-credit { border: 2px solid #fff; padding: 8px 15px; color: #fff; text-transform: uppercase; font-weight: 800; display: inline-block; white-space: nowrap;}
+        .footer-credit { border: 3px solid #fff; padding: 10px 20px; color: #fff; text-transform: uppercase; font-weight: 800; display: inline-block; white-space: nowrap;}
     </style>
 </head>
 <body>
@@ -371,55 +377,39 @@
     <canvas id="cursor-canvas"></canvas>
     <div class="custom-cursor-dot" id="cursor-dot"></div>
 
-    <div class="page-transition" id="page-transition">
-        <h1 class="glitch-text" data-text="VIROX" style="font-size: 5rem; font-weight: 800; color: #fff; letter-spacing: -1px;">VIROX</h1>
-        <p style="font-family: var(--font-mono); font-weight: 800; color: #fff; margin-top: 15px; letter-spacing: 3px; font-size: 1rem;">SYSTEM LOADING...</p>
-    </div>
-
     <div class="toast-container" id="toast-container"></div>
 
     <header>
-        <div class="logo"><a href="#home" class="magnetic-btn nav-btn" data-target="view-home">VIROX</a></div>
+        <div class="logo"><a href="#home" class="magnetic-btn nav-btn glitch-text" data-text="VIROX" data-target="view-home">VIROX</a></div>
         
         <nav id="nav-menu" class="nav-links">
             <a href="#home" class="nav-link nav-btn active-link scrambler" data-target="view-home">HOME DIR</a>
             <a href="#shop" class="nav-link nav-btn scrambler" data-target="view-shop">CATALOG</a>
             <a href="#campaigns" class="nav-link nav-btn scrambler" data-target="view-campaigns">ARCHIVE</a>
+            <a href="#lookbook" class="nav-link nav-btn scrambler" data-target="view-lookbook">LOOKBOOK</a>
             <a href="#journal" class="nav-link nav-btn scrambler" data-target="view-journal">LOGS</a>
             <a href="#about" class="nav-link nav-btn scrambler" data-target="view-about">CORE</a>
-            
-            <div class="mobile-only-link" style="width: 100%; border-top: 4px dashed var(--text-color); margin-top: 10px; padding-top: 20px;">
-                <a href="#faq" class="nav-link nav-btn scrambler" data-target="view-faq">INTEL / FAQ</a>
-                <a href="#contact" class="nav-link nav-btn scrambler" data-target="view-contact">TRANSMIT MSG</a>
-                <a href="#shipping" class="nav-link nav-btn scrambler" data-target="view-shipping">SHIPPING</a>
-                <a href="#returns" class="nav-link nav-btn scrambler" data-target="view-returns">RETURNS</a>
-                <a href="#size-guide" class="nav-link nav-btn scrambler" data-target="view-size-guide">SIZE GUIDE</a>
-                <a href="#care" class="nav-link nav-btn scrambler" data-target="view-care">CARE</a>
-                <a href="#legal" class="nav-link nav-btn scrambler" data-target="view-legal" onclick="document.getElementById('legal-title').innerText='LEGAL'">LEGAL</a>
-            </div>
-            
-            <a href="#account" class="nav-link nav-btn scrambler mobile-only-link" data-target="view-account" style="background: #000; color: #fff; text-align: center; margin-top: 20px;">LOGIN / ACCOUNT</a>
         </nav>
 
         <div class="header-actions">
-            <button class="btn-action magnetic-btn nav-btn" data-target="view-account">LOGIN</button>
-            <button class="btn-action magnetic-btn" id="cart-toggle">
-                CART <span style="background:var(--text-color); color:#fff; padding: 2px 6px; font-family:var(--font-mono);" id="cart-count">0</span>
+            <button class="btn-action magnetic-btn nav-btn btn-glitch" data-target="view-account">LOGIN</button>
+            <button class="btn-action magnetic-btn btn-glitch" id="cart-toggle">
+                CART <span style="background:var(--text-color); color:#fff; padding: 2px 8px; font-family:var(--font-mono);" id="cart-count">0</span>
             </button>
 
-            <button class="mobile-icon-btn magnetic-btn" id="cart-toggle-mobile">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="square"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <button class="mobile-icon-btn magnetic-btn btn-glitch" id="cart-toggle-mobile">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="square"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             </button>
 
-            <button class="mobile-toggle magnetic-btn" id="mobile-toggle"><span></span><span></span></button>
+            <button class="mobile-toggle magnetic-btn btn-glitch" id="mobile-toggle"><span></span><span></span></button>
         </div>
     </header>
 
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-drawer" id="cart-drawer">
         <div class="cart-header">
-            <h2>MANIFEST</h2>
-            <button class="magnetic-btn" id="cart-close" style="font-size: 2rem; font-weight:800; font-family: var(--font-mono); border: 3px solid var(--text-color); background: #fff; padding: 0 10px; box-shadow: 4px 4px 0 var(--text-color);">X</button>
+            <h2 class="glitch-text" data-text="MANIFEST">MANIFEST</h2>
+            <button class="magnetic-btn btn-glitch" id="cart-close" style="font-size: 2.5rem; font-weight:800; font-family: var(--font-mono); border: 4px solid var(--text-color); background: #fff; padding: 0 15px; box-shadow: 6px 6px 0 var(--text-color);">X</button>
         </div>
         <div class="cart-items" id="cart-items">
             </div>
@@ -428,25 +418,25 @@
                 <span>TOTAL</span>
                 <span id="cart-total-price">$0.00</span>
             </div>
-            <button class="primary-btn nav-btn magnetic-btn" data-target="view-checkout" style="width: 100%; padding: 20px; font-size: 1.2rem;" id="checkout-drawer-btn">INITIALIZE CHECKOUT</button>
+            <button class="primary-btn nav-btn magnetic-btn btn-glitch" data-target="view-checkout" style="width: 100%; padding: 25px; font-size: 1.4rem;" id="checkout-drawer-btn">INITIALIZE CHECKOUT</button>
         </div>
     </div>
 
-    <main>
+    <main id="main-wrap">
         
         <section id="view-home" class="view-section active">
             <div class="hero">
                 <div class="hero-text-box">
-                    <span style="font-family: var(--font-mono); font-weight: 800; border: 2px solid var(--text-color); padding: 5px 10px; display: inline-block; margin-bottom: 20px; width: fit-content; font-size: 0.9rem;">DROP 002 LIVE</span>
+                    <span style="font-family: var(--font-mono); font-weight: 800; border: 3px solid var(--text-color); padding: 8px 15px; display: inline-block; margin-bottom: 25px; width: fit-content; font-size: 1rem; box-shadow: 4px 4px 0 var(--muted-bg);">DROP 002 LIVE</span>
                     <h1 class="hero-title glitch-text" data-text="VIROX SYSTEM">VIROX<br>SYSTEM</h1>
-                    <p class="text-body" style="font-weight: 700; border-left: 6px solid var(--text-color); padding-left: 20px;">
+                    <p class="text-body" style="font-weight: 700; border-left: 8px solid var(--text-color); padding-left: 25px;">
                         Engineered streetwear for the modern grid. Heavyweight fabrics. Structural silhouettes. Strict monochromatic protocol.
                     </p>
-                    <div style="margin-top: 40px; display: flex; gap: 15px; flex-wrap: wrap;">
-                        <button class="primary-btn magnetic-btn nav-btn" data-target="view-shop">ENTER CATALOG</button>
+                    <div style="margin-top: 50px; display: flex; gap: 20px; flex-wrap: wrap;">
+                        <button class="primary-btn magnetic-btn nav-btn btn-glitch" data-target="view-shop">ENTER CATALOG</button>
                     </div>
                 </div>
-                <div class="hero-img-box magnetic-btn nav-btn" data-target="view-campaigns" style="cursor: pointer;">
+                <div class="hero-img-box magnetic-btn nav-btn img-glitch" data-target="view-campaigns" style="cursor: pointer;">
                     <img src="https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=1200&auto=format&fit=crop" alt="Virox Hero">
                     <div class="hero-badge">ENTER<br>ARCHIVE</div>
                 </div>
@@ -462,8 +452,8 @@
 
             <div class="section-padding">
                 <h2 class="section-title glitch-text" data-text="THE DIRECTIVE">THE DIRECTIVE</h2>
-                <div class="grid-layout" style="grid-template-columns: 1fr; gap: 40px;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div class="grid-layout" style="grid-template-columns: 1fr; gap: 50px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;">
                         <div class="data-block magnetic-btn">
                             <h3>01. STRUCTURAL INTEGRITY</h3>
                             <p class="text-body">We reject lightweight materials. Every garment is constructed using hyper-dense fabrics ranging from 280gsm cotton to 500gsm fleece. The silhouette must hold its shape independent of the wearer.</p>
@@ -473,6 +463,14 @@
                             <p class="text-body">Color is a distraction. The Virox system relies purely on stark contrast, extreme textures, and meticulous pattern making to convey aesthetic dominance.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="section-padding" style="padding-top:0;">
+                <div style="border: 8px solid var(--text-color); padding: 50px; background: #fff; box-shadow: 15px 15px 0 var(--text-color); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 class="glitch-text" data-text="AUTHORIZED STOCKISTS" style="font-size: 2.5rem; font-weight: 800; text-transform: uppercase; margin-bottom: 30px;">AUTHORIZED STOCKISTS</h3>
+                    <p class="text-body" style="font-family: var(--font-mono); font-size: 1.2rem; max-width: 800px;">AVAILABLE EXCLUSIVELY ONLINE VIA VIROX.IN AND SELECT PHYSICAL TERMINALS IN TOKYO, BERLIN, AND LONDON.</p>
+                    <button class="outline-btn magnetic-btn nav-btn btn-glitch" data-target="view-stockists" style="margin-top: 20px;">VIEW TERMINALS</button>
                 </div>
             </div>
         </section>
@@ -493,12 +491,17 @@
 
                 <div class="grid-layout" id="product-grid">
                     </div>
+                
+                <div style="margin-top: 80px; padding: 60px 40px; background: #000; color: #fff; border: 8px solid var(--text-color); text-align: center;" class="magnetic-btn">
+                    <h3 class="glitch-text" data-text="TRENDING NOW: THE OVERCOAT" style="font-size: 3rem; text-transform: uppercase; margin-bottom: 20px;">TRENDING NOW: THE OVERCOAT</h3>
+                    <button class="outline-btn magnetic-btn nav-btn btn-glitch" data-target="view-product" onclick="openProductDetail(3)" style="color:#000; border-color:#fff;">SECURE NOW</button>
+                </div>
             </div>
         </section>
 
         <section id="view-product" class="view-section">
             <div class="section-padding">
-                <button class="outline-btn nav-btn magnetic-btn" data-target="view-shop" style="margin-bottom: 40px; padding: 12px 25px; font-size: 0.9rem;">[ BACK TO CATALOG ]</button>
+                <button class="outline-btn nav-btn magnetic-btn btn-glitch" data-target="view-shop" style="margin-bottom: 50px; padding: 15px 30px; font-size: 1rem;">[ BACK TO CATALOG ]</button>
                 <div class="pd-layout" id="pd-container">
                     </div>
             </div>
@@ -510,20 +513,70 @@
                 <p class="text-body">Documentation of the Virox aesthetic protocol. Lookbooks and campaigns strictly enforcing the monochromatic rule.</p>
                 
                 <div class="grid-layout">
-                    <div class="journal-card magnetic-btn">
+                    <div class="journal-card magnetic-btn img-glitch">
                         <img src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=800&auto=format&fit=crop" alt="C1">
                         <span class="journal-tag">CAMPAIGN 001</span>
                         <h3>SILHOUETTE DISTORTION</h3>
                     </div>
-                    <div class="journal-card magnetic-btn">
+                    <div class="journal-card magnetic-btn img-glitch">
                         <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop" alt="C2">
                         <span class="journal-tag">LOOKBOOK</span>
                         <h3>THE HEAVY OVERCOAT</h3>
                     </div>
-                    <div class="journal-card magnetic-btn">
+                    <div class="journal-card magnetic-btn img-glitch">
                         <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop" alt="C3">
                         <span class="journal-tag">STUDIO DATA</span>
                         <h3>PATTERN DRAFTING V2</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="view-lookbook" class="view-section">
+            <div class="section-padding">
+                <h2 class="section-title glitch-text" data-text="LOOKBOOK: DROP 002">LOOKBOOK: DROP 002</h2>
+                <p class="text-body">Exploring shape, shadow, and structure.</p>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 40px;">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1600&auto=format&fit=crop" alt="L1" style="width: 100%; border: 10px solid var(--text-color); box-shadow: 20px 20px 0 var(--text-color);" class="img-glitch">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800&auto=format&fit=crop" alt="L2" style="width: 100%; border: 8px solid var(--text-color);" class="img-glitch">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800&auto=format&fit=crop" alt="L3" style="width: 100%; border: 8px solid var(--text-color);" class="img-glitch">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-collabs" class="view-section">
+            <div class="section-padding">
+                <h2 class="section-title glitch-text" data-text="COLLABORATIONS">COLLABORATIONS</h2>
+                <div class="data-block magnetic-btn" style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
+                    <img src="https://images.unsplash.com/photo-1618085220188-b4f210d22703?q=80&w=600&auto=format&fit=crop" style="width: 300px; border: 6px solid var(--text-color);" alt="Collab">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="font-size: 2.5rem; margin-bottom: 10px;">VIROX x DIGITAL TRADE</h3>
+                        <p class="text-body">A limited capsule collection merging our heavyweight architectural garments with Digital Trade's precise cyber-aesthetic prints. Restricted to 100 units globally.</p>
+                        <button class="primary-btn nav-btn magnetic-btn btn-glitch" data-target="view-shop">VIEW CAPSULE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="view-stockists" class="view-section">
+            <div class="section-padding">
+                <div class="text-layout">
+                    <h2 class="section-title glitch-text" data-text="PHYSICAL TERMINALS">PHYSICAL TERMINALS</h2>
+                    <p class="text-body" style="margin-bottom: 50px;">Virox assets can be procured in person at the following authorized global coordinates.</p>
+                    
+                    <div class="data-block magnetic-btn">
+                        <h3>TOKYO NODE</h3>
+                        <p class="text-body" style="font-family: var(--font-mono);">Shibuya-ku, 150-0041<br>Tokyo, Japan</p>
+                    </div>
+                    <div class="data-block magnetic-btn">
+                        <h3>BERLIN NODE</h3>
+                        <p class="text-body" style="font-family: var(--font-mono);">Mitte, 10119<br>Berlin, Germany</p>
+                    </div>
+                    <div class="data-block magnetic-btn">
+                        <h3>LONDON NODE</h3>
+                        <p class="text-body" style="font-family: var(--font-mono);">Soho, W1D 3SG<br>London, UK</p>
                     </div>
                 </div>
             </div>
@@ -534,17 +587,17 @@
                 <h2 class="section-title glitch-text" data-text="SYSTEM LOGS">SYSTEM LOGS</h2>
                 <p class="text-body">Transmissions from HQ regarding design philosophy, fabric sourcing, and future architecture.</p>
                 <div class="grid-layout">
-                    <div class="journal-card magnetic-btn">
+                    <div class="journal-card magnetic-btn img-glitch">
                         <img src="https://images.unsplash.com/photo-1618085220188-b4f210d22703?q=80&w=800&auto=format&fit=crop" alt="J1">
                         <span class="journal-tag">DESIGN</span>
                         <h3>ARCHITECTURE OF A TEE</h3>
                     </div>
-                    <div class="journal-card magnetic-btn">
+                    <div class="journal-card magnetic-btn img-glitch">
                         <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800&auto=format&fit=crop" alt="J2">
                         <span class="journal-tag">SUPPLY CHAIN</span>
                         <h3>SOURCING 500GSM FLEECE</h3>
                     </div>
-                    <div class="journal-card magnetic-btn">
+                    <div class="journal-card magnetic-btn img-glitch">
                         <img src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=800&auto=format&fit=crop" alt="J3">
                         <span class="journal-tag">PARTNERSHIPS</span>
                         <h3>DIGITAL TRADE COLLAB</h3>
@@ -557,7 +610,7 @@
             <div class="section-padding">
                 <div class="text-layout">
                     <h2 class="section-title glitch-text" data-text="SYSTEM CORE">SYSTEM CORE</h2>
-                    <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=1200&auto=format&fit=crop" alt="About" style="width: 100%; border: 6px solid var(--text-color); margin-bottom: 40px; box-shadow: 10px 10px 0 var(--text-color);">
+                    <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=1200&auto=format&fit=crop" alt="About" style="width: 100%; border: 8px solid var(--text-color); margin-bottom: 50px; box-shadow: 15px 15px 0 var(--text-color);" class="img-glitch">
                     
                     <div class="data-block magnetic-btn">
                         <h3>ORIGIN PROTOCOL</h3>
@@ -570,19 +623,19 @@
                         <p class="text-body">A silhouette is only as strong as its foundation. We refuse lightweight fabrics. Our t-shirts utilize a minimum of 280gsm cotton for a rigid, boxy drape. Outerwear is constructed from high-tensile nylons, weatherproof ripstop, and heavy thermal linings.</p>
                     </div>
 
-                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-top: 50px; border-bottom: 4px solid var(--text-color); padding-bottom: 15px; text-transform: uppercase;">OPERATIONAL LOOP</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px;">
-                        <div class="data-block magnetic-btn" style="margin:0; padding: 25px;">
+                    <h3 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; margin-top: 70px; border-bottom: 6px solid var(--text-color); padding-bottom: 20px; text-transform: uppercase;">OPERATIONAL LOOP</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 40px;">
+                        <div class="data-block magnetic-btn" style="margin:0; padding: 30px;">
                             <h4>PHASE A: DRAFT</h4>
-                            <p class="text-body" style="font-size: 1rem; margin-top: 10px;">Silhouettes are engineered digitally. Shoulders are dropped precisely. Cropped lengths are calculated.</p>
+                            <p class="text-body" style="font-size: 1.1rem; margin-top: 15px;">Silhouettes are engineered digitally. Shoulders are dropped precisely. Cropped lengths are calculated.</p>
                         </div>
-                        <div class="data-block magnetic-btn" style="margin:0; padding: 25px;">
+                        <div class="data-block magnetic-btn" style="margin:0; padding: 30px;">
                             <h4>PHASE B: PROCUREMENT</h4>
-                            <p class="text-body" style="font-size: 1rem; margin-top: 10px;">We hunt for the densest, most durable fabrics available on the global market to ensure standards are met.</p>
+                            <p class="text-body" style="font-size: 1.1rem; margin-top: 15px;">We hunt for the densest, most durable fabrics available on the global market to ensure standards are met.</p>
                         </div>
-                        <div class="data-block magnetic-btn" style="margin:0; padding: 25px;">
+                        <div class="data-block magnetic-btn" style="margin:0; padding: 30px;">
                             <h4>PHASE C: EXECUTION</h4>
-                            <p class="text-body" style="font-size: 1rem; margin-top: 10px;">Heavy-duty hardware insertion. Reinforced stitching across all tension points. Rigorous QA.</p>
+                            <p class="text-body" style="font-size: 1.1rem; margin-top: 15px;">Heavy-duty hardware insertion. Reinforced stitching across all tension points. Rigorous QA.</p>
                         </div>
                     </div>
                 </div>
@@ -591,9 +644,9 @@
 
         <section id="view-account" class="view-section">
             <div class="section-padding" style="display: flex; justify-content: center;">
-                <div class="text-layout" style="width: 100%; max-width: 600px; text-align: center;">
+                <div class="text-layout" style="width: 100%; max-width: 700px; text-align: center;">
                     <h2 class="section-title glitch-text" data-text="LOGIN PROTOCOL">LOGIN PROTOCOL</h2>
-                    <form onsubmit="event.preventDefault(); showToast('AUTHORIZATION ACCEPTED.'); setTimeout(()=>navigateTo('view-home'), 2000);">
+                    <form onsubmit="event.preventDefault(); showToast('AUTHORIZATION ACCEPTED.'); setTimeout(()=>navigateTo('view-home'), 1500);">
                         <div class="form-group">
                             <label class="form-label">COMMLINK [EMAIL]</label>
                             <input type="email" class="form-input magnetic-btn" required>
@@ -602,9 +655,9 @@
                             <label class="form-label">CIPHER [PASSWORD]</label>
                             <input type="password" class="form-input magnetic-btn" required>
                         </div>
-                        <button type="submit" class="primary-btn magnetic-btn" style="width: 100%; margin-top: 20px;">AUTHENTICATE</button>
-                        <div style="margin-top: 30px; font-weight: 800; font-size: 1.1rem; font-family: var(--font-mono);">
-                            NO CLEARANCE? <a href="#" style="border-bottom: 3px solid var(--text-color);">REQUEST ACCESS</a>
+                        <button type="submit" class="primary-btn magnetic-btn btn-glitch" style="width: 100%; margin-top: 25px;">AUTHENTICATE</button>
+                        <div style="margin-top: 40px; font-weight: 800; font-size: 1.2rem; font-family: var(--font-mono);">
+                            NO CLEARANCE? <a href="#" style="border-bottom: 4px solid var(--text-color);">REQUEST ACCESS</a>
                         </div>
                     </form>
                 </div>
@@ -613,38 +666,38 @@
 
         <section id="view-checkout" class="view-section">
             <div class="section-padding">
-                <div class="text-layout" style="max-width: 1200px;">
+                <div class="text-layout" style="max-width: 1400px;">
                     <h2 class="section-title glitch-text" data-text="SECURE CHECKOUT">SECURE CHECKOUT</h2>
                     <div class="checkout-grid">
                         <div>
-                            <h3 style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; background: var(--text-color); color: #fff; display: inline-block; padding: 10px 20px; margin-bottom: 30px;">1. DESTINATION DATA</h3>
-                            <form onsubmit="event.preventDefault(); showToast('TRANSACTION COMPLETE. ASSETS SECURED.'); setTimeout(()=>navigateTo('view-home'), 3000);">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <h3 style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; background: var(--text-color); color: #fff; display: inline-block; padding: 15px 25px; margin-bottom: 40px;">1. DESTINATION DATA</h3>
+                            <form onsubmit="event.preventDefault(); showToast('TRANSACTION COMPLETE. ASSETS SECURED.'); setTimeout(()=>navigateTo('view-home'), 2500);">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                                     <div class="form-group"><label class="form-label">FIRST NAME</label><input type="text" class="form-input magnetic-btn" required></div>
                                     <div class="form-group"><label class="form-label">LAST NAME</label><input type="text" class="form-input magnetic-btn" required></div>
                                 </div>
                                 <div class="form-group"><label class="form-label">ADDRESS LINE</label><input type="text" class="form-input magnetic-btn" required></div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                                     <div class="form-group"><label class="form-label">CITY</label><input type="text" class="form-input magnetic-btn" required></div>
                                     <div class="form-group"><label class="form-label">ZIP CODE</label><input type="text" class="form-input magnetic-btn" required></div>
                                 </div>
                                 
-                                <h3 style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; background: var(--text-color); color: #fff; display: inline-block; padding: 10px 20px; margin: 40px 0 30px 0;">2. PAYMENT UPLINK</h3>
+                                <h3 style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; background: var(--text-color); color: #fff; display: inline-block; padding: 15px 25px; margin: 50px 0 40px 0;">2. PAYMENT UPLINK</h3>
                                 <div class="form-group"><label class="form-label">CARD NUMBER</label><input type="text" class="form-input magnetic-btn" placeholder="0000 0000 0000 0000" required></div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                                     <div class="form-group"><label class="form-label">EXPIRY</label><input type="text" class="form-input magnetic-btn" placeholder="MM/YY" required></div>
                                     <div class="form-group"><label class="form-label">CVC</label><input type="text" class="form-input magnetic-btn" required></div>
                                 </div>
-                                <button type="submit" class="primary-btn magnetic-btn" style="width: 100%; margin-top: 10px;">AUTHORIZE TRANSFER</button>
+                                <button type="submit" class="primary-btn magnetic-btn btn-glitch" style="width: 100%; margin-top: 20px;">AUTHORIZE TRANSFER</button>
                             </form>
                         </div>
                         <div class="order-summary">
-                            <h3 style="margin-bottom: 30px; font-family: var(--font-heading); font-size: 2rem; font-weight: 800; border-bottom: 4px solid var(--text-color); padding-bottom: 15px; text-transform: uppercase;">MANIFEST</h3>
+                            <h3 style="margin-bottom: 40px; font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; border-bottom: 6px solid var(--text-color); padding-bottom: 20px; text-transform: uppercase;">MANIFEST</h3>
                             <div id="checkout-items"></div>
-                            <div style="margin-top: 40px; background: var(--muted-bg); padding: 30px; border: 4px solid var(--text-color);">
+                            <div style="margin-top: 50px; background: var(--muted-bg); padding: 40px; border: 6px solid var(--text-color);">
                                 <div class="summary-item"><span>SUBTOTAL</span><span id="checkout-subtotal">$0.00</span></div>
-                                <div class="summary-item"><span>FREIGHT</span><span style="font-family: var(--font-mono); font-size:0.9rem;">CALC AT DISPATCH</span></div>
-                                <div class="summary-item" style="border: none; font-size: 2.2rem; font-family: var(--font-mono); font-weight: 800; color: var(--text-color); padding-bottom: 0; align-items: center; margin-top: 20px;"><span>TOTAL</span><span id="checkout-total">$0.00</span></div>
+                                <div class="summary-item"><span>FREIGHT</span><span style="font-family: var(--font-mono); font-size:1rem;">CALC AT DISPATCH</span></div>
+                                <div class="summary-item" style="border: none; font-size: 3rem; font-family: var(--font-mono); font-weight: 800; color: var(--text-color); padding-bottom: 0; align-items: center; margin-top: 30px;"><span>TOTAL</span><span id="checkout-total">$0.00</span></div>
                             </div>
                         </div>
                     </div>
@@ -656,19 +709,19 @@
             <div class="section-padding">
                 <div class="text-layout">
                     <h2 class="section-title glitch-text" data-text="INTEL / FAQ">INTEL / FAQ</h2>
-                    <p class="text-body" style="font-size: 1.2rem; margin-bottom: 40px; border-left: 6px solid var(--text-color); padding-left: 20px; font-weight: 700;">Before opening a comms channel, review the system parameters below.</p>
+                    <p class="text-body" style="font-size: 1.3rem; margin-bottom: 50px; border-left: 8px solid var(--text-color); padding-left: 25px; font-weight: 700;">Before opening a comms channel, review the system parameters below.</p>
                     
                     <div class="accordion-item magnetic-btn">
                         <button class="accordion-btn">HOW DOES THE GEAR FIT? <span class="accordion-icon">+</span></button>
-                        <div class="accordion-content"><p class="text-body" style="padding-top:20px;">Our signature fit is inherently boxy, slightly cropped, with pronounced dropped shoulders. Order your true size to achieve the intended architectural look. Sizing down will result in a more standard fit.</p></div>
+                        <div class="accordion-content"><p class="text-body" style="padding-top:25px;">Our signature fit is inherently boxy, slightly cropped, with pronounced dropped shoulders. Order your true size to achieve the intended architectural look. Sizing down will result in a more standard fit.</p></div>
                     </div>
                     <div class="accordion-item magnetic-btn">
                         <button class="accordion-btn">RESTOCK SCHEDULE? <span class="accordion-icon">+</span></button>
-                        <div class="accordion-content"><p class="text-body" style="padding-top:20px;">We operate on a strict drop model. Once a collection is released, inventory is limited. When an item sells out, it is archived permanently. No restocks. Subscribe to the network ping for alerts.</p></div>
+                        <div class="accordion-content"><p class="text-body" style="padding-top:25px;">We operate on a strict drop model. Once a collection is released, inventory is limited. When an item sells out, it is archived permanently. No restocks. Subscribe to the network ping for alerts.</p></div>
                     </div>
                     <div class="accordion-item magnetic-btn">
                         <button class="accordion-btn">DO YOU OFFER WHOLESALE? <span class="accordion-icon">+</span></button>
-                        <div class="accordion-content"><p class="text-body" style="padding-top:20px;">Yes, we partner with select boutiques globally. Please transmit a message via our contact page for wholesale inquiries.</p></div>
+                        <div class="accordion-content"><p class="text-body" style="padding-top:25px;">Yes, we partner with select boutiques globally. Please transmit a message via our contact page for wholesale inquiries.</p></div>
                     </div>
                 </div>
             </div>
@@ -720,15 +773,15 @@
                     <h2 class="section-title glitch-text" data-text="SIZE GUIDE">SIZE GUIDE</h2>
                     <p class="text-body">Our garments are designed with a structural, oversized fit. Use the table below to find your correct measurements (in inches).</p>
                     
-                    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin: 40px 0 20px; text-transform: uppercase; font-weight: 800;">TOPS (TEES & HOODIES)</h3>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 50px 0 25px; text-transform: uppercase; font-weight: 800;">TOPS (TEES & HOODIES)</h3>
                     <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                        <table class="lux-table">
-                            <thead><tr><th>SIZE</th><th>CHEST (PIT TO PIT)</th><th>LENGTH</th><th>SLEEVE</th></tr></thead>
+                        <table class="lux-table" style="width: 100%; border-collapse: collapse; border: 4px solid var(--text-color); font-family: var(--font-mono); font-size: 1.1rem; text-align: left;">
+                            <thead><tr style="background: var(--text-color); color: #fff;"><th style="padding: 15px;">SIZE</th><th style="padding: 15px;">CHEST (PIT TO PIT)</th><th style="padding: 15px;">LENGTH</th><th style="padding: 15px;">SLEEVE</th></tr></thead>
                             <tbody>
-                                <tr><td>S</td><td>22.5"</td><td>26.5"</td><td>8.5"</td></tr>
-                                <tr><td>M</td><td>23.5"</td><td>27.5"</td><td>9.0"</td></tr>
-                                <tr><td>L</td><td>24.5"</td><td>28.5"</td><td>9.5"</td></tr>
-                                <tr><td>XL</td><td>25.5"</td><td>29.5"</td><td>10.0"</td></tr>
+                                <tr><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">S</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">22.5"</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">26.5"</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">8.5"</td></tr>
+                                <tr><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">M</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">23.5"</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">27.5"</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">9.0"</td></tr>
+                                <tr><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">L</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">24.5"</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">28.5"</td><td style="padding: 15px; border-bottom: 2px solid var(--text-color);">9.5"</td></tr>
+                                <tr><td style="padding: 15px;">XL</td><td style="padding: 15px;">25.5"</td><td style="padding: 15px;">29.5"</td><td style="padding: 15px;">10.0"</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -760,14 +813,12 @@
             <div class="section-padding">
                 <div class="text-layout">
                     <h2 class="section-title glitch-text" data-text="TRANSMIT">TRANSMIT</h2>
-                    <p class="text-body" style="margin-bottom: 40px; font-size: 1.2rem;">For order support, wholesale inquiries, or press, transmit a message to the dispatch unit below. Response time is typically within 24 standard hours.</p>
+                    <p class="text-body" style="margin-bottom: 50px; font-size: 1.4rem;">For order support, wholesale inquiries, or press, transmit a message to the dispatch unit below. Response time is typically within 24 standard hours.</p>
                     
                     <form onsubmit="event.preventDefault(); showToast('TRANSMISSION SENT SUCCESSFULLY.');">
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 0;">
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                                <div class="form-group"><label class="form-label">ID / NAME</label><input type="text" class="form-input magnetic-btn" required></div>
-                                <div class="form-group"><label class="form-label">EMAIL COMM-LINK</label><input type="email" class="form-input magnetic-btn" required></div>
-                            </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                            <div class="form-group"><label class="form-label">ID / NAME</label><input type="text" class="form-input magnetic-btn" required></div>
+                            <div class="form-group"><label class="form-label">EMAIL COMM-LINK</label><input type="email" class="form-input magnetic-btn" required></div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">SUBJECT CATEGORY</label>
@@ -778,8 +829,8 @@
                                 <option>System Error</option>
                             </select>
                         </div>
-                        <div class="form-group"><label class="form-label">MESSAGE DATA</label><textarea class="form-input magnetic-btn" style="height: 200px; resize: vertical;" required></textarea></div>
-                        <button type="submit" class="primary-btn magnetic-btn" style="padding: 20px 40px;">SEND TRANSMISSION</button>
+                        <div class="form-group"><label class="form-label">MESSAGE DATA</label><textarea class="form-input magnetic-btn" style="height: 250px; resize: vertical;" required></textarea></div>
+                        <button type="submit" class="primary-btn magnetic-btn btn-glitch" style="padding: 25px 50px;">SEND TRANSMISSION</button>
                     </form>
                 </div>
             </div>
@@ -790,9 +841,9 @@
                 <div class="text-layout">
                     <h2 id="legal-title" class="section-title glitch-text" data-text="LEGAL DATA">LEGAL DATA</h2>
                     
-                    <p class="text-body" style="font-size: 1.2rem; border-left: 6px solid var(--text-color); padding-left: 20px; font-weight: 800;">Data collection, returns protocols, and terms of use are governed strictly by the Virox Systems mandate. Review thoroughly.</p>
+                    <p class="text-body" style="font-size: 1.4rem; border-left: 8px solid var(--text-color); padding-left: 25px; font-weight: 800;">Data collection, returns protocols, and terms of use are governed strictly by the Virox Systems mandate. Review thoroughly.</p>
                     
-                    <div class="data-block magnetic-btn" style="margin-top: 40px;">
+                    <div class="data-block magnetic-btn" style="margin-top: 50px;">
                         <h3>1. DATA USAGE (PRIVACY)</h3>
                         <p class="text-body">We collect necessary telemetry to process orders and optimize grid performance. Financial information provided during secure checkout is fully encrypted via industry-standard protocols and never stored on our local servers. We collect information you provide directly to us.</p>
                     </div>
@@ -809,39 +860,62 @@
 
     <footer>
         <div class="footer-grid">
-            <div style="grid-column: 1 / -1; margin-bottom: 20px;">
+            <div style="grid-column: 1 / -1; margin-bottom: 30px;">
                 <div class="footer-logo glitch-text" data-text="VIROX">VIROX</div>
             </div>
             
+            <div>
+                <h4 class="footer-title">DIRECTORY</h4>
+                <ul class="footer-links">
+                    <li><a href="#home" class="nav-btn scrambler" data-target="view-home">HOME DIR</a></li>
+                    <li><a href="#shop" class="nav-btn scrambler" data-target="view-shop">CATALOG</a></li>
+                    <li><a href="#campaigns" class="nav-btn scrambler" data-target="view-campaigns">ARCHIVE</a></li>
+                    <li><a href="#lookbook" class="nav-btn scrambler" data-target="view-lookbook">LOOKBOOK</a></li>
+                    <li><a href="#collabs" class="nav-btn scrambler" data-target="view-collabs">COLLABS</a></li>
+                </ul>
+            </div>
+
             <div>
                 <h4 class="footer-title">SUPPORT</h4>
                 <ul class="footer-links">
                     <li><a href="#faq" class="nav-btn scrambler" data-target="view-faq">INTEL / FAQ</a></li>
                     <li><a href="#contact" class="nav-btn scrambler" data-target="view-contact">TRANSMIT MSG</a></li>
                     <li><a href="#returns" class="nav-btn scrambler" data-target="view-returns">RETURNS POLICY</a></li>
+                    <li><a href="#shipping" class="nav-btn scrambler" data-target="view-shipping">SHIPPING</a></li>
+                    <li><a href="#size-guide" class="nav-btn scrambler" data-target="view-size-guide">SIZE GUIDE</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-title">CORPORATE</h4>
+                <ul class="footer-links">
+                    <li><a href="#about" class="nav-btn scrambler" data-target="view-about">CORE SYSTEM</a></li>
+                    <li><a href="#stockists" class="nav-btn scrambler" data-target="view-stockists">STOCKISTS</a></li>
+                    <li><a href="#journal" class="nav-btn scrambler" data-target="view-journal">JOURNAL</a></li>
+                    <li><a href="#account" class="nav-btn scrambler" data-target="view-account">LOGIN / ACCESS</a></li>
                 </ul>
             </div>
             
             <div style="grid-column: 1 / -1;">
                 <h4 class="footer-title">NETWORK PING</h4>
-                <p style="margin-bottom: 15px; font-size: 1.1rem; font-weight: 700;">Subscribe for drop intel.</p>
+                <p style="margin-bottom: 20px; font-size: 1.2rem; font-weight: 700;">Subscribe for drop intel.</p>
                 <div class="footer-newsletter-wrapper">
                     <form class="newsletter-input-group" onsubmit="event.preventDefault(); showToast('NETWORK JOINED.');">
                         <input type="email" class="newsletter-input" placeholder="COMM-LINK" required>
-                        <button type="submit" class="newsletter-btn">></button>
+                        <button type="submit" class="newsletter-btn btn-glitch">></button>
                     </form>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <span style="letter-spacing: 1px;">&copy; 2026 VIROX SYS.</span>
+            <span style="letter-spacing: 2px;">&copy; 2026 VIROX SYS.</span>
             <div class="footer-bottom-links">
                 <a href="#legal" class="nav-btn scrambler" data-target="view-legal" onclick="document.getElementById('legal-title').innerText='PRIVACY DATA'">PRIVACY</a>
                 <a href="#legal" class="nav-btn scrambler" data-target="view-legal" onclick="document.getElementById('legal-title').innerText='TERMS OF ACCESS'">TERMS</a>
             </div>
-            <div style="width: 100%; margin-top: 10px;">
-                <span class="footer-credit">SYS BY DIGITAL TRADE</span>
+            <div style="width: 100%; margin-top: 15px;">
+                <span class="footer-credit btn-glitch" style="cursor: pointer;">SYS BY DIGITAL TRADE</span>
             </div>
         </div>
     </footer>
@@ -849,10 +923,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- 1. ROBUST ROUTING SYSTEM ---
+            // --- 1. ROBUST ROUTING SYSTEM WITH CSS FLASH ---
             const views = document.querySelectorAll('.view-section');
             const navLinks = document.querySelectorAll('.nav-link');
-            const pageTransition = document.getElementById('page-transition');
             const mobileMenu = document.getElementById('nav-menu');
             const mobileToggle = document.getElementById('mobile-toggle');
 
@@ -877,11 +950,12 @@
                 const targetView = document.getElementById(targetId);
                 if(!targetView) return;
 
-                // Fire Glitch Transition Layer
-                pageTransition.classList.remove('exit');
-                pageTransition.classList.add('active');
-
+                // INVERT GLITCH FLASH EFFECT (No blocking screen)
+                document.body.classList.add('glitch-flash');
+                
                 setTimeout(() => {
+                    document.body.classList.remove('glitch-flash');
+                    
                     // Hide all, show target
                     views.forEach(v => {
                         v.classList.remove('active');
@@ -890,7 +964,7 @@
                     
                     targetView.classList.add('active');
                     void targetView.offsetWidth; // Trigger reflow for fresh animation
-                    targetView.style.animation = 'pixelReveal 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards';
+                    targetView.style.animation = 'brutalReveal 0.4s cubic-bezier(0.19, 1, 0.22, 1) forwards';
 
                     if(targetId === 'view-checkout') renderCheckout();
 
@@ -905,12 +979,7 @@
                     window.scrollTo(0,0);
                     document.body.classList.remove('cart-open'); 
                     closeMobileNav(); 
-
-                    // Exit Transition Layer
-                    pageTransition.classList.add('exit');
-                    setTimeout(() => pageTransition.classList.remove('active', 'exit'), 600);
-
-                }, 600); // Fast snap
+                }, 150); // Very fast flash
             };
 
             // Bind Navigation Buttons
@@ -961,7 +1030,7 @@
                 if(!grid) return;
                 grid.innerHTML = filtered.map(p => `
                     <div class="product-card magnetic-btn" onclick="openProductDetail(${p.id})" style="cursor: pointer;">
-                        <div class="product-img">
+                        <div class="product-img img-glitch">
                             <img src="${p.img1}" class="base-img" alt="${p.name}">
                             <img src="${p.img2}" class="hover-img" alt="${p.name}">
                         </div>
@@ -969,7 +1038,7 @@
                             <h3 class="product-name glitch-text" data-text="${p.name}">${p.name}</h3>
                             <span class="product-price">$${p.price}</span>
                         </div>
-                        <div class="btn-add magnetic-btn" onclick="event.stopPropagation(); addToCart(${p.id});">SECURE ASSET</div>
+                        <div class="btn-add magnetic-btn btn-glitch" onclick="event.stopPropagation(); addToCart(${p.id});">SECURE ASSET</div>
                     </div>
                 `).join('');
             };
@@ -993,16 +1062,16 @@
                 const pdContainer = document.getElementById('pd-container');
                 pdContainer.innerHTML = `
                     <div class="pd-images">
-                        <img src="${p.img1}" alt="${p.name}" class="magnetic-btn">
-                        <img src="${p.img2}" alt="${p.name}" class="magnetic-btn">
+                        <img src="${p.img1}" alt="${p.name}" class="magnetic-btn img-glitch">
+                        <img src="${p.img2}" alt="${p.name}" class="magnetic-btn img-glitch">
                     </div>
                     <div>
                         <div class="pd-info">
                             <h1 class="glitch-text" data-text="${p.name}">${p.name}</h1>
                             <span class="pd-price">$${p.price}.00</span>
-                            <p class="text-body" style="font-weight: 800; font-size: 1.2rem;">${p.desc}</p>
+                            <p class="text-body" style="font-weight: 800; font-size: 1.3rem;">${p.desc}</p>
                             
-                            <h3 style="font-family: var(--font-mono); margin-top: 40px; margin-bottom: 20px; font-size: 1.2rem; font-weight:800;">SELECT SPEC</h3>
+                            <h3 style="font-family: var(--font-mono); margin-top: 40px; margin-bottom: 20px; font-size: 1.3rem; font-weight:800;">SELECT SPEC</h3>
                             <div class="size-selector" id="pd-sizes">
                                 <button class="size-btn magnetic-btn">S</button>
                                 <button class="size-btn magnetic-btn active">M</button>
@@ -1010,7 +1079,7 @@
                                 <button class="size-btn magnetic-btn">XL</button>
                             </div>
 
-                            <button class="primary-btn magnetic-btn" style="width: 100%; padding: 25px; font-size: 1.4rem;" onclick="addToCart(${p.id})">ADD TO MANIFEST</button>
+                            <button class="primary-btn magnetic-btn btn-glitch" style="width: 100%; padding: 25px; font-size: 1.5rem;" onclick="addToCart(${p.id})">ADD TO MANIFEST</button>
                         </div>
                     </div>
                 `;
@@ -1043,8 +1112,6 @@
                 updateCartUI();
                 showToast(`ASSET [${p.name}] SECURED.`);
                 body.classList.add('cart-open');
-                document.getElementById('cart-count').classList.add('bump');
-                setTimeout(() => document.getElementById('cart-count').classList.remove('bump'), 300);
             };
 
             window.updateQty = function(index, change) {
@@ -1063,7 +1130,7 @@
                 let totalItems = 0; let totalPrice = 0;
 
                 if(cart.length === 0) {
-                    container.innerHTML = '<h3 style="font-family:var(--font-mono); text-align:center; margin-top:50px; font-size: 1.2rem; background: #fff; border: 4px solid #000; padding: 30px;">NO ASSETS SECURED.</h3>';
+                    container.innerHTML = '<h3 class="glitch-text" data-text="NO ASSETS SECURED." style="font-family:var(--font-mono); text-align:center; margin-top:50px; font-size: 1.2rem; background: #fff; border: 4px solid #000; padding: 30px;">NO ASSETS SECURED.</h3>';
                     badge.innerText = "0"; totalEl.innerText = "$0.00";
                     checkoutBtn.style.pointerEvents = 'none'; checkoutBtn.style.opacity = '0.5';
                     return;
@@ -1075,7 +1142,7 @@
                     totalItems += item.qty; totalPrice += (item.price * item.qty);
                     return `
                         <div class="cart-item-card magnetic-btn">
-                            <img src="${item.img1}">
+                            <img src="${item.img1}" class="img-glitch">
                             <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
                                 <div>
                                     <h4 style="font-weight:800; font-size:1.1rem; text-transform:uppercase;">${item.name}</h4>
@@ -1083,9 +1150,9 @@
                                 </div>
                                 <div style="display:flex; justify-content:space-between; align-items:flex-end;">
                                     <div class="cart-controls">
-                                        <button onclick="updateQty(${i}, -1)">-</button>
+                                        <button class="btn-glitch" onclick="updateQty(${i}, -1)">-</button>
                                         <span>${item.qty}</span>
-                                        <button onclick="updateQty(${i}, 1)">+</button>
+                                        <button class="btn-glitch" onclick="updateQty(${i}, 1)">+</button>
                                     </div>
                                     <span style="font-family:var(--font-mono); font-weight:800; font-size:1.4rem;">$${item.price * item.qty}</span>
                                 </div>
@@ -1104,7 +1171,7 @@
                 const checkoutTotal = document.getElementById('checkout-total');
                 
                 if(cart.length === 0) {
-                    checkoutItems.innerHTML = '<p class="text-body" style="font-weight: 800; font-family: var(--font-mono); font-size: 1.2rem; background: #fff; padding: 30px; border: 4px dashed var(--text-color); text-align: center;">NO ASSETS IN CART.</p>';
+                    checkoutItems.innerHTML = '<p class="text-body glitch-text" data-text="NO ASSETS IN CART." style="font-weight: 800; font-family: var(--font-mono); font-size: 1.2rem; background: #fff; padding: 30px; border: 4px dashed var(--text-color); text-align: center;">NO ASSETS IN CART.</p>';
                     checkoutSubtotal.innerText = '$0.00'; checkoutTotal.innerText = '$0.00';
                     return;
                 }
@@ -1123,7 +1190,8 @@
             window.showToast = function(msg) {
                 const container = document.getElementById('toast-container');
                 const t = document.createElement('div');
-                t.className = 'toast';
+                t.className = 'toast glitch-text';
+                t.setAttribute('data-text', msg);
                 t.innerText = msg;
                 container.appendChild(t);
                 setTimeout(() => t.classList.add('show'), 10);
@@ -1170,10 +1238,8 @@
                 });
             });
 
-            // Advanced Canvas Trail Cursor (Performance optimized, disabled on touch)
-            const isTouchDevice = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
-            
-            if (!isTouchDevice && window.innerWidth > 768) {
+            // Advanced Canvas Trail Cursor (WebGL style vector lines)
+            if (window.innerWidth > 768 && !('ontouchstart' in window)) {
                 const canvas = document.getElementById('cursor-canvas');
                 const ctx = canvas.getContext('2d');
                 const dot = document.getElementById('cursor-dot');
@@ -1215,18 +1281,21 @@
                         if(i === 0) ctx.moveTo(p.x, p.y);
                         else ctx.lineTo(p.x, p.y);
                         
+                        // Age out points
                         if(p.age > 20) {
                             trail.splice(i, 1);
                             i--;
                         }
                     }
                     
+                    // Draw Trail Line
                     ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
                     ctx.lineWidth = 4;
                     ctx.lineCap = 'square';
                     ctx.lineJoin = 'miter';
                     ctx.stroke();
 
+                    // Draw geometric nodes along trail
                     trail.forEach((p, index) => {
                         if(index % 3 === 0) {
                             let size = Math.max(0, 10 - (p.age * 0.5));
@@ -1239,6 +1308,7 @@
                 }
                 renderTrail();
             } else {
+                // Disable custom cursor on mobile / touch devices
                 document.getElementById('cursor-canvas').style.display = 'none';
                 document.getElementById('cursor-dot').style.display = 'none';
                 document.body.style.cursor = 'auto';
