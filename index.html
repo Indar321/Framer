@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VIROX | Streetwear Archive</title>
+    <title>VIROX | The Streetwear Archive</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================
-           1. CSS VARIABLES & CORE SETUP (PRO-ADVANCE BRUTALIST)
+           1. CSS VARIABLES (VIBRANT NEO-BRUTALISM)
            ========================================== */
         :root {
-            --bg-color: #f4f4f4;
-            --text-color: #111111;
-            --accent-color: #f28c28; /* Orange */
-            --accent-green: #25b885; /* Green */
-            --secondary-bg: #e8e8e8;
-            --border-color: #dcdcdc;
-            --muted-text: #666666;
-            --font-heading: 'Silkscreen', cursive;
-            --font-body: 'Space Grotesk', sans-serif;
-            --transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-            --header-height: 90px;
+            --bg-color: #ffffff; /* Clear light background */
+            --text-color: #050505; /* Deep black for max contrast */
+            --accent-orange: #FF4500; /* Vibrant Electric Orange */
+            --accent-lime: #CCFF00; /* Vibrant Acid Lime */
+            --accent-blue: #0044FF; /* Vibrant Cobalt Blue */
+            --secondary-bg: #f0f0f0;
+            --border-color: #050505; /* Solid black borders */
+            --muted-text: #555555;
+            
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            --header-height: 130px; /* Taller to accommodate stacked menu */
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,369 +36,361 @@
         html { scroll-behavior: smooth; }
         
         body {
-            background-color: var(--bg-color); color: var(--text-color);
-            font-family: var(--font-body); line-height: 1.6;
-            overflow-x: hidden; cursor: none;
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+            font-family: var(--font-body); 
+            line-height: 1.6;
+            overflow-x: hidden; 
+            cursor: none; /* Custom cursor */
             -webkit-tap-highlight-color: transparent;
+            /* Subtle grid for structural feel, lighter so it doesn't distract */
             background-image: 
-                linear-gradient(var(--border-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-            background-size: 80px 80px;
-            background-position: center top;
+                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
         body.no-scroll { overflow: hidden; }
 
-        ::-webkit-scrollbar { width: 10px; height: 10px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); border-left: 2px solid var(--text-color); }
-        ::-webkit-scrollbar-thumb { background: var(--accent-color); border: 2px solid var(--text-color); }
+        ::-webkit-scrollbar { width: 12px; height: 12px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); border-left: 3px solid var(--border-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-blue); border: 3px solid var(--border-color); }
 
         a { color: inherit; text-decoration: none; transition: var(--transition); cursor: none; }
         ul { list-style: none; }
         img { max-width: 100%; display: block; object-fit: cover; }
         button, input, textarea, select { font-family: var(--font-body); cursor: none; background: none; border: none; outline: none; color: inherit; border-radius: 0; -webkit-appearance: none; }
 
-        .crosshair { position: absolute; color: var(--accent-orange); font-size: 1.2rem; font-weight: 300; line-height: 1; z-index: 10; pointer-events: none;}
-
         /* ==========================================
-           2. GLOBAL UI (FIXED CURSOR, TOASTS)
+           2. GLOBAL UI (FLAWLESS CURSOR, TOASTS)
            ========================================== */
         @media (hover: hover) and (pointer: fine) {
-            .cursor { width: 12px; height: 12px; background: var(--text-color); position: fixed; pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: difference; }
-            .cursor-follower { width: 40px; height: 40px; border: 2px solid var(--accent-color); position: fixed; pointer-events: none; z-index: 999998; transform: translate(-50%, -50%); transition: transform 0.05s linear, width 0.2s, height 0.2s, background 0.2s, border-color 0.2s; }
+            .cursor { width: 10px; height: 10px; background: var(--accent-orange); position: fixed; pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; border-radius: 50%;}
+            .cursor-follower { width: 40px; height: 40px; border: 2px solid var(--text-color); position: fixed; pointer-events: none; z-index: 999998; transform: translate(-50%, -50%); transition: transform 0.05s linear, width 0.2s, height 0.2s, background 0.2s; border-radius: 50%;}
             .cursor.hovered { width: 0; height: 0; }
-            .cursor-follower.hovered { width: 50px; height: 50px; background: var(--accent-green); border-color: var(--text-color); mix-blend-mode: normal; box-shadow: 4px 4px 0 var(--text-color); border-radius: 0;}
+            .cursor-follower.hovered { width: 60px; height: 60px; background: var(--accent-lime); border-color: var(--text-color); mix-blend-mode: multiply; border-radius: 0;}
         }
         @media (hover: none) and (pointer: coarse) {
             .cursor, .cursor-follower { display: none !important; }
             body, a, button, input, textarea { cursor: auto !important; }
         }
 
-        .page-transition { position: fixed; inset: 0; background: var(--accent-color); z-index: 100000; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); display: flex; justify-content: center; align-items: center; border-top: 10px solid var(--text-color);}
+        .page-transition { position: fixed; inset: 0; background: var(--accent-blue); z-index: 100000; transform: translateY(100%); transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1); display: flex; justify-content: center; align-items: center; border-top: 15px solid var(--text-color);}
         .page-transition.active { transform: translateY(0); }
         .page-transition.exit { transform: translateY(-100%); }
-        .transition-logo { font-family: var(--font-heading); font-size: 5rem; color: var(--text-color); text-align: center; padding: 0 20px; text-shadow: 4px 4px 0 #fff;}
+        .transition-logo { font-family: var(--font-heading); font-size: 6rem; font-weight: 800; color: #fff; text-align: center; text-shadow: 6px 6px 0 var(--text-color);}
 
-        .toast-container { position: fixed; bottom: 20px; right: 20px; left: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; align-items: flex-end; }
-        @media(min-width: 768px) { .toast-container { right: 30px; left: auto; bottom: 30px; } }
-        .toast { background: #fff; color: var(--text-color); padding: 15px 25px; font-family: var(--font-heading); font-size: 0.8rem; transform: translateY(150%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); border: 2px solid var(--text-color); border-left: 10px solid var(--accent-green); box-shadow: 6px 6px 0 var(--text-color); }
+        .toast-container { position: fixed; bottom: 20px; right: 20px; left: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 15px; pointer-events: none; align-items: flex-end; }
+        @media(min-width: 768px) { .toast-container { right: 40px; left: auto; bottom: 40px; } }
+        .toast { background: var(--accent-lime); color: var(--text-color); padding: 18px 30px; font-family: var(--font-heading); font-weight: 700; font-size: 1rem; transform: translateY(150%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); border: 3px solid var(--text-color); box-shadow: 6px 6px 0 var(--text-color); text-transform: uppercase;}
         .toast.show { transform: translateY(0); }
 
         /* ==========================================
-           3. HEADER & RECTANGULAR NAVIGATION
+           3. STACKED HEADER & MENU
            ========================================== */
-        header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; z-index: 90000; background: rgba(244, 244, 244, 0.98); border-bottom: 2px solid var(--text-color); transition: var(--transition); box-shadow: 0 4px 0 rgba(0,0,0,0.05);}
+        header { position: fixed; top: 0; left: 0; width: 100%; display: flex; flex-direction: column; z-index: 90000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 3px solid var(--text-color); transition: var(--transition); box-shadow: 0 5px 0 rgba(0,0,0,0.05);}
         
-        .logo a { font-family: var(--font-heading); font-size: 2.2rem; color: var(--accent-green); line-height: 1; display: flex; flex-direction: column; text-shadow: 2px 2px 0 var(--text-color);}
-        .logo a span { font-size: 1rem; color: var(--text-color); margin-top: -2px; text-shadow: none; letter-spacing: 2px;}
+        .header-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; border-bottom: 3px solid var(--text-color); width: 100%;}
         
-        /* The Rectangular Header Menu */
-        .nav-links { display: flex; gap: 12px; }
-        .nav-links a { 
-            font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; 
-            padding: 10px 18px; border: 2px solid var(--text-color); background: #fff; 
-            box-shadow: 3px 3px 0 var(--text-color); transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-        }
-        .nav-links a:hover, .nav-links a.active-link { 
-            background: var(--accent-orange); color: #fff; transform: translate(3px, 3px); box-shadow: 0px 0px 0 var(--text-color); 
-        }
+        .logo a { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; color: var(--text-color); line-height: 1; text-transform: uppercase; letter-spacing: -1px;}
+        .logo a span { color: var(--accent-orange); }
+        
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+        .action-icon { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; padding: 10px 20px; border: 3px solid var(--text-color); background: #fff; box-shadow: 4px 4px 0 var(--text-color); transition: var(--transition); display: flex; align-items: center; gap: 8px; color: var(--text-color);}
+        .action-icon:hover { background: var(--accent-blue); color: #fff; transform: translate(4px, 4px); box-shadow: 0px 0px 0 var(--text-color); }
+        
+        .cart-count { background: var(--accent-lime); color: var(--text-color); padding: 2px 8px; border: 2px solid var(--text-color); font-weight: 800; transition: transform 0.2s; }
+        .cart-count.bump { transform: scale(1.5) rotate(5deg); background: var(--accent-orange); color: #fff;}
 
-        .header-actions { display: flex; gap: 12px; align-items: center; }
-        .action-icon { 
-            font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; 
-            padding: 10px 18px; border: 2px solid var(--text-color); background: #fff; 
-            box-shadow: 3px 3px 0 var(--text-color); transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .action-icon:hover { background: var(--text-color); color: #fff; transform: translate(3px, 3px); box-shadow: 0px 0px 0 var(--accent-green); }
+        /* The Rectangular Nav underneath the logo */
+        .header-bottom { padding: 15px 5%; background: var(--secondary-bg); width: 100%; display: flex; gap: 15px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+        .header-bottom::-webkit-scrollbar { display: none; }
+        .nav-links { display: flex; gap: 15px; width: 100%; justify-content: center;}
         
-        .cart-count { background: var(--accent-green); color: #fff; padding: 2px 8px; border: 1px solid var(--text-color); transition: transform 0.2s; }
-        .cart-count.bump { transform: scale(1.4); }
+        .nav-links a { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; padding: 10px 25px; border: 3px solid var(--text-color); background: #fff; box-shadow: 4px 4px 0 var(--text-color); transition: var(--transition); color: var(--text-color);}
+        .nav-links a:hover, .nav-links a.active-link { background: var(--accent-lime); transform: translate(4px, 4px); box-shadow: 0px 0px 0 var(--text-color); }
 
-        .mobile-toggle { display: none; width: 45px; height: 45px; border: 2px solid var(--text-color); position: relative; z-index: 90001; background: #fff; box-shadow: 3px 3px 0 var(--text-color); transition: transform 0.15s, box-shadow 0.15s;}
-        .mobile-toggle:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--text-color); }
-        .mobile-toggle span { position: absolute; left: 10px; height: 3px; background: var(--text-color); transition: var(--transition); pointer-events: none; }
-        .mobile-toggle span:nth-child(1) { top: 14px; width: 21px; }
-        .mobile-toggle span:nth-child(2) { top: 24px; width: 21px; }
+        .mobile-toggle { display: none; width: 50px; height: 50px; border: 3px solid var(--text-color); position: relative; z-index: 90001; background: var(--accent-lime); box-shadow: 4px 4px 0 var(--text-color); transition: var(--transition);}
+        .mobile-toggle:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--text-color); }
+        .mobile-toggle span { position: absolute; left: 10px; height: 4px; background: var(--text-color); transition: var(--transition); pointer-events: none; }
+        .mobile-toggle span:nth-child(1) { top: 15px; width: 24px; }
+        .mobile-toggle span:nth-child(2) { top: 25px; width: 24px; }
         
-        .mobile-toggle.active { background: var(--accent-orange); border-color: var(--text-color); transform: rotate(90deg); }
-        .mobile-toggle.active span { background: #fff; top: 19px; }
+        .mobile-toggle.active { background: var(--text-color); }
+        .mobile-toggle.active span { background: #fff; top: 20px; }
         .mobile-toggle.active span:nth-child(1) { transform: rotate(45deg); }
         .mobile-toggle.active span:nth-child(2) { transform: rotate(-45deg); }
 
-        .search-overlay { position: fixed; inset: 0; background: var(--bg-color); z-index: 95000; opacity: 0; visibility: hidden; transition: var(--transition); display: flex; flex-direction: column; padding: 5%; border: 10px solid var(--text-color); background-image: linear-gradient(var(--border-color) 1px, transparent 1px), linear-gradient(90deg, var(--border-color) 1px, transparent 1px); background-size: 80px 80px; }
+        /* Search Overlay */
+        .search-overlay { position: fixed; inset: 0; background: var(--bg-color); z-index: 95000; opacity: 0; visibility: hidden; transition: var(--transition); display: flex; flex-direction: column; padding: 5%; border: 15px solid var(--text-color); background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 80px 80px; }
         .search-overlay.active { opacity: 1; visibility: visible; }
         .search-header { display: flex; justify-content: flex-end; }
-        .search-close { font-family: var(--font-heading); font-size: 3rem; color: var(--text-color); line-height: 1; padding: 10px; border: 2px solid transparent; transition: all 0.2s; }
-        .search-close:hover { background: var(--text-color); color: #fff; }
-        .search-input-wrapper { margin-top: 30px; border-bottom: 6px solid var(--text-color); display: flex; align-items: center; padding-bottom: 10px; }
-        .search-input { background: transparent; border: none; color: var(--text-color); font-size: clamp(2rem, 8vw, 6rem); font-family: var(--font-heading); width: 100%; text-transform: uppercase; }
-        .search-results { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 30px; overflow-y: auto; max-height: 60vh; }
-        .search-result-item { background: #fff; padding: 15px; border: 2px solid var(--text-color); box-shadow: 4px 4px 0 var(--accent-orange); transition: transform 0.15s, box-shadow 0.15s; }
-        .search-result-item:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--text-color); }
-        .search-result-item img { width: 100%; height: 220px; object-fit: cover; mix-blend-mode: multiply; margin-bottom: 15px; border: 2px solid var(--border-color);}
-        .search-result-item h4 { font-family: var(--font-heading); font-size: 0.9rem; line-height: 1.2; margin-bottom: 5px;}
+        .search-close { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 800; color: var(--text-color); line-height: 1; padding: 10px; border: 4px solid transparent; transition: var(--transition); background: var(--accent-lime); border: 4px solid var(--text-color); box-shadow: 6px 6px 0 var(--text-color);}
+        .search-close:hover { background: var(--text-color); color: #fff; transform: translate(4px,4px); box-shadow: 0 0 0 transparent;}
+        
+        .search-input-wrapper { margin-top: 5vh; border-bottom: 8px solid var(--text-color); display: flex; align-items: center; padding-bottom: 15px; }
+        .search-input { background: transparent; border: none; color: var(--text-color); font-size: clamp(2.5rem, 8vw, 7rem); font-weight: 800; font-family: var(--font-heading); width: 100%; text-transform: uppercase; }
+        .search-results { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 40px; overflow-y: auto; max-height: 60vh; padding-bottom: 50px;}
+        .search-result-item { background: #fff; padding: 15px; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--accent-orange); transition: var(--transition); }
+        .search-result-item:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--accent-blue); }
+        .search-result-item img { width: 100%; height: 250px; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--text-color);}
+        .search-result-item h4 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; line-height: 1.2; margin-bottom: 8px;}
 
         /* ==========================================
            4. GLOBAL COMPONENTS & LAYOUTS
            ========================================== */
-        .view-section { display: none; min-height: 100vh; padding-top: var(--header-height); animation: fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; width: 100%; }
+        .view-section { display: none; min-height: 100vh; padding-top: var(--header-height); animation: fadeUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; width: 100%; }
         .view-section.active { display: block; }
-        #view-home.active { padding-top: 0; } 
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(20px); } }
+        #view-home.active { padding-top: calc(var(--header-height) - 30px); } 
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(30px); } }
 
-        .section-padding { padding: 80px 5%; position: relative;}
-        @media(min-width: 768px) { .section-padding { padding: 120px 5%; } }
+        .section-padding { padding: 100px 5%; position: relative;}
+        @media(min-width: 768px) { .section-padding { padding: 140px 5%; } }
         
-        .section-header { margin-bottom: 50px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;}
-        .section-header h2 { font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--text-color); line-height: 1; margin: 0; text-shadow: 3px 3px 0 #fff, 4px 4px 0 var(--text-color);}
+        .section-header { margin-bottom: 60px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;}
+        .section-header h2 { font-family: var(--font-heading); font-size: clamp(3rem, 7vw, 5rem); font-weight: 800; color: var(--text-color); line-height: 1.05; margin: 0; text-transform: uppercase;}
         
-        .text-body { font-size: 1.05rem; color: var(--text-color); margin-bottom: 25px; line-height: 1.7; font-weight: 500;}
+        .text-body { font-size: 1.15rem; color: var(--muted-text); margin-bottom: 25px; line-height: 1.8;}
+        .text-body strong { color: var(--text-color); font-weight: 600;}
 
-        .btn-primary { display: inline-flex; justify-content: center; align-items: center; padding: 18px 30px; background: var(--accent-orange); color: #fff; font-family: var(--font-heading); font-size: 1rem; text-transform: uppercase; border: 2px solid var(--text-color); box-shadow: 6px 6px 0 var(--text-color); transition: transform 0.15s, box-shadow 0.15s; }
-        .btn-primary:active, .btn-primary:hover { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--text-color); }
+        .btn-primary { display: inline-flex; justify-content: center; align-items: center; padding: 20px 35px; background: var(--accent-orange); color: #fff; font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--text-color); transition: var(--transition); }
+        .btn-primary:active, .btn-primary:hover { transform: translate(6px, 6px); box-shadow: 2px 2px 0 var(--text-color); background: var(--accent-blue);}
         
-        .btn-outline { border: 2px solid var(--text-color); background: #fff; padding: 15px 25px; text-transform: uppercase; font-family: var(--font-heading); font-size: 0.9rem; transition: transform 0.15s, box-shadow 0.15s; color: var(--text-color); box-shadow: 4px 4px 0 var(--text-color);}
-        .btn-outline:active, .btn-outline:hover { background: var(--text-color); color: #fff; transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent-green);}
+        .btn-outline { border: 4px solid var(--text-color); background: #fff; padding: 18px 30px; text-transform: uppercase; font-family: var(--font-heading); font-size: 1rem; font-weight: 700; transition: var(--transition); color: var(--text-color); box-shadow: 6px 6px 0 var(--text-color);}
+        .btn-outline:active, .btn-outline:hover { background: var(--accent-lime); transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--text-color);}
 
-        .form-group { margin-bottom: 25px; text-align: left; width: 100%;}
-        .form-label { display: block; text-transform: uppercase; font-family: var(--font-heading); font-size: 0.9rem; margin-bottom: 10px; color: var(--text-color); }
-        .form-input { width: 100%; padding: 18px; background: #fff; border: 2px solid var(--text-color); color: var(--text-color); font-size: 1rem; transition: box-shadow 0.2s; box-shadow: 4px 4px 0 var(--border-color);}
-        .form-input:focus { border-color: var(--accent-orange); box-shadow: 4px 4px 0 var(--text-color); }
+        .form-group { margin-bottom: 30px; text-align: left; width: 100%;}
+        .form-label { display: block; text-transform: uppercase; font-family: var(--font-heading); font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: var(--text-color); }
+        .form-input { width: 100%; padding: 20px; background: #fff; border: 3px solid var(--text-color); color: var(--text-color); font-size: 1.1rem; font-family: var(--font-body); transition: var(--transition); box-shadow: 5px 5px 0 rgba(0,0,0,0.1);}
+        .form-input:focus { border-color: var(--accent-blue); box-shadow: 8px 8px 0 var(--accent-blue); outline: none;}
 
-        .accordion-container { border-top: 4px solid var(--text-color); width: 100%; }
-        .accordion-item { border-bottom: 4px solid var(--text-color); width: 100%; background: #fff;}
-        .accordion-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 30px 25px; font-family: var(--font-heading); font-size: 1.1rem; transition: background 0.2s; text-align: left;}
-        .accordion-btn:hover { background: var(--accent-green); color: #fff; }
-        .accordion-icon { font-size: 2rem; font-weight: bold; transition: transform 0.3s; color: var(--accent-orange);}
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; padding: 0 25px; font-weight: 500;}
-        .accordion-item.active .accordion-icon { transform: rotate(45deg); color: var(--text-color); }
-        .accordion-item.active .accordion-content { max-height: 600px; padding-bottom: 30px; }
-        .accordion-item.active .accordion-btn { background: var(--text-color); color: #fff; }
+        .accordion-container { border-top: 5px solid var(--text-color); width: 100%; }
+        .accordion-item { border-bottom: 5px solid var(--text-color); width: 100%; background: #fff;}
+        .accordion-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 35px 30px; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; transition: var(--transition); text-align: left; color: var(--text-color);}
+        .accordion-btn:hover { background: var(--accent-lime); }
+        .accordion-icon { font-size: 2.5rem; font-weight: 800; transition: transform 0.4s; color: var(--accent-blue);}
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; padding: 0 30px; }
+        .accordion-item.active .accordion-icon { transform: rotate(45deg); color: var(--accent-orange); }
+        .accordion-item.active .accordion-content { max-height: 800px; padding-bottom: 35px; }
 
         /* ==========================================
-           5. HERO SECTION (VIROX SYSTEM)
+           5. HERO SECTION
            ========================================== */
-        .hero-section { position: relative; min-height: 100vh; padding: calc(var(--header-height) + 20px) 5% 2rem; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+        .hero-section { position: relative; min-height: 90vh; padding: 2rem 5%; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;}
         
-        .hero-top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 5; margin-top: 20px;}
-        .hero-top-left { display: flex; flex-direction: column; gap: 20px; }
-        .orange-blocks { display: grid; grid-template-columns: repeat(3, 20px); gap: 5px; }
-        .orange-blocks div { width: 20px; height: 20px; background: var(--accent-color); border: 1px solid var(--text-color);}
-        .orange-blocks div:nth-child(even) { background: #fff; }
+        .hero-center { text-align: center; z-index: 2; display: flex; flex-direction: column; align-items: center; margin-bottom: 5vh;}
+        .huge-text { font-family: var(--font-heading); font-size: clamp(4rem, 16vw, 16rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; color: var(--text-color); text-shadow: 8px 8px 0 var(--accent-lime);}
+        .huge-text.outline { color: transparent; -webkit-text-stroke: 3px var(--text-color); text-shadow: 8px 8px 0 var(--accent-blue); margin-top: -2vw;}
+
+        .hero-imagery { display: flex; gap: 30px; justify-content: center; width: 100%; max-width: 1400px; z-index: 3;}
+        .hero-card { flex: 1; border: 5px solid var(--text-color); box-shadow: 12px 12px 0 var(--text-color); background: #fff; padding: 15px; transition: var(--transition); position: relative;}
+        .hero-card:hover { transform: translateY(-10px); box-shadow: 16px 16px 0 var(--accent-orange);}
+        .hero-card img { width: 100%; height: 50vh; object-fit: cover; border: 3px solid var(--border-color);}
         
-        .thumbnail-box { width: 140px; background: #fff; padding: 8px; border: 2px solid var(--text-color); box-shadow: 4px 4px 0 var(--accent-green); transition: transform 0.2s;}
-        .thumbnail-box:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--text-color);}
-        .thumbnail-box img { width: 100%; height: 160px; object-fit: cover; border: 1px solid var(--border-color);}
-        
-        .pagination { display: flex; gap: 8px; font-family: var(--font-heading); font-size: 0.8rem; margin-top: 10px; color: var(--muted-text); }
-        .pagination span.active { color: var(--accent-orange); background: var(--text-color); padding: 2px 6px;}
-
-        .hero-top-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 40px; }
-        .nav-vertical { text-align: right; border-right: 4px solid var(--accent-color); padding-right: 20px;}
-        .nav-vertical li { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; cursor: pointer; transition: color 0.2s; display: block;}
-        .nav-vertical li:hover { color: var(--accent-green); transform: translateX(-5px);}
-
-        .hero-center { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center; z-index: 2; pointer-events: none;}
-        .huge-text { font-family: var(--font-heading); font-size: clamp(5rem, 16vw, 18rem); line-height: 0.85; text-transform: uppercase; text-shadow: 6px 6px 0 #fff;}
-        .text-urban { color: var(--accent-green); }
-        .text-angel { color: var(--text-color); margin-top: -1vw; }
-
-        .main-model { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -45%); height: 80vh; width: auto; z-index: 3; pointer-events: none; filter: contrast(1.1) drop-shadow(10px 10px 0px rgba(0,0,0,0.1)); }
-
-        .diamond-arrow { position: absolute; top: 50%; right: 18%; width: 80px; height: 80px; background: var(--accent-color); transform: translateY(-50%) rotate(45deg); display: flex; justify-content: center; align-items: center; z-index: 4; color: #fff; cursor: pointer; border: 3px solid var(--text-color); box-shadow: 5px 5px 0 var(--text-color); transition: transform 0.2s, background 0.2s;}
-        .diamond-arrow:hover { background: var(--text-color); transform: translateY(-50%) rotate(45deg) translate(-5px, -5px); box-shadow: 10px 10px 0 var(--accent-green);}
-        .diamond-arrow span { transform: rotate(-45deg); font-family: var(--font-heading); font-size: 2.5rem; }
-
-        .ticker-wrap { position: relative; background: var(--accent-color); color: #fff; padding: 15px 0; overflow: hidden; white-space: nowrap; z-index: 10; margin-top: 45vh; border-top: 4px solid var(--text-color); border-bottom: 4px solid var(--text-color); transform: rotate(-1.5deg); box-shadow: 0 8px 0 rgba(0,0,0,0.1);}
-        .ticker { display: inline-block; font-family: var(--font-heading); font-size: 1.4rem; animation: ticker 20s linear infinite; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        .hero-bottom { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 30px; padding-top: 60px; z-index: 5; position: relative; }
-        .rotated-text { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--font-heading); font-size: 2.5rem; color: var(--text-color); text-align: center; text-shadow: 2px 2px 0 #fff;}
-        .promo-card { position: relative; height: 350px; background: #fff; display: flex; align-items: flex-end; padding: 25px; border: 4px solid var(--text-color); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 8px 8px 0 var(--text-color);}
-        .promo-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--accent-green); }
-        .promo-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-position: top; border: 2px solid transparent; transition: border 0.2s;}
-        .promo-card:hover img { border: 4px solid #fff; }
-        .promo-label { position: relative; background: var(--text-color); color: #fff; padding: 12px 20px; font-family: var(--font-heading); font-size: 1.1rem; z-index: 2; border: 2px solid #fff;}
-        .promo-card:nth-child(3) .promo-label { background: var(--accent-color); color: var(--text-color); border-color: var(--text-color);}
+        .hero-card-label { position: absolute; bottom: -20px; right: -20px; background: var(--accent-lime); padding: 15px 25px; border: 4px solid var(--text-color); font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; text-transform: uppercase; box-shadow: 6px 6px 0 var(--text-color);}
+        .hero-card:nth-child(2) .hero-card-label { background: var(--accent-blue); color: #fff;}
+        .hero-card:nth-child(3) .hero-card-label { background: var(--accent-orange); color: #fff;}
 
         @media (max-width: 768px) {
-            .hero-bottom { grid-template-columns: 1fr; }
-            .rotated-text { writing-mode: horizontal-tb; transform: none; margin-bottom: 20px; height: auto;}
-            .main-model { height: 50vh; top: 40%; }
-            .diamond-arrow { right: 5%; width: 60px; height: 60px;}
-            .diamond-arrow span { font-size: 1.8rem; }
-            .ticker-wrap { margin-top: 40vh; }
-            .hero-top-right .nav-vertical { display: none; }
-            .nav-links a { display: block; border-bottom: none; border: 2px solid var(--text-color); margin-bottom: 10px; width: 100%; text-align: center;}
+            .hero-imagery { flex-direction: column; }
+            .hero-card img { height: 40vh; }
+            .huge-text { text-shadow: 4px 4px 0 var(--accent-lime);}
+            .huge-text.outline { text-shadow: 4px 4px 0 var(--accent-blue); -webkit-text-stroke: 2px var(--text-color);}
+            .hero-card-label { right: 10px; bottom: 10px; }
         }
+
+        /* Ticker */
+        .ticker-wrap { background: var(--text-color); color: var(--accent-lime); padding: 20px 0; overflow: hidden; white-space: nowrap; border-top: 5px solid var(--text-color); border-bottom: 5px solid var(--text-color); transform: rotate(-2deg) scale(1.05); box-shadow: 0 10px 0 rgba(0,0,0,0.1); margin: 60px 0;}
+        .ticker { display: inline-block; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; animation: ticker 25s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Philosophy Section */
+        .philosophy-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center;}
+        @media(min-width: 1024px) { .philosophy-grid { grid-template-columns: 1fr 1fr; gap: 80px;} }
+        .phil-img { border: 6px solid var(--text-color); box-shadow: 15px 15px 0 var(--accent-blue); transition: var(--transition);}
+        .phil-img:hover { transform: translate(-5px, -5px); box-shadow: 20px 20px 0 var(--accent-orange);}
 
         /* ==========================================
            6. SHOP GRID & FILTERS
            ========================================== */
-        .shop-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
-        .shop-tabs button { font-family: var(--font-heading); font-size: 0.95rem; background: #fff; color: var(--text-color); padding: 12px 25px; border: 2px solid var(--text-color); box-shadow: 4px 4px 0 var(--border-color); transition: all 0.15s; }
-        .shop-tabs button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--text-color); }
-        .shop-tabs button.active { background: var(--accent-color); color: #fff; transform: translate(2px, 2px); box-shadow: 0 0 0 var(--text-color);}
+        .shop-tabs { display: flex; justify-content: flex-start; gap: 20px; margin-bottom: 60px; overflow-x: auto; padding-bottom: 15px; -webkit-overflow-scrolling: touch;}
+        .shop-tabs button { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; background: #fff; color: var(--text-color); padding: 15px 30px; border: 4px solid var(--text-color); box-shadow: 6px 6px 0 var(--border-color); transition: var(--transition); white-space: nowrap;}
+        .shop-tabs button:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--accent-blue); }
+        .shop-tabs button.active { background: var(--accent-orange); color: #fff; transform: translate(3px, 3px); box-shadow: 0 0 0 transparent;}
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; width: 100%;} 
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 50px; width: 100%;} 
         
-        .product-card { background: #fff; padding: 15px; display: flex; flex-direction: column; position: relative; border: 3px solid var(--text-color); box-shadow: 6px 6px 0 var(--border-color); transition: transform 0.2s, box-shadow 0.2s;}
-        .product-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0 var(--accent-green); }
+        .product-card { background: #fff; padding: 20px; display: flex; flex-direction: column; border: 5px solid var(--text-color); box-shadow: 10px 10px 0 var(--border-color); transition: var(--transition);}
+        .product-card:hover { transform: translate(-6px, -6px); box-shadow: 16px 16px 0 var(--accent-blue); border-color: var(--accent-blue);}
         
-        .product-img-wrap { width: 100%; height: 320px; background: var(--secondary-bg); margin-bottom: 20px; position: relative; overflow: hidden; border: 2px solid var(--text-color);}
-        .product-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; transition: opacity 0.3s ease; }
-        .product-img-hover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: 0; transition: opacity 0.3s ease; transform: scale(1.05);}
+        .product-img-wrap { width: 100%; height: 380px; background: var(--secondary-bg); margin-bottom: 25px; position: relative; overflow: hidden; border: 3px solid var(--text-color);}
+        .product-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
+        .product-img-hover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: all 0.4s ease; transform: scale(1.08);}
         .product-card:hover .product-img { opacity: 0; }
         .product-card:hover .product-img-hover { opacity: 1; transform: scale(1);}
         
-        .product-info-grid { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .product-title { font-weight: 800; font-size: 0.95rem; text-transform: uppercase; max-width: 70%; line-height: 1.2; }
-        .product-price { font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent-green); background: var(--text-color); padding: 2px 8px; border: 1px solid var(--text-color);}
+        .product-info-grid { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; gap: 15px;}
+        .product-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; line-height: 1.3; }
+        .product-price { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #fff; background: var(--text-color); padding: 5px 12px; border: 2px solid var(--text-color); box-shadow: 4px 4px 0 var(--accent-lime);}
 
-        .product-actions { display: flex; gap: 8px; margin-top: auto; }
-        .btn-add { flex-grow: 1; background: var(--accent-orange); color: #fff; font-family: var(--font-heading); font-size: 0.9rem; padding: 15px; border: 2px solid var(--text-color); transition: all 0.15s; box-shadow: 3px 3px 0 var(--text-color);}
-        .btn-heart { background: #fff; color: var(--text-color); padding: 0 20px; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; border: 2px solid var(--text-color); transition: all 0.15s; box-shadow: 3px 3px 0 var(--text-color);}
-        .btn-add:active, .btn-heart:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--text-color); }
-        .btn-add:hover { background: var(--text-color); color: #fff; }
-        .btn-heart:hover { background: var(--accent-green); color: #fff;}
+        .product-actions { display: flex; gap: 12px; margin-top: auto; }
+        .btn-add { flex-grow: 1; background: var(--accent-lime); color: var(--text-color); font-family: var(--font-heading); font-weight: 700; font-size: 1rem; padding: 18px; border: 4px solid var(--text-color); transition: var(--transition); box-shadow: 5px 5px 0 var(--text-color);}
+        .btn-heart { background: #fff; color: var(--text-color); padding: 0 22px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; border: 4px solid var(--text-color); transition: var(--transition); box-shadow: 5px 5px 0 var(--text-color);}
+        .btn-add:active, .btn-heart:active { transform: translate(5px, 5px); box-shadow: 0 0 0 transparent; }
+        .btn-add:hover { background: var(--text-color); color: var(--accent-lime); }
+        .btn-heart:hover { background: var(--accent-orange); color: #fff;}
 
-        /* Bottom Banner */
-        .bottom-banner { background: var(--accent-color); padding: 50px; display: flex; justify-content: space-between; align-items: center; position: relative; max-width: 1000px; margin: 80px auto 0; border: 6px solid var(--text-color); box-shadow: 12px 12px 0 var(--text-color);}
-        .banner-text { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 4rem); color: var(--text-color); line-height: 1.1; z-index: 2; text-shadow: 2px 2px 0 #fff;}
-        .banner-text span { color: #fff; text-shadow: 2px 2px 0 var(--text-color);}
-        .banner-img { position: absolute; right: 18%; top: -40px; width: 180px; height: 240px; object-fit: cover; z-index: 1; border: 4px solid var(--text-color); box-shadow: 6px 6px 0 var(--accent-green);}
-        @media(max-width: 768px){ .banner-img { opacity: 0.5; right: 5%;} }
-        .btn-arrow-up { background: var(--text-color); color: #fff; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; z-index: 2; border: 2px solid #fff; transition: background 0.2s, transform 0.2s;}
-        .btn-arrow-up:hover { background: var(--accent-green); transform: scale(1.1); }
+        /* Promo Banner inside Shop */
+        .promo-banner { background: var(--accent-orange); border: 6px solid var(--text-color); box-shadow: 15px 15px 0 var(--text-color); padding: 60px 5%; margin: 80px 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 30px;}
+        @media(min-width: 768px) { .promo-banner { flex-direction: row; text-align: left; justify-content: space-between; padding: 80px;} }
+        .promo-banner h3 { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; color: #fff; line-height: 1.1; text-transform: uppercase; text-shadow: 4px 4px 0 var(--text-color);}
 
         /* ==========================================
-           7. PRODUCT DETAIL, VIEWS & CART
+           7. PRODUCT DETAIL
            ========================================== */
-        .pd-images { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media(min-width: 768px) { .pd-images { grid-template-columns: 1fr 1fr; } }
-        .pd-images img { width: 100%; background: var(--secondary-bg); mix-blend-mode: multiply; border: 4px solid var(--text-color); box-shadow: 6px 6px 0 var(--border-color); }
+        .product-detail-layout { display: grid; grid-template-columns: 1fr; gap: 50px; align-items: start; max-width: 1400px; margin: 0 auto;}
+        @media(min-width: 1024px) { .product-detail-layout { grid-template-columns: 1.2fr 1fr; gap: 80px;} }
         
-        .pd-info { background: #fff; padding: 40px; border: 6px solid var(--text-color); box-shadow: 12px 12px 0 var(--accent-color); position: sticky; top: calc(var(--header-height) + 30px);}
-        .pd-info h1 { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 15px; text-transform: uppercase;}
-        .pd-price { font-family: var(--font-heading); font-size: 2rem; color: #fff; background: var(--accent-green); padding: 5px 15px; border: 2px solid var(--text-color); margin-bottom: 25px; display: inline-block; box-shadow: 4px 4px 0 var(--text-color);}
+        .pd-images { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .pd-images img { width: 100%; border: 6px solid var(--text-color); box-shadow: 12px 12px 0 var(--border-color); }
         
-        .size-grid { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
-        .size-btn { width: 60px; height: 60px; border: 2px solid var(--text-color); background: #fff; font-family: var(--font-heading); font-size: 1.1rem; transition: var(--transition); box-shadow: 4px 4px 0 var(--border-color);}
-        .size-btn.selected { border-color: var(--text-color); background: var(--text-color); color: #fff; box-shadow: 4px 4px 0 var(--accent-orange); transform: translate(-2px, -2px);}
-        .size-btn:hover:not(.selected) { background: var(--secondary-bg); transform: translate(2px, 2px); box-shadow: 0 0 0 transparent;}
-
-        /* Campaign & Journal */
-        .campaign-grid { display: grid; grid-template-columns: 1fr; gap: 30px;}
-        @media (min-width: 768px) { .campaign-grid { grid-template-columns: repeat(12, 1fr); } .camp-img.full { grid-column: span 12; height: 700px; } .camp-img.half { grid-column: span 6; height: 500px; } }
-        .camp-img { width: 100%; object-fit: cover; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--border-color); filter: grayscale(100%) contrast(1.2); transition: filter 0.4s, transform 0.2s, box-shadow 0.2s; }
-        .camp-img:hover { filter: grayscale(0%) contrast(1); transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--accent-orange); }
-
-        .journal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
-        .journal-card { background: #fff; border: 4px solid var(--text-color); padding: 20px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 6px 6px 0 var(--border-color);}
-        .journal-card:hover { transform: translate(-5px, -5px); box-shadow: 10px 10px 0 var(--accent-green); }
-        .journal-card img { width: 100%; height: 240px; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--text-color); }
-        .journal-meta { font-family: var(--font-heading); font-size: 0.8rem; color: #fff; background: var(--text-color); padding: 4px 10px; margin-bottom: 15px; display: inline-block; }
-        .journal-card h3 { font-size: 1.4rem; font-weight: 800; line-height: 1.2; text-transform: uppercase; font-family: var(--font-heading);}
-
-        /* Text Layouts (About, Checkout, Legal) */
-        .text-layout { max-width: 900px; margin: 0 auto; background: #fff; padding: 50px; border: 6px solid var(--text-color); box-shadow: 15px 15px 0 var(--accent-color);}
+        .pd-info { background: #fff; padding: 50px; border: 6px solid var(--text-color); box-shadow: 15px 15px 0 var(--accent-lime); position: sticky; top: calc(var(--header-height) + 40px);}
+        .pd-info h1 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; text-transform: uppercase;}
+        .pd-price { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; color: #fff; background: var(--accent-blue); padding: 10px 20px; border: 4px solid var(--text-color); margin-bottom: 30px; display: inline-block; box-shadow: 6px 6px 0 var(--text-color);}
         
-        .process-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 50px;}
+        .size-grid { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .size-btn { width: 70px; height: 70px; border: 3px solid var(--text-color); background: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem; transition: var(--transition); box-shadow: 5px 5px 0 var(--border-color);}
+        .size-btn.selected { border-color: var(--text-color); background: var(--text-color); color: var(--accent-lime); box-shadow: 5px 5px 0 var(--accent-orange); transform: translate(-3px, -3px);}
+        .size-btn:hover:not(.selected) { background: var(--secondary-bg); transform: translate(3px, 3px); box-shadow: 0 0 0 transparent;}
+
+        /* ==========================================
+           8. CAMPAIGNS & JOURNAL
+           ========================================== */
+        .campaign-grid { display: grid; grid-template-columns: 1fr; gap: 40px;}
+        @media (min-width: 768px) { .campaign-grid { grid-template-columns: repeat(12, 1fr); gap: 50px;} .camp-item.full { grid-column: span 12; } .camp-item.half { grid-column: span 6; } }
+        
+        .camp-item { position: relative; border: 6px solid var(--text-color); box-shadow: 12px 12px 0 var(--border-color); transition: var(--transition); background: #fff; padding: 20px;}
+        .camp-item:hover { transform: translate(-5px, -5px); box-shadow: 18px 18px 0 var(--accent-blue); }
+        .camp-item img { width: 100%; height: 500px; object-fit: cover; border: 3px solid var(--text-color); margin-bottom: 20px; filter: grayscale(20%) contrast(1.1); transition: filter 0.4s;}
+        .camp-item.full img { height: 700px; }
+        .camp-item:hover img { filter: grayscale(0%) contrast(1); }
+        .camp-item h3 { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px;}
+
+        .journal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 50px; }
+        .journal-card { background: #fff; border: 5px solid var(--text-color); padding: 25px; transition: var(--transition); box-shadow: 10px 10px 0 var(--border-color);}
+        .journal-card:hover { transform: translate(-6px, -6px); box-shadow: 16px 16px 0 var(--accent-lime); }
+        .journal-card img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 25px; border: 3px solid var(--text-color); }
+        .journal-meta { font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; color: var(--text-color); background: var(--accent-lime); padding: 6px 15px; margin-bottom: 20px; display: inline-block; border: 2px solid var(--text-color);}
+        .journal-card h3 { font-size: 1.6rem; font-weight: 800; line-height: 1.3; text-transform: uppercase; font-family: var(--font-heading);}
+
+        /* ==========================================
+           9. ABOUT, TEXT PAGES & FORMS
+           ========================================== */
+        .text-layout { max-width: 1000px; margin: 0 auto; background: #fff; padding: 60px; border: 8px solid var(--text-color); box-shadow: 20px 20px 0 var(--accent-orange);}
+        @media(max-width: 768px){ .text-layout { padding: 30px; border-width: 5px; box-shadow: 10px 10px 0 var(--accent-orange); } }
+        
+        .process-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 60px;}
         @media(min-width:768px){ .process-grid { grid-template-columns: repeat(3, 1fr); } }
-        .process-step { background: var(--secondary-bg); padding: 30px; border: 3px solid var(--text-color); border-bottom-width: 8px; transition: transform 0.2s;}
-        .process-step:hover { transform: translateY(-5px); }
-        .process-step h4 { font-family: var(--font-heading); font-size: 1.2rem; color: var(--accent-green); margin-bottom: 15px; background: var(--text-color); display: inline-block; padding: 5px 10px;}
+        .process-step { background: var(--secondary-bg); padding: 40px 30px; border: 4px solid var(--text-color); border-bottom-width: 10px; transition: var(--transition);}
+        .process-step:hover { transform: translateY(-8px); background: var(--accent-lime);}
+        .process-step h4 { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 20px; background: var(--text-color); display: inline-block; padding: 8px 15px;}
         
-        .checkout-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
-        @media (min-width: 1024px) { .checkout-grid { grid-template-columns: 1.5fr 1fr; gap: 50px; } }
-        .order-summary { background: var(--secondary-bg); padding: 30px; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--accent-green); height: fit-content;}
-        .summary-item { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 3px dashed var(--border-color); padding-bottom: 20px; }
+        .checkout-grid { display: grid; grid-template-columns: 1fr; gap: 50px; }
+        @media (min-width: 1024px) { .checkout-grid { grid-template-columns: 1.5fr 1fr; gap: 60px; } }
+        .order-summary { background: #fff; padding: 40px; border: 5px solid var(--text-color); box-shadow: 12px 12px 0 var(--accent-blue); height: fit-content;}
+        .summary-item { display: flex; justify-content: space-between; margin-bottom: 25px; border-bottom: 4px dashed var(--border-color); padding-bottom: 25px; font-weight: 600; font-size: 1.1rem;}
 
-        /* Cart Drawer */
-        .cart-overlay { position: fixed; inset: 0; background: rgba(17, 17, 17, 0.8); z-index: 96000; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(5px);}
-        .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 500px; height: 100%; background: #fff; z-index: 97000; display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1); border-left: 6px solid var(--text-color); box-shadow: -10px 0 0 var(--accent-color); }
+        /* ==========================================
+           10. CART DRAWER
+           ========================================== */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(5, 5, 5, 0.85); z-index: 96000; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(8px);}
+        .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 550px; height: 100%; background: #fff; z-index: 97000; display: flex; flex-direction: column; transition: right 0.5s cubic-bezier(0.25, 1, 0.5, 1); border-left: 8px solid var(--text-color); box-shadow: -15px 0 0 var(--accent-orange); }
         
         body.cart-active .cart-overlay { opacity: 1; visibility: visible; }
         body.cart-active .cart-drawer { right: 0; }
 
-        .cart-header { padding: 30px; border-bottom: 4px solid var(--text-color); display: flex; justify-content: space-between; align-items: center; background: var(--bg-color);}
-        .cart-header h2 { font-family: var(--font-heading); font-size: 1.8rem; }
-        .close-cart { font-family: var(--font-heading); font-size: 3rem; color: var(--text-color); line-height: 1; transition: color 0.2s; cursor: pointer; padding: 5px;}
-        .close-cart:hover { color: var(--accent-orange); }
+        .cart-header { padding: 35px; border-bottom: 5px solid var(--text-color); display: flex; justify-content: space-between; align-items: center; background: var(--secondary-bg);}
+        .cart-header h2 { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800;}
+        .close-cart { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 800; color: var(--text-color); line-height: 1; transition: var(--transition); cursor: pointer; padding: 5px;}
+        .close-cart:hover { color: var(--accent-orange); transform: rotate(90deg);}
 
-        .cart-body { flex-grow: 1; padding: 30px; overflow-y: auto; background-image: linear-gradient(var(--border-color) 1px, transparent 1px), linear-gradient(90deg, var(--border-color) 1px, transparent 1px); background-size: 40px 40px; }
-        .empty-cart { text-align: center; font-family: var(--font-heading); font-size: 1.2rem; margin-top: 50px; color: var(--muted-text); background: #fff; padding: 30px; border: 2px dashed var(--text-color);}
+        .cart-body { flex-grow: 1; padding: 35px; overflow-y: auto; background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 40px 40px; }
+        .empty-cart { text-align: center; font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; margin-top: 60px; color: var(--text-color); background: var(--accent-lime); padding: 40px; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--text-color);}
         
-        .cart-item { display: flex; gap: 20px; margin-bottom: 25px; background: #fff; padding: 15px; border: 3px solid var(--text-color); box-shadow: 5px 5px 0 var(--accent-orange);}
-        .cart-item-img { width: 90px; height: 110px; object-fit: cover; background: var(--secondary-bg); mix-blend-mode: multiply; border: 1px solid var(--border-color);}
+        .cart-item { display: flex; gap: 25px; margin-bottom: 30px; background: #fff; padding: 20px; border: 4px solid var(--text-color); box-shadow: 6px 6px 0 var(--accent-blue);}
+        .cart-item-img { width: 100px; height: 120px; object-fit: cover; border: 3px solid var(--text-color);}
         .cart-item-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .cart-item-title { font-weight: 800; text-transform: uppercase; font-size: 1rem; line-height: 1.1; font-family: var(--font-heading);}
-        .cart-item-meta { font-family: var(--font-body); font-weight: 700; font-size: 0.8rem; color: var(--text-color); background: var(--secondary-bg); padding: 2px 6px; margin-top: 8px; display: inline-block;}
+        .cart-item-title { font-family: var(--font-heading); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; line-height: 1.2;}
+        .cart-item-meta { font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; color: var(--text-color); background: var(--accent-lime); padding: 4px 10px; margin-top: 10px; display: inline-block; border: 2px solid var(--text-color);}
         
         .cart-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
-        .qty-selector { display: flex; align-items: center; border: 2px solid var(--text-color); }
-        .qty-btn { width: 35px; height: 35px; font-family: var(--font-heading); display: flex; justify-content: center; align-items: center; background: #fff; transition: background 0.2s;}
+        .qty-selector { display: flex; align-items: center; border: 3px solid var(--text-color); }
+        .qty-btn { width: 40px; height: 40px; font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; background: #fff; transition: var(--transition);}
         .qty-btn:hover { background: var(--text-color); color: #fff; }
-        .qty-amount { width: 35px; text-align: center; font-weight: 700; border-left: 2px solid var(--text-color); border-right: 2px solid var(--text-color); font-size: 1rem; background: var(--secondary-bg);}
-        .cart-item-price { font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent-green); }
+        .qty-amount { width: 40px; text-align: center; font-family: var(--font-heading); font-weight: 800; border-left: 3px solid var(--text-color); border-right: 3px solid var(--text-color); font-size: 1.1rem; background: var(--secondary-bg);}
+        .cart-item-price { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--accent-orange); }
 
-        .cart-footer { padding: 30px; background: var(--bg-color); border-top: 4px solid var(--text-color); }
-        .cart-summary { display: flex; justify-content: space-between; font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 20px; }
-        .checkout-btn { width: 100%; padding: 20px; background: var(--text-color); color: #fff; font-family: var(--font-heading); font-size: 1.1rem; text-align: center; display: block; border: 2px solid var(--text-color); transition: transform 0.15s, box-shadow 0.15s; box-shadow: 6px 6px 0 var(--accent-green);}
-        .checkout-btn:hover { transform: translate(3px, 3px); box-shadow: 0px 0px 0 transparent;}
+        .cart-footer { padding: 35px; background: #fff; border-top: 5px solid var(--text-color); }
+        .cart-summary { display: flex; justify-content: space-between; font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; }
+        .checkout-btn { width: 100%; padding: 25px; background: var(--text-color); color: #fff; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; text-align: center; display: block; border: 4px solid var(--text-color); transition: var(--transition); box-shadow: 8px 8px 0 var(--accent-lime);}
+        .checkout-btn:hover { transform: translate(4px, 4px); box-shadow: 0px 0px 0 transparent; background: var(--accent-blue);}
 
         /* Mobile Nav Override */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+            :root { --header-height: 90px; }
+            .header-bottom { display: none; } /* Hide horizontal menu */
+            .header-top { border-bottom: none; }
+            header { border-bottom: 3px solid var(--text-color); }
+            
             .mobile-toggle { display: block; }
             .header-actions .action-icon { display: none; }
-            .header-actions .search-mobile-icon { display: flex; border: 2px solid var(--text-color); background: #fff; padding: 10px;}
-            .header-actions .cart-mobile { display: block; border: 2px solid var(--text-color); background: #fff; padding: 10px;}
+            .header-actions .search-mobile-icon { display: flex; border: 3px solid var(--text-color); background: #fff; padding: 12px; box-shadow: 4px 4px 0 var(--text-color);}
+            .header-actions .cart-mobile { display: block; border: 3px solid var(--text-color); background: #fff; padding: 12px; box-shadow: 4px 4px 0 var(--text-color);}
             
-            .nav-links { position: fixed; top: 0; left: -100%; width: 85%; max-width: 380px; height: 100vh; background: var(--bg-color); border-right: 6px solid var(--text-color); flex-direction: column; justify-content: center; align-items: flex-start; z-index: 90000; transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1); gap: 20px; padding: 0 40px; box-shadow: 20px 0 0 rgba(0,0,0,0.1); }
+            .nav-links { position: fixed; top: 0; left: -100%; width: 85%; max-width: 400px; height: 100vh; background: var(--bg-color); border-right: 8px solid var(--text-color); flex-direction: column; justify-content: center; align-items: flex-start; z-index: 90000; transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1); gap: 25px; padding: 0 40px; box-shadow: 25px 0 0 rgba(0,0,0,0.1); background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 40px 40px;}
             .nav-links.active { left: 0; }
-            .nav-links a { font-size: 1.8rem; padding: 15px 20px; width: 100%; text-align: left; background: #fff; border: 3px solid var(--text-color); box-shadow: 6px 6px 0 var(--text-color);}
-            .nav-links a.active-link { background: var(--text-color); color: #fff; box-shadow: 6px 6px 0 var(--accent-orange);}
+            .nav-links a { font-size: 2rem; padding: 20px 25px; width: 100%; text-align: left; background: #fff; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--text-color);}
+            .nav-links a.active-link { background: var(--accent-lime); color: var(--text-color); box-shadow: 8px 8px 0 var(--accent-blue);}
             .mobile-only-link { display: block !important; }
         }
-        @media (min-width: 769px) { .mobile-only-link, .cart-mobile, .search-mobile-icon { display: none !important; } }
+        @media (min-width: 901px) { .mobile-only-link, .cart-mobile, .search-mobile-icon { display: none !important; } }
 
         /* ==========================================
-           8. FOOTER
+           11. FOOTER
            ========================================== */
-        footer { background: var(--text-color); color: #fff; padding: 80px 5% 40px; border-top: 8px solid var(--accent-color); margin-top: auto; position: relative; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 60px 60px;}
+        footer { background: var(--text-color); color: #fff; padding: 100px 5% 50px; border-top: 10px solid var(--accent-blue); margin-top: auto; position: relative; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 60px 60px;}
         
-        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 50px; margin-bottom: 60px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 60px; margin-bottom: 80px; }
         @media (min-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
         @media (min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
         
-        .footer-brand h3 { font-family: var(--font-heading); font-size: 3rem; color: #fff; margin-bottom: 20px; text-shadow: 4px 4px 0 var(--accent-green);}
-        .footer-brand p { color: #ccc; margin-bottom: 30px; font-weight: 500; font-size: 1.1rem; max-width: 90%;}
-        .footer-contact-info { color: #aaa; font-size: 0.95rem; }
-        .footer-contact-info strong { color: var(--accent-orange); font-family: var(--font-heading); display: inline-block; margin-bottom: 8px; font-size: 1rem;}
+        .footer-brand h3 { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 800; color: #fff; margin-bottom: 25px; text-shadow: 5px 5px 0 var(--accent-orange);}
+        .footer-brand p { color: #e0e0e0; margin-bottom: 35px; font-weight: 500; font-size: 1.2rem; max-width: 90%; line-height: 1.7;}
+        .footer-contact-info { color: #cccccc; font-size: 1.05rem; line-height: 1.8;}
+        .footer-contact-info strong { color: var(--accent-lime); font-family: var(--font-heading); display: inline-block; margin-bottom: 10px; font-size: 1.1rem; letter-spacing: 1px;}
         
-        .footer-links h4 { font-family: var(--font-heading); margin-bottom: 25px; color: var(--accent-green); font-size: 1.2rem;}
-        .footer-links ul li { margin-bottom: 15px; font-weight: 500; }
-        .footer-links ul li a { display: inline-block; border: 1px solid transparent; padding: 2px 5px;}
-        .footer-links ul li a:hover { color: var(--text-color); background: var(--accent-orange); border-color: var(--accent-orange); transform: translateX(5px);}
+        .footer-links h4 { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 30px; color: var(--accent-blue); background: #fff; display: inline-block; padding: 5px 15px;}
+        .footer-links ul li { margin-bottom: 18px; font-weight: 600; font-size: 1.1rem;}
+        .footer-links ul li a { display: inline-block; border: 2px solid transparent; padding: 4px 8px; transition: var(--transition);}
+        .footer-links ul li a:hover { color: var(--text-color); background: var(--accent-lime); border-color: var(--accent-lime); transform: translateX(8px);}
         
-        .newsletter-form { display: flex; margin-top: 20px; border: 2px solid #fff; background: rgba(0,0,0,0.5); }
-        .newsletter-form input { padding: 15px; color: #fff; width: 100%; font-size: 1rem; }
-        .newsletter-form button { background: var(--accent-orange); color: var(--text-color); font-family: var(--font-heading); padding: 0 20px; font-size: 1.2rem; transition: background 0.2s;}
-        .newsletter-form button:hover { background: #fff; }
+        .newsletter-form { display: flex; margin-top: 25px; border: 3px solid #fff; background: rgba(0,0,0,0.5); box-shadow: 8px 8px 0 var(--accent-orange);}
+        .newsletter-form input { padding: 20px; color: #fff; width: 100%; font-size: 1.1rem; font-family: var(--font-body);}
+        .newsletter-form input::placeholder { color: #aaa; }
+        .newsletter-form button { background: #fff; color: var(--text-color); font-family: var(--font-heading); font-weight: 800; padding: 0 25px; font-size: 1.4rem; transition: var(--transition); border-left: 3px solid #fff;}
+        .newsletter-form button:hover { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue);}
 
-        .social-icons { display: flex; gap: 15px; margin-top: 30px; }
-        .social-icons a { font-family: var(--font-heading); font-size: 0.9rem; color: var(--text-color); background: #fff; border: 2px solid #fff; padding: 8px 15px; transition: all 0.2s; box-shadow: 3px 3px 0 var(--accent-green);}
-        .social-icons a:hover { background: var(--accent-orange); border-color: var(--accent-orange); color: #fff; transform: translate(2px, 2px); box-shadow: 0 0 0 transparent;}
+        .social-icons { display: flex; gap: 15px; margin-top: 40px; }
+        .social-icons a { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--text-color); background: #fff; border: 3px solid #fff; padding: 10px 20px; transition: var(--transition); box-shadow: 4px 4px 0 var(--accent-lime);}
+        .social-icons a:hover { background: var(--accent-orange); border-color: var(--accent-orange); color: #fff; transform: translate(3px, 3px); box-shadow: 0 0 0 transparent;}
 
-        .footer-bottom { border-top: 2px solid rgba(255,255,255,0.1); padding-top: 30px; display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+        .footer-bottom { border-top: 3px solid rgba(255,255,255,0.1); padding-top: 40px; display: flex; flex-direction: column; gap: 25px; align-items: flex-start; }
         @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
-        .footer-bottom p { color: #888; font-family: var(--font-heading); font-size: 0.9rem; }
-        .footer-bottom-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center;}
-        .footer-bottom-links a { color: #ccc; font-size: 0.9rem; font-weight: 600; text-transform: uppercase;}
-        .footer-bottom-links a:hover { color: var(--accent-orange); text-decoration: underline;}
+        .footer-bottom p { color: #aaa; font-family: var(--font-heading); font-weight: 700; font-size: 1rem; }
+        .footer-bottom-links { display: flex; gap: 25px; flex-wrap: wrap; align-items: center;}
+        .footer-bottom-links a { color: #e0e0e0; font-size: 1rem; font-weight: 700; text-transform: uppercase; transition: var(--transition);}
+        .footer-bottom-links a:hover { color: var(--accent-lime); background: rgba(255,255,255,0.1); padding: 0 5px;}
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
@@ -405,7 +400,7 @@
     <div class="cursor-follower" id="cursor-follower"></div>
 
     <div class="page-transition" id="page-transition">
-        <div class="transition-logo">VIROX<br>SYSTEM</div>
+        <div class="transition-logo">VIROX</div>
     </div>
 
     <div class="toast-container" id="toast-container"></div>
@@ -421,54 +416,58 @@
     </div>
 
     <header id="header">
-        <div class="logo"><a href="#home" class="nav-trigger hover-target" data-target="view-home">VIROX<br><span>SYSTEMS</span></a></div>
-        
-        <nav class="nav-links" id="nav-links">
-            <a href="#home" class="nav-trigger hover-target active-link" data-target="view-home">HOME</a>
-            <a href="#shop" class="nav-trigger hover-target" data-target="view-shop">CATEGORIES</a>
-            <a href="#campaigns" class="nav-trigger hover-target" data-target="view-campaigns">NEW ARRIVAL</a>
-            <a href="#journal" class="nav-trigger hover-target" data-target="view-journal">JOURNAL</a>
-            <a href="#about" class="nav-trigger hover-target" data-target="view-about">ABOUT</a>
+        <div class="header-top">
+            <div class="logo"><a href="#home" class="nav-trigger hover-target" data-target="view-home">VIROX<span>.</span></a></div>
             
-            <a href="#account" class="nav-trigger hover-target mobile-only-link" data-target="view-account" style="margin-top: 30px; background: var(--accent-orange); color:#fff;">LOGIN / ACCOUNT</a>
-            <a href="#" class="mobile-only-link hover-target" id="mobile-search-trigger">SEARCH ARCHIVE</a>
-        </nav>
-        
-        <div class="header-actions">
-            <button class="action-icon hover-target" id="search-toggle">SEARCH</button>
-            <a href="#account" class="action-icon nav-trigger hover-target" data-target="view-account">LOGIN</a>
-            
-            <button class="action-icon search-mobile-icon hover-target" id="search-toggle-mobile">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
+            <div class="header-actions">
+                <button class="action-icon hover-target" id="search-toggle">SEARCH</button>
+                <a href="#account" class="action-icon nav-trigger hover-target" data-target="view-account">LOGIN</a>
+                
+                <button class="action-icon search-mobile-icon hover-target" id="search-toggle-mobile">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
 
-            <button class="action-icon hover-target" id="cart-toggle" style="background:var(--text-color); color:#fff; box-shadow: 3px 3px 0 var(--accent-green);">
-                CART <span class="cart-count" id="cart-badge">0</span>
-            </button>
-            
-            <button class="cart-mobile hover-target" id="cart-toggle-mobile">
-                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            </button>
+                <button class="action-icon hover-target" id="cart-toggle" style="background:var(--accent-lime); border-color:var(--text-color);">
+                    CART <span class="cart-count" id="cart-badge">0</span>
+                </button>
+                
+                <button class="cart-mobile hover-target action-icon" id="cart-toggle-mobile" style="background:var(--accent-lime);">
+                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                </button>
 
-            <button class="mobile-toggle hover-target" id="mobile-toggle">
-                <span></span><span></span>
-            </button>
+                <button class="mobile-toggle hover-target" id="mobile-toggle">
+                    <span></span><span></span>
+                </button>
+            </div>
         </div>
+        
+        <nav class="header-bottom">
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="nav-trigger hover-target active-link" data-target="view-home">HOME DIR</a>
+                <a href="#shop" class="nav-trigger hover-target" data-target="view-shop">CATEGORIES</a>
+                <a href="#campaigns" class="nav-trigger hover-target" data-target="view-campaigns">VISUAL ARCHIVE</a>
+                <a href="#journal" class="nav-trigger hover-target" data-target="view-journal">JOURNAL</a>
+                <a href="#about" class="nav-trigger hover-target" data-target="view-about">ABOUT CORE</a>
+                
+                <a href="#account" class="nav-trigger hover-target mobile-only-link" data-target="view-account" style="margin-top: 20px; background: var(--accent-orange); color:#fff;">LOGIN / ACCOUNT</a>
+                <a href="#" class="mobile-only-link hover-target" id="mobile-search-trigger">SEARCH CATALOG</a>
+            </div>
+        </nav>
     </header>
 
     <div class="cart-overlay" id="cart-overlay"></div>
     <div class="cart-drawer">
         <div class="cart-header">
-            <h2>MANIFEST</h2>
+            <h2>CART</h2>
             <button class="close-cart hover-target" id="close-cart">&times;</button>
         </div>
         <div class="cart-body" id="cart-body"></div>
         <div class="cart-footer">
             <div class="cart-summary">
                 <span>TOTAL</span>
-                <span id="cart-total" style="color:var(--text-color);">$0.00</span>
+                <span id="cart-total" style="color:var(--accent-blue);">$0.00</span>
             </div>
-            <a href="#checkout" class="checkout-btn nav-trigger hover-target" data-target="view-checkout" id="checkout-btn">INITIALIZE CHECKOUT</a>
+            <a href="#checkout" class="checkout-btn nav-trigger hover-target" data-target="view-checkout" id="checkout-btn">PROCEED TO CHECKOUT</a>
         </div>
     </div>
 
@@ -476,116 +475,106 @@
         
         <section id="view-home" class="view-section active">
             <section class="hero-section">
-                <span class="crosshair reveal" style="top: 15%; left: 8%;">+</span>
-                <span class="crosshair reveal" style="top: 15%; right: 18%;">+</span>
-                <span class="crosshair reveal" style="top: 80%; left: 5%;">+</span>
-                <span class="crosshair reveal" style="top: 85%; right: 5%;">+</span>
-
-                <div class="hero-top reveal">
-                    <div class="hero-top-left">
-                        <div class="orange-blocks hover-target">
-                            <div></div><div></div><div></div><div></div><div></div><div></div>
-                        </div>
-                        <div class="thumbnail-box hover-target nav-trigger" data-target="view-shop" style="cursor:pointer; margin-top: 15px;">
-                            <img src="https://images.unsplash.com/photo-1523398002811-999aa8e9e11a?q=80&w=400&auto=format&fit=crop" alt="Look 1">
-                        </div>
-                        <div class="pagination"><span class="active">01</span> <span>02</span> <span>03</span> <span>04</span></div>
-                        <p style="font-size: 0.75rem; max-width: 180px; margin-top: 15px; font-weight: 700; border-left: 3px solid var(--accent-orange); padding-left: 10px;">Exclusive streetwear that blends style, comfort, and brutal attitude.</p>
-                    </div>
-
-                    <div class="hero-top-right">
-                        <button class="btn-primary hover-target nav-trigger" data-target="view-account" style="padding: 12px 20px; font-size: 0.9rem;">JOIN SYSTEM <span>&#x2197;</span></button>
-                        <ul class="nav-vertical">
-                            <li class="nav-trigger hover-target" data-target="view-home" style="color:var(--accent-orange);">HOME DIR</li>
-                            <li class="nav-trigger hover-target" data-target="view-shop">CATEGORIES</li>
-                            <li class="nav-trigger hover-target" data-target="view-campaigns">NEW ARRIVAL</li>
-                            <li class="nav-trigger hover-target" data-target="view-shop">COLLECTIONS</li>
-                            <li class="nav-trigger hover-target" data-target="view-about">ABOUT CORE</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="hero-center reveal" style="transition-delay: 0.1s;">
-                    <div class="huge-text text-urban">VIROX</div>
-                    <div class="huge-text text-angel">ARCHIVE</div>
-                </div>
                 
-                <img class="main-model reveal" style="transition-delay: 0.2s;" src="https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=800&auto=format&fit=crop" alt="Model">
-                
-                <div class="diamond-arrow hover-target nav-trigger reveal" data-target="view-shop" style="transition-delay: 0.3s;">
-                    <span>&#x2193;</span>
+                <div class="hero-center reveal">
+                    <div class="huge-text">VIROX</div>
+                    <div class="huge-text outline">SYSTEM</div>
                 </div>
 
-                <div class="ticker-wrap reveal">
-                    <div class="ticker">
-                        EAST VANGUARD ++ BEYOND THE NORM ++ BREAK THE MOLD ++ EAST VANGUARD ++ BEYOND THE NORM ++ BREAK THE MOLD ++ EAST VANGUARD ++ BEYOND THE NORM ++ BREAK THE MOLD ++
+                <div class="hero-imagery reveal" style="transition-delay: 0.2s;">
+                    <div class="hero-card nav-trigger hover-target" data-target="view-shop" onclick="setTimeout(()=>renderShop('essentials'), 600)">
+                        <img src="https://images.unsplash.com/photo-1523398002811-999aa8e9e11a?q=80&w=800&auto=format&fit=crop" alt="Look">
+                        <div class="hero-card-label">OUTERWEAR</div>
+                    </div>
+                    <div class="hero-card nav-trigger hover-target" data-target="view-shop" onclick="setTimeout(()=>renderShop('graphics'), 600)">
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop" alt="Look">
+                        <div class="hero-card-label">ESSENTIALS</div>
+                    </div>
+                    <div class="hero-card nav-trigger hover-target" data-target="view-shop" onclick="setTimeout(()=>renderShop('bottoms'), 600)">
+                        <img src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=800&auto=format&fit=crop" alt="Look">
+                        <div class="hero-card-label">NEW DROP</div>
                     </div>
                 </div>
 
-                <div class="hero-bottom reveal">
-                    <div class="rotated-text">STREETWEAR THAT SPEAKS</div>
-                    
-                    <div class="promo-card nav-trigger hover-target" data-target="view-shop" onclick="setTimeout(()=>renderShop('graphics'), 600)">
-                        <img src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=600&auto=format&fit=crop" alt="Look">
-                        <div class="promo-label">CRAZY WORKSHIRT</div>
+            </section>
+
+            <div class="ticker-wrap reveal">
+                <div class="ticker">
+                    NEW ARRIVALS LIVE ++ HEAVYWEIGHT COTTON ++ ENGINEERED IN STUDIO ++ NO RESTOCKS ++ NEW ARRIVALS LIVE ++ HEAVYWEIGHT COTTON ++ ENGINEERED IN STUDIO ++ NO RESTOCKS ++
+                </div>
+            </div>
+
+            <section class="section-padding">
+                <div class="philosophy-grid reveal">
+                    <div>
+                        <h2 style="font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 30px; text-transform: uppercase; line-height: 1.1;">Constructed for the Grid.</h2>
+                        <p class="text-body">Our garments are engineered with precision. We utilize heavyweight fabrics, custom boxy silhouettes, and rigorous construction methods to ensure every piece is structural and enduring.</p>
+                        <p class="text-body">Rejecting mass production, every collection is a limited drop. Once an asset is archived, it does not return.</p>
+                        <button class="btn-outline nav-trigger hover-target" data-target="view-about" style="margin-top: 20px;">READ MANIFESTO</button>
                     </div>
-                    
-                    <div class="promo-card nav-trigger hover-target" data-target="view-shop" onclick="setTimeout(()=>renderShop('outerwear'), 600)">
-                        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=600&auto=format&fit=crop" alt="Look">
-                        <div class="promo-label">MONSTER GREEN JACKET</div>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=800&auto=format&fit=crop" alt="Philosophy" class="phil-img">
                 </div>
             </section>
         </section>
 
         <section id="view-shop" class="view-section">
             <div class="section-padding">
-                <span class="crosshair" style="top: 20px; left: 20%;">+</span>
-                <span class="crosshair" style="top: 150px; right: 10%;">+</span>
-
                 <div class="section-header reveal">
-                    <h2 style="max-width: 800px; margin: 0 auto; text-align: center;">
-                        BORN FROM<br>THE STREETS<br>INSPIRED BY<br>THE CULTURE
-                    </h2>
+                    <h2>THE ARCHIVE</h2>
+                    <p class="text-body" style="max-width: 500px; margin:0;">Browse the complete collection of active assets. Filter by category to locate specific gear.</p>
                 </div>
 
                 <div class="shop-tabs reveal" id="shop-filters">
                     <button class="filter-btn active hover-target" data-filter="all">ALL ASSETS</button>
-                    <button class="filter-btn hover-target" data-filter="essentials">SHIRT</button>
-                    <button class="filter-btn hover-target" data-filter="outerwear">JACKET</button>
-                    <button class="filter-btn hover-target" data-filter="accessories">CAP / ACC</button>
+                    <button class="filter-btn hover-target" data-filter="essentials">SHIRT / TEES</button>
+                    <button class="filter-btn hover-target" data-filter="outerwear">JACKETS</button>
+                    <button class="filter-btn hover-target" data-filter="accessories">HARDWARE</button>
                     <button class="filter-btn hover-target" data-filter="bottoms">BOTTOMS</button>
                 </div>
+                
                 <div class="product-grid reveal" id="shop-products"></div>
                 
-                <div class="bottom-banner reveal">
-                    <div class="banner-text">
-                        STYLE<br><span>WITH A</span><br>PURPOSE
+                <div class="promo-banner reveal">
+                    <div>
+                        <h3>JOIN THE<br>INNER CIRCLE</h3>
+                        <p style="color: #fff; font-size: 1.2rem; font-weight: 600; margin-top: 15px; max-width: 600px;">Get priority access to new drops, exclusive colorways, and studio insights before public release.</p>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=400&auto=format&fit=crop" class="banner-img" alt="Purpose">
-                    <button class="btn-arrow-up hover-target" onclick="window.scrollTo(0,0);">&#x2197;</button>
+                    <button class="btn-primary nav-trigger hover-target" data-target="view-account" style="background: var(--text-color); box-shadow: 8px 8px 0 var(--accent-lime);">REGISTER NOW</button>
                 </div>
             </div>
         </section>
 
         <section id="view-product" class="view-section">
             <div class="section-padding">
-                <button class="btn-outline nav-trigger hover-target" data-target="view-shop" style="margin-bottom: 40px;">&larr; BACK TO DIR</button>
-                <div class="product-detail-layout" id="product-detail-container" style="display: grid; grid-template-columns: 1fr; gap: 50px; align-items: start;">
+                <button class="btn-outline nav-trigger hover-target" data-target="view-shop" style="margin-bottom: 50px;">&larr; BACK TO CATALOG</button>
+                <div class="product-detail-layout" id="product-detail-container">
                     </div>
-            </div>
+                
+                </div>
         </section>
 
         <section id="view-campaigns" class="view-section">
             <div class="section-padding">
                 <div class="section-header reveal">
-                    <h2>VISUAL ARCHIVE</h2>
+                    <h2>VISUAL DATA</h2>
+                    <p class="text-body" style="max-width: 600px;">A curated look into our seasonal campaigns, lookbooks, and the aesthetic direction of the Virox system.</p>
                 </div>
                 <div class="campaign-grid">
-                    <img src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=1200" alt="C1" class="camp-img full reveal hover-target">
-                    <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800" alt="C2" class="camp-img half reveal hover-target">
-                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800" alt="C3" class="camp-img half reveal hover-target">
-                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1600" alt="C4" class="camp-img full reveal hover-target">
+                    <div class="camp-item full reveal hover-target">
+                        <img src="https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=1200&auto=format&fit=crop" alt="C1">
+                        <h3>CAMPAIGN 001: NEON MIRAGE</h3>
+                        <p class="text-body">Exploring the boundaries of high-visibility outerwear in low-light urban environments.</p>
+                    </div>
+                    <div class="camp-item half reveal hover-target">
+                        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop" alt="C3">
+                        <h3>LOOKBOOK: THE OVERCOAT</h3>
+                        <p class="text-body">Structural layering techniques for transitional weather.</p>
+                    </div>
+                    <div class="camp-item half reveal hover-target">
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop" alt="C2">
+                        <h3>STUDIO SESSION 04</h3>
+                        <p class="text-body">Behind the scenes fit-testing of the heavyweight bomber jacket.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -594,6 +583,7 @@
             <div class="section-padding">
                 <div class="section-header reveal">
                     <h2>SYSTEM LOGS</h2>
+                    <p class="text-body">Deep dives into our design methodology, fabric sourcing, and studio updates.</p>
                 </div>
                 <div class="journal-grid" id="journal-grid"></div>
             </div>
@@ -602,24 +592,30 @@
         <section id="view-about" class="view-section">
             <div class="section-padding">
                 <div class="text-layout reveal">
-                    <h2 style="font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 30px; line-height: 1;">RAW<br><span style="color:var(--accent-green); background: var(--text-color); padding: 0 10px;">AESTHETIC.</span></h2>
-                    <img src="https://images.unsplash.com/photo-1618085220188-b4f210d22703?q=80&w=1200&auto=format&fit=crop" alt="Studio" class="hover-target" style="margin-bottom: 35px; width: 100%; border: 4px solid var(--text-color); box-shadow: 8px 8px 0 var(--border-color);">
-                    <p class="text-body" style="font-size: 1.15rem;">Virox operates at the intersection of raw street culture and digital brutalism. We craft garments with aggressive attention to detail, boxy cuts, and heavyweight fabric.</p>
-                    <p class="text-body" style="font-size: 1.15rem;">Our mission is to break the mold. We build pieces meant to withstand the urban landscape and make a statement without saying a word.</p>
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; margin-bottom: 40px; line-height: 1; text-transform: uppercase;">THE <span style="color:var(--accent-blue); background: var(--accent-lime); padding: 5px 15px; border: 4px solid var(--text-color);">CORE</span></h2>
                     
-                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-top: 60px; border-bottom: 4px solid var(--text-color); padding-bottom: 10px;">THE SYSTEM</h3>
+                    <img src="https://images.unsplash.com/photo-1618085220188-b4f210d22703?q=80&w=1200&auto=format&fit=crop" alt="Studio" class="hover-target" style="margin-bottom: 40px; width: 100%; border: 6px solid var(--text-color); box-shadow: 12px 12px 0 var(--border-color);">
+                    
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-bottom: 20px;">ORIGIN</h3>
+                    <p class="text-body">Founded by Indrajeet Pisda, Virox emerged from the creative and analytical ecosystem of digital design and brand building. Recognizing a void in the market for truly structural, heavyweight everyday apparel, the system was initialized.</p>
+                    <p class="text-body">We view garments as hardware. They must function, they must endure, and they must carry an unmistakable aesthetic presence.</p>
+                    
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-top: 50px; margin-bottom: 20px;">MATERIALS</h3>
+                    <p class="text-body">We do not compromise on textiles. Our standard tees utilize 280gsm cotton, providing a heavy drape that holds its boxy shape. Outerwear pieces utilize water-resistant nylons and dense ripstop to withstand harsh conditions.</p>
+                    
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-top: 60px; border-bottom: 5px solid var(--text-color); padding-bottom: 15px;">OPERATIONAL METHOD</h3>
                     <div class="process-grid">
                         <div class="process-step hover-target">
                             <h4>01. DRAFT</h4>
-                            <p class="text-body" style="font-size: 0.95rem; margin:0;">Silhouettes engineered digitally before reality.</p>
+                            <p class="text-body" style="font-size: 1.05rem; margin:0;">Silhouettes are engineered digitally, calculating drop shoulders and crop lengths before a physical sample is ever cut.</p>
                         </div>
                         <div class="process-step hover-target">
                             <h4>02. SECURE</h4>
-                            <p class="text-body" style="font-size: 0.95rem; margin:0;">Procuring dense fabrics with extreme structural integrity.</p>
+                            <p class="text-body" style="font-size: 1.05rem; margin:0;">Procuring dense, premium fabrics globally to ensure extreme structural integrity and longevity.</p>
                         </div>
                         <div class="process-step hover-target">
                             <h4>03. EXECUTE</h4>
-                            <p class="text-body" style="font-size: 0.95rem; margin:0;">Reinforced stitching. Acid washes. Built tough.</p>
+                            <p class="text-body" style="font-size: 1.05rem; margin:0;">Reinforced stitching, custom acid wash treatments, and rigorous QA testing prior to release.</p>
                         </div>
                     </div>
                 </div>
@@ -627,15 +623,15 @@
         </section>
 
         <section id="view-account" class="view-section">
-            <div class="section-padding">
-                <div class="text-layout reveal" style="max-width: 600px;">
-                    <h2 style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 30px; text-align: center; text-shadow: 3px 3px 0 var(--accent-orange);">LOGIN PORTAL</h2>
-                    <form onsubmit="event.preventDefault(); showToast('ACCESS GRANTED.'); setTimeout(()=>navigateTo('view-home'), 1500);">
-                        <div class="form-group"><label class="form-label">COMMLINK / EMAIL</label><input type="email" class="form-input hover-target" required></div>
-                        <div class="form-group"><label class="form-label">CIPHER / PASSWORD</label><input type="password" class="form-input hover-target" required></div>
-                        <button type="submit" class="btn-primary hover-target" style="width: 100%; padding: 22px; font-size:1.2rem;">ENTER SYSTEM</button>
-                        <div style="text-align: center; margin-top: 30px; font-weight: 700; font-size: 0.95rem;">
-                            NO CLEARANCE? <a href="#" class="hover-target" style="color: var(--accent-orange); border-bottom: 2px solid var(--accent-orange); padding-bottom: 2px;">REGISTER HERE</a>
+            <div class="section-padding" style="display: flex; justify-content: center;">
+                <div class="text-layout reveal" style="width: 100%; max-width: 600px; padding: 50px;">
+                    <h2 style="font-family: var(--font-heading); font-size: 3.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; text-shadow: 4px 4px 0 var(--accent-orange);">LOGIN</h2>
+                    <form onsubmit="event.preventDefault(); showToast('ACCESS GRANTED. INITIALIZING DASHBOARD...'); setTimeout(()=>navigateTo('view-home'), 2000);">
+                        <div class="form-group"><label class="form-label">EMAIL</label><input type="email" class="form-input hover-target" required></div>
+                        <div class="form-group"><label class="form-label">PASSWORD</label><input type="password" class="form-input hover-target" required></div>
+                        <button type="submit" class="btn-primary hover-target" style="width: 100%; padding: 22px; font-size:1.3rem;">ENTER SYSTEM</button>
+                        <div style="text-align: center; margin-top: 30px; font-weight: 700; font-size: 1.1rem;">
+                            NEW USER? <a href="#" class="hover-target" style="color: var(--accent-blue); border-bottom: 3px solid var(--accent-blue); padding-bottom: 2px;">CREATE ACCOUNT</a>
                         </div>
                     </form>
                 </div>
@@ -645,38 +641,38 @@
         <section id="view-checkout" class="view-section">
             <div class="section-padding">
                 <div class="section-header reveal">
-                    <h2>SECURE CHECKOUT</h2>
+                    <h2>CHECKOUT</h2>
                 </div>
                 <div class="checkout-grid reveal">
-                    <div style="background:#fff; padding:40px; border:6px solid var(--text-color); box-shadow: 12px 12px 0 var(--accent-color);">
-                        <h3 style="margin-bottom: 30px; font-family: var(--font-heading); font-size: 1.4rem; color:var(--text-color); background: var(--secondary-bg); display: inline-block; padding: 5px 15px; border: 2px solid var(--text-color);">1. SHIPPING DATA</h3>
-                        <form onsubmit="event.preventDefault(); showToast('TRANSACTION COMPLETE.'); setTimeout(()=>navigateTo('view-home'), 2000);">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background:#fff; padding:50px; border:6px solid var(--text-color); box-shadow: 15px 15px 0 var(--accent-lime);">
+                        <h3 style="margin-bottom: 35px; font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; background: var(--text-color); color: #fff; display: inline-block; padding: 10px 20px;">1. SHIPPING DATA</h3>
+                        <form onsubmit="event.preventDefault(); showToast('TRANSACTION COMPLETE. AWAIT DISPATCH.'); setTimeout(()=>navigateTo('view-home'), 2500);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
                                 <div class="form-group"><label class="form-label">FIRST NAME</label><input type="text" class="form-input hover-target" required></div>
                                 <div class="form-group"><label class="form-label">LAST NAME</label><input type="text" class="form-input hover-target" required></div>
                             </div>
                             <div class="form-group"><label class="form-label">ADDRESS</label><input type="text" class="form-input hover-target" required></div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
                                 <div class="form-group"><label class="form-label">CITY</label><input type="text" class="form-input hover-target" required></div>
                                 <div class="form-group"><label class="form-label">ZIP</label><input type="text" class="form-input hover-target" required></div>
                             </div>
                             
-                            <h3 style="margin: 50px 0 30px; font-family: var(--font-heading); font-size: 1.4rem; color:var(--text-color); background: var(--secondary-bg); display: inline-block; padding: 5px 15px; border: 2px solid var(--text-color);">2. PAYMENT LINK</h3>
-                            <div class="form-group"><label class="form-label">CARD NUM</label><input type="text" class="form-input hover-target" placeholder="0000 0000 0000 0000" required></div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                                <div class="form-group"><label class="form-label">EXP</label><input type="text" class="form-input hover-target" placeholder="MM/YY" required></div>
+                            <h3 style="margin: 60px 0 35px; font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; background: var(--text-color); color: #fff; display: inline-block; padding: 10px 20px;">2. PAYMENT</h3>
+                            <div class="form-group"><label class="form-label">CARD NUMBER</label><input type="text" class="form-input hover-target" placeholder="0000 0000 0000 0000" required></div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                                <div class="form-group"><label class="form-label">EXPIRY</label><input type="text" class="form-input hover-target" placeholder="MM/YY" required></div>
                                 <div class="form-group"><label class="form-label">CVC</label><input type="text" class="form-input hover-target" required></div>
                             </div>
-                            <button type="submit" class="btn-primary hover-target" style="width: 100%; margin-top: 25px; font-size: 1.2rem; padding: 22px;">AUTHORIZE PAYMENT</button>
+                            <button type="submit" class="btn-primary hover-target" style="width: 100%; margin-top: 30px; font-size: 1.3rem; padding: 25px;">AUTHORIZE PAYMENT</button>
                         </form>
                     </div>
                     <div class="order-summary">
-                        <h3 style="margin-bottom: 25px; font-family: var(--font-heading); font-size: 1.4rem; border-bottom: 4px solid var(--text-color); padding-bottom: 15px;">MANIFEST</h3>
+                        <h3 style="margin-bottom: 30px; font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; border-bottom: 5px solid var(--text-color); padding-bottom: 15px;">ORDER MANIFEST</h3>
                         <div id="checkout-items"></div>
-                        <div style="margin-top: 30px; background: #fff; padding: 25px; border: 4px solid var(--text-color);">
+                        <div style="margin-top: 40px; background: var(--secondary-bg); padding: 30px; border: 4px solid var(--text-color);">
                             <div class="summary-item"><span>SUBTOTAL</span><span id="checkout-subtotal">$0.00</span></div>
-                            <div class="summary-item"><span>FREIGHT</span><span>TBD</span></div>
-                            <div class="summary-item" style="border: none; font-size: 1.8rem; font-family: var(--font-heading); color: var(--accent-green); padding-bottom: 0; align-items: center;"><span>TOTAL</span><span id="checkout-total">$0.00</span></div>
+                            <div class="summary-item"><span>FREIGHT</span><span>Calculated at Dispatch</span></div>
+                            <div class="summary-item" style="border: none; font-size: 2rem; font-family: var(--font-heading); font-weight: 800; color: var(--accent-orange); padding-bottom: 0; align-items: center; margin-top: 20px;"><span>TOTAL</span><span id="checkout-total">$0.00</span></div>
                         </div>
                     </div>
                 </div>
@@ -686,19 +682,25 @@
         <section id="view-faq" class="view-section">
             <div class="section-padding">
                 <div class="text-layout reveal">
-                    <h2 style="font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 40px; text-shadow: 4px 4px 0 var(--border-color);">INTEL / FAQ</h2>
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; margin-bottom: 50px; text-shadow: 5px 5px 0 var(--accent-orange);">INTEL / FAQ</h2>
+                    <p class="text-body" style="font-size: 1.2rem; margin-bottom: 40px;">Before opening a comms channel, review our operational parameters below.</p>
+                    
                     <div class="accordion-container">
                         <div class="accordion-item">
                             <button class="accordion-btn hover-target">HOW DOES THE GEAR FIT? <span class="accordion-icon">+</span></button>
-                            <div class="accordion-content"><p class="text-body" style="padding-top:20px;">Boxy. Dropped shoulders. True to size for intended look, size down for standard.</p></div>
+                            <div class="accordion-content"><p class="text-body" style="padding-top:20px;">Our signature fit is inherently boxy, slightly cropped, with pronounced dropped shoulders. We recommend ordering your true size to achieve the intended architectural look. Sizing down will result in a more standard fit.</p></div>
                         </div>
                         <div class="accordion-item">
-                            <button class="accordion-btn hover-target">RESTOCK SCHEDULE? <span class="accordion-icon">+</span></button>
-                            <div class="accordion-content"><p class="text-body" style="padding-top:20px;">We operate on drops. Once it's gone, it's archived forever.</p></div>
+                            <button class="accordion-btn hover-target">WHAT IS THE RESTOCK SCHEDULE? <span class="accordion-icon">+</span></button>
+                            <div class="accordion-content"><p class="text-body" style="padding-top:20px;">We operate on a strict drop model. Once a collection is released, inventory is limited. When an item sells out, it is archived permanently. Subscribe to the network ping for alerts on new drops.</p></div>
                         </div>
                         <div class="accordion-item">
-                            <button class="accordion-btn hover-target">SHIPPING ZONES? <span class="accordion-icon">+</span></button>
-                            <div class="accordion-content"><p class="text-body" style="padding-top:20px;">Global dispatch available. Rates calc at checkout.</p></div>
+                            <button class="accordion-btn hover-target">SHIPPING & DISPATCH ZONES? <span class="accordion-icon">+</span></button>
+                            <div class="accordion-content"><p class="text-body" style="padding-top:20px;">We offer standard dispatch across India within 3-5 business days. Global dispatch is available; international rates and delivery estimates are calculated dynamically at checkout.</p></div>
+                        </div>
+                         <div class="accordion-item">
+                            <button class="accordion-btn hover-target">WASH & CARE INSTRUCTIONS? <span class="accordion-icon">+</span></button>
+                            <div class="accordion-content"><p class="text-body" style="padding-top:20px;">To maintain structural integrity: Machine wash cold, inside out. Use mild detergent. Do not bleach. Hang dry in shaded area. Do not tumble dry. Never iron directly over screen prints or hardware.</p></div>
                         </div>
                     </div>
                 </div>
@@ -708,15 +710,25 @@
         <section id="view-contact" class="view-section">
             <div class="section-padding">
                 <div class="text-layout reveal">
-                    <h2 style="font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 40px; text-shadow: 4px 4px 0 var(--accent-orange);">COMMS</h2>
-                    <p class="text-body" style="margin-bottom: 40px;">Transmit a message to the dispatch unit below.</p>
-                    <form onsubmit="event.preventDefault(); showToast('TRANSMISSION SENT.');">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                    <h2 style="font-family: var(--font-heading); font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; margin-bottom: 50px; text-shadow: 5px 5px 0 var(--accent-blue);">COMMS</h2>
+                    <p class="text-body" style="margin-bottom: 40px; font-size: 1.2rem;">For order support, wholesale inquiries, or press, transmit a message to the dispatch unit below. Response time is typically within 24 standard hours.</p>
+                    
+                    <form onsubmit="event.preventDefault(); showToast('TRANSMISSION SENT SUCCESSFULLY.');">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                             <div class="form-group"><label class="form-label">ID / NAME</label><input type="text" class="form-input hover-target" required></div>
-                            <div class="form-group"><label class="form-label">COMMLINK / EMAIL</label><input type="email" class="form-input hover-target" required></div>
+                            <div class="form-group"><label class="form-label">EMAIL COMM-LINK</label><input type="email" class="form-input hover-target" required></div>
                         </div>
-                        <div class="form-group"><label class="form-label">DATA</label><textarea class="form-input hover-target" style="height: 180px; resize: vertical;" required></textarea></div>
-                        <button type="submit" class="btn-primary hover-target" style="padding: 20px 40px; font-size: 1.1rem;">SEND TRANSMISSION</button>
+                        <div class="form-group">
+                            <label class="form-label">SUBJECT CATEGORY</label>
+                            <select class="form-input hover-target">
+                                <option>Order Inquiry</option>
+                                <option>Wholesale</option>
+                                <option>Media / Press</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label class="form-label">MESSAGE DATA</label><textarea class="form-input hover-target" style="height: 200px; resize: vertical;" required></textarea></div>
+                        <button type="submit" class="btn-primary hover-target" style="padding: 25px 50px; font-size: 1.2rem;">SEND TRANSMISSION</button>
                     </form>
                 </div>
             </div>
@@ -725,14 +737,18 @@
         <section id="view-legal" class="view-section">
             <div class="section-padding">
                 <div class="text-layout reveal">
-                    <h2 id="legal-title" style="font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 40px; text-shadow: 4px 4px 0 var(--accent-green);">LEGAL DATA</h2>
-                    <p class="text-body" style="font-size: 1.2rem; border-left: 4px solid var(--text-color); padding-left: 15px;">Data collection and usage protocols are governed by the Virox Systems mandate. All user interactions are logged for operational security.</p>
+                    <h2 id="legal-title" style="font-family: var(--font-heading); font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; margin-bottom: 40px; text-shadow: 5px 5px 0 var(--accent-lime); text-transform: uppercase;">LEGAL DATA</h2>
                     
-                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-top: 50px; background: var(--text-color); color: #fff; display: inline-block; padding: 5px 15px;">1. DATA USAGE</h3>
-                    <p class="text-body" style="margin-top: 20px;">We collect telemetry to optimize the user experience and ensure grid stability. Information provided during transactions is encrypted.</p>
+                    <p class="text-body" style="font-size: 1.3rem; border-left: 6px solid var(--text-color); padding-left: 20px; font-weight: 600;">Data collection, returns protocols, and terms of use are governed strictly by the Virox Systems mandate. Review thoroughly before proceeding.</p>
                     
-                    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-top: 50px; background: var(--text-color); color: #fff; display: inline-block; padding: 5px 15px;">2. TERMS OF ACCESS</h3>
-                    <p class="text-body" style="margin-top: 20px;">By accessing the Virox Archive, you consent to our operational protocols. Misuse of the system architecture will result in an immediate block.</p>
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-top: 60px; background: var(--text-color); color: #fff; display: inline-block; padding: 10px 20px;">1. RETURNS POLICY</h3>
+                    <p class="text-body" style="margin-top: 25px;">We accept returns and exchanges within 14 days of receipt. Assets must remain unworn, unwashed, and retain all original structural tags. Limited drop items are considered final sale and cannot be returned unless a manufacturing defect is verified.</p>
+                    
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-top: 60px; background: var(--text-color); color: #fff; display: inline-block; padding: 10px 20px;">2. DATA USAGE (PRIVACY)</h3>
+                    <p class="text-body" style="margin-top: 25px;">We collect necessary telemetry to process orders and optimize grid performance. Financial information provided during secure checkout is fully encrypted and never stored on local servers.</p>
+                    
+                    <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; margin-top: 60px; background: var(--text-color); color: #fff; display: inline-block; padding: 10px 20px;">3. TERMS OF ACCESS</h3>
+                    <p class="text-body" style="margin-top: 25px;">By utilizing the Virox web architecture, you consent to these operational protocols. Unauthorized reproduction of our apparel designs or digital assets will result in immediate legal action.</p>
                 </div>
             </div>
         </section>
@@ -743,16 +759,17 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <h3>VIROX</h3>
-                <p>Engineered streetwear for the modern grid. Boxy cuts. Aggressive details.</p>
+                <p>Engineered streetwear for the modern grid. Boxy cuts. Aggressive details. Heavyweight construction.</p>
                 <div class="footer-contact-info">
-                    <div style="margin-bottom: 15px;">
+                    <div style="margin-bottom: 20px;">
                         <strong>HQ LOCATION</strong><br>
-                        Sector 7, Grid Node 42<br>
-                        Neo-Tokyo Metro Zone
+                        Virox Studios<br>
+                        Teknaar Chowk Awarabhata<br>
+                        Dantewada (CG), India
                     </div>
                     <div>
                         <strong>COMMS LINK</strong><br>
-                        <a href="mailto:sys@virox.in" class="hover-target" style="color:#fff; text-decoration: underline;">sys@virox.in</a>
+                        <a href="mailto:sys@virox.in" class="hover-target" style="color:#fff; text-decoration: underline; font-weight: 600;">sys@virox.in</a>
                     </div>
                 </div>
             </div>
@@ -773,32 +790,31 @@
                 <ul>
                     <li><a href="#faq" class="nav-trigger hover-target" data-target="view-faq">INTEL / FAQ</a></li>
                     <li><a href="#contact" class="nav-trigger hover-target" data-target="view-contact">TRANSMIT MSG</a></li>
-                    <li><a href="#legal" class="nav-trigger hover-target" data-target="view-legal" onclick="document.getElementById('legal-title').innerText = 'RETURNS'">RETURNS POLICY</a></li>
+                    <li><a href="#legal" class="nav-trigger hover-target" data-target="view-legal" onclick="document.getElementById('legal-title').innerText = 'RETURNS POLICY'">RETURNS POLICY</a></li>
                 </ul>
             </div>
 
             <div class="footer-links">
                 <h4>NETWORK PING</h4>
-                <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;">Subscribe to the mainframe for drop alerts.</p>
-                <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('NETWORK JOINED.');">
-                    <input type="email" placeholder="EMAIL COMMLINK" class="hover-target" required>
+                <p style="color: #ccc; font-size: 1rem; margin-bottom: 20px;">Subscribe to the mainframe for early access and drop alerts.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('NETWORK JOINED. STANDBY FOR INTEL.');">
+                    <input type="email" placeholder="EMAIL ADDRESS" class="hover-target" required>
                     <button type="submit" class="hover-target">+</button>
                 </form>
                 <div class="social-icons">
                     <a href="#" class="hover-target">IG</a>
-                    <a href="#" class="hover-target">TW</a>
-                    <a href="#" class="hover-target">DISCORD</a>
+                    <a href="#" class="hover-target">TW / X</a>
                 </div>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2026 VIROX SYS.</p>
+            <p>&copy; 2026 VIROX STUDIOS.</p>
             <div class="footer-bottom-links">
-                <a href="#legal" class="nav-trigger hover-target" data-target="view-legal" onclick="document.getElementById('legal-title').innerText = 'PRIVACY DATA'">PRIVACY</a>
-                <a href="#legal" class="nav-trigger hover-target" data-target="view-legal" onclick="document.getElementById('legal-title').innerText = 'TERMS OF ACCESS'">TERMS</a>
-                <span style="color: #666; margin: 0 10px;">|</span>
-                <a href="#" class="hover-target" style="color: var(--accent-orange);">DESIGNED BY DIGITAL TRADE</a>
+                <a href="#legal" class="nav-trigger hover-target" data-target="view-legal" onclick="document.getElementById('legal-title').innerText = 'PRIVACY DATA'">PRIVACY POLICY</a>
+                <a href="#legal" class="nav-trigger hover-target" data-target="view-legal" onclick="document.getElementById('legal-title').innerText = 'TERMS OF ACCESS'">TERMS OF SERVICE</a>
+                <span style="color: #555; margin: 0 15px;">|</span>
+                <a href="#" class="hover-target" style="color: var(--accent-lime);">POWERED BY DIGITAL TRADE</a>
             </div>
         </div>
     </footer>
@@ -808,25 +824,26 @@
             
             /* --- 1. PRODUCT DATABASE --- */
             const products = [
-                { id: 1, name: "REBEL SPIRIT BOMBER", price: 256, category: "outerwear", img1: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=500", img2: "https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=500", desc: "Heavyweight nylon bomber with tactical ribbing." },
-                { id: 2, name: "NEON MIRAGE WINDBREAKER", price: 180, category: "outerwear", img1: "https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=500", img2: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=500", desc: "Lightweight ripstop shell. Reflective 3M details." },
-                { id: 3, name: "DRIP MASTERS TECHWEAR", price: 310, category: "outerwear", img1: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=500", img2: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=500", desc: "Full water-resistant shell. Multiple utility pockets." },
-                { id: 4, name: "MIDNIGHT GHOST LAYERED", price: 210, category: "essentials", img1: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=500", img2: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=500", desc: "Double layer hoodie. 500gsm cotton fleece." },
-                { id: 5, name: "FUTURISTIC PUFFER", price: 280, category: "outerwear", img1: "https://images.unsplash.com/photo-1523398002811-999aa8e9e11a?q=80&w=500", img2: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=500", desc: "Synthetic down. Boxy cropped fit." },
-                { id: 6, name: "CYBER UTILITY VEST", price: 150, category: "accessories", img1: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=500", img2: "https://images.unsplash.com/photo-1523398002811-999aa8e9e11a?q=80&w=500", desc: "Tactical rigging vest. Adjustable straps." },
-                { id: 7, name: "ECLIPSE OVERSIZED TEE", price: 65, category: "essentials", img1: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=500", img2: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=500", desc: "Heavy 280gsm cotton. Acid washed." },
-                { id: 8, name: "RETRO REFLECTIVE HOODIE", price: 125, category: "essentials", img1: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=500", img2: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=500", desc: "Vintage fade with highly reflective graphic hits." },
-                { id: 9, name: "CARGO PARACHUTE PANT", price: 145, category: "bottoms", img1: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=500", img2: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=500", desc: "Wide leg nylon pants with knee darts and drawstrings." },
-                { id: 10, name: "GRID BEANIE", price: 40, category: "accessories", img1: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=500", img2: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=500", desc: "Chunky knit with woven brand patch." }
+                { id: 1, name: "REBEL SPIRIT BOMBER", price: 256, category: "outerwear", img1: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800", img2: "https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=800", desc: "Heavyweight nylon bomber with tactical ribbing. Water-resistant outer shell with thermal lining. Boxy fit." },
+                { id: 2, name: "NEON MIRAGE WINDBREAKER", price: 180, category: "outerwear", img1: "https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=800", img2: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800", desc: "Lightweight ripstop shell. Reflective 3M details across the back panel. Adjustable cinch waist." },
+                { id: 3, name: "DRIP MASTERS TECHWEAR", price: 310, category: "outerwear", img1: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=800", img2: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800", desc: "Full water-resistant shell. Multiple utility pockets with weatherproof zippers. Extended length." },
+                { id: 4, name: "MIDNIGHT GHOST HOODIE", price: 210, category: "essentials", img1: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800", img2: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=800", desc: "Double layer hoodie constructed from 500gsm cotton fleece. Dropped shoulders, extremely heavy." },
+                { id: 5, name: "FUTURISTIC PUFFER", price: 280, category: "outerwear", img1: "https://images.unsplash.com/photo-1523398002811-999aa8e9e11a?q=80&w=800", img2: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800", desc: "Premium synthetic down. Boxy cropped fit with high collar. Matte finish hardware." },
+                { id: 6, name: "CYBER UTILITY VEST", price: 150, category: "accessories", img1: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800", img2: "https://images.unsplash.com/photo-1523398002811-999aa8e9e11a?q=80&w=800", desc: "Tactical rigging vest. Adjustable straps with quick-release buckles. Modular pockets." },
+                { id: 7, name: "ECLIPSE OVERSIZED TEE", price: 65, category: "essentials", img1: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800", img2: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800", desc: "Heavy 280gsm cotton. Acid washed for a vintage fade. Mock neck collar." },
+                { id: 8, name: "RETRO REFLECTIVE HOODIE", price: 125, category: "essentials", img1: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800", img2: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800", desc: "Vintage wash with highly reflective graphic hits on sleeves. 400gsm terry cloth." },
+                { id: 9, name: "CARGO PARACHUTE PANT", price: 145, category: "bottoms", img1: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800", img2: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800", desc: "Wide leg nylon pants with knee darts. Adjustable drawstrings at waist and ankle." },
+                { id: 10, name: "GRID BEANIE", price: 40, category: "accessories", img1: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800", img2: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800", desc: "Chunky knit with woven brand patch. Deep fit." }
             ];
 
             const journalEntries = [
                 { title: "SYSTEM ARCHITECTURE 01", category: "DESIGN", img: "https://images.unsplash.com/photo-1618085220188-b4f210d22703?q=80&w=800" },
                 { title: "FABRIC PROCUREMENT", category: "SUPPLY", img: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800" },
-                { title: "GRID WALKER LOOKBOOK", category: "VISUALS", img: "https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=800" }
+                { title: "GRID WALKER LOOKBOOK", category: "VISUALS", img: "https://images.unsplash.com/photo-1511511450040-677116ff389e?q=80&w=800" },
+                { title: "STUDIO EXPANSION", category: "NEWS", img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800" }
             ];
 
-            /* --- 2. PERFECTED CUSTOM CURSOR (DESKTOP) --- */
+            /* --- 2. PERFECTED CUSTOM CURSOR --- */
             const cursor = document.getElementById('cursor');
             const follower = document.getElementById('cursor-follower');
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
@@ -846,12 +863,12 @@
                 renderCursor();
 
                 document.addEventListener('mouseover', (e) => {
-                    const isHoverable = e.target.closest('button, a, input, select, textarea, .product-card, .promo-card, .search-result-item, .journal-card, .hover-target, .accordion-btn, .thumbnail-box, .process-step');
+                    const isHoverable = e.target.closest('button, a, input, select, textarea, .product-card, .promo-card, .search-result-item, .journal-card, .hover-target, .accordion-btn, .thumbnail-box, .process-step, .hero-card');
                     if (isHoverable) { cursor.classList.add('hovered'); follower.classList.add('hovered'); }
                 });
 
                 document.addEventListener('mouseout', (e) => {
-                    const isHoverable = e.target.closest('button, a, input, select, textarea, .product-card, .promo-card, .search-result-item, .journal-card, .hover-target, .accordion-btn, .thumbnail-box, .process-step');
+                    const isHoverable = e.target.closest('button, a, input, select, textarea, .product-card, .promo-card, .search-result-item, .journal-card, .hover-target, .accordion-btn, .thumbnail-box, .process-step, .hero-card');
                     if (isHoverable) { cursor.classList.remove('hovered'); follower.classList.remove('hovered'); }
                 });
             }
@@ -888,7 +905,7 @@
                     <div class="search-result-item hover-target" onclick="document.getElementById('search-close').click(); openProductDetail(${p.id});" style="cursor: pointer;">
                         <img src="${p.img1}" alt="${p.name}">
                         <h4>${p.name}</h4>
-                        <span style="color: var(--accent-orange); font-family: var(--font-heading); font-size: 1.1rem;">$${p.price}</span>
+                        <span style="color: var(--accent-blue); font-family: var(--font-heading); font-size: 1.2rem; font-weight:800;">$${p.price}</span>
                     </div>
                 `).join('');
             });
@@ -898,7 +915,14 @@
             const mobileToggle = document.getElementById('mobile-toggle');
             const navLinks = document.getElementById('nav-links');
 
-            window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
+            window.addEventListener('scroll', () => {
+                // Adjust header styling lightly on scroll if needed
+                if(window.scrollY > 20) {
+                    header.style.boxShadow = "0 10px 0 rgba(0,0,0,0.1)";
+                } else {
+                    header.style.boxShadow = "0 5px 0 rgba(0,0,0,0.05)";
+                }
+            });
 
             function openMobileNav() { mobileToggle.classList.add('active'); navLinks.classList.add('active'); document.body.classList.add('no-scroll'); }
             function closeMobileNav() { mobileToggle.classList.remove('active'); navLinks.classList.remove('active'); document.body.classList.remove('no-scroll'); }
@@ -920,7 +944,7 @@
                     const targetView = document.getElementById(targetId);
                     if(targetView) {
                         targetView.classList.add('active');
-                        setTimeout(() => targetView.style.animation = 'fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards', 10);
+                        setTimeout(() => targetView.style.animation = 'fadeUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards', 10);
                         if(targetId === 'view-checkout') renderCheckout();
                     }
                     
@@ -933,8 +957,8 @@
                     initScrollReveals();
 
                     pageTransition.classList.add('exit');
-                    setTimeout(() => pageTransition.classList.remove('active', 'exit'), 500);
-                }, 500);
+                    setTimeout(() => pageTransition.classList.remove('active', 'exit'), 600);
+                }, 600);
             }
 
             document.querySelectorAll('.nav-trigger').forEach(trigger => {
@@ -966,7 +990,7 @@
                         </div>
                         <div class="product-actions">
                             <button class="btn-add hover-target" onclick="event.stopPropagation(); addToCart(${p.id}, 'M')">ADD TO CART</button>
-                            <button class="btn-heart hover-target" onclick="event.stopPropagation(); showToast('WISHLIST ADDED.');">&#x2665;</button>
+                            <button class="btn-heart hover-target" onclick="event.stopPropagation(); showToast('ASSET BOOKMARKED.');">&#x2665;</button>
                         </div>
                     </div>
                 `;
@@ -1022,10 +1046,10 @@
                     <div class="pd-info reveal">
                         <h1>${p.name}</h1>
                         <span class="pd-price">$${p.price}.00</span>
-                        <p class="text-body" style="font-size:1.15rem;">${p.desc}</p>
+                        <p class="text-body">${p.desc}</p>
                         
                         <div style="margin: 40px 0;">
-                            <h4 style="font-family: var(--font-heading); margin-bottom:20px; font-size:1.1rem; color: var(--text-color);">SELECT SIZE</h4>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; margin-bottom:20px; color: var(--text-color);">SELECT SPEC</h4>
                             <div class="size-grid" id="pd-size-grid">
                                 <button class="size-btn hover-target" data-size="S">S</button>
                                 <button class="size-btn hover-target selected" data-size="M">M</button>
@@ -1034,12 +1058,30 @@
                             </div>
                         </div>
                         
-                        <button class="btn-primary hover-target" style="width:100%; font-size:1.3rem; padding: 25px; box-shadow: 6px 6px 0 var(--accent-green);" onclick="addToCart(${p.id}, currentSelectedSize)">SECURE ASSET</button>
+                        <button class="btn-primary hover-target" style="width:100%; font-size:1.4rem; padding: 25px; box-shadow: 8px 8px 0 var(--accent-blue);" onclick="addToCart(${p.id}, currentSelectedSize)">SECURE ASSET</button>
+
+                        <div class="accordion-container" style="margin-top: 50px;">
+                            <div class="accordion-item">
+                                <button class="accordion-btn hover-target" style="padding: 20px 0; font-size: 1.1rem; border:none; background:none;">FABRIC SPECS <span class="accordion-icon">+</span></button>
+                                <div class="accordion-content"><p class="text-body">Constructed with high-density fibers to prevent shrinkage and maintain shape over extensive use.</p></div>
+                            </div>
+                             <div class="accordion-item">
+                                <button class="accordion-btn hover-target" style="padding: 20px 0; font-size: 1.1rem; border:none; background:none;">SHIPPING & RETURNS <span class="accordion-icon">+</span></button>
+                                <div class="accordion-content"><p class="text-body">Dispatched within 3 days. Returns accepted within 14 days of delivery. Refer to Legal Data for exceptions.</p></div>
+                            </div>
+                        </div>
                     </div>
                 `;
                 
-                if(window.innerWidth > 768) { document.getElementById('product-detail-container').style.gridTemplateColumns = '1.2fr 1fr'; } 
-                else { document.getElementById('product-detail-container').style.gridTemplateColumns = '1fr'; }
+                // Re-bind accordion
+                document.querySelectorAll('#product-detail-container .accordion-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const item = btn.parentElement;
+                        const isActive = item.classList.contains('active');
+                        document.querySelectorAll('#product-detail-container .accordion-item').forEach(i => i.classList.remove('active'));
+                        if(!isActive) item.classList.add('active');
+                    });
+                });
 
                 document.querySelectorAll('#pd-size-grid .size-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
@@ -1123,7 +1165,7 @@
                 const checkoutTotal = document.getElementById('checkout-total');
                 
                 if(cart.length === 0) {
-                    checkoutItems.innerHTML = '<p class="text-body" style="font-weight: 700; background: #fff; padding: 20px; border: 2px dashed var(--text-color);">NO ASSETS IN CART.</p>';
+                    checkoutItems.innerHTML = '<p class="text-body" style="font-weight: 700; background: #fff; padding: 30px; border: 4px dashed var(--text-color); text-align: center;">NO ASSETS IN CART.</p>';
                     checkoutSubtotal.innerText = '$0.00'; checkoutTotal.innerText = '$0.00';
                     return;
                 }
@@ -1131,7 +1173,7 @@
                 let total = 0;
                 checkoutItems.innerHTML = cart.map(item => {
                     total += (item.product.price * item.qty);
-                    return `<div class="summary-item" style="align-items:center; background:#fff; padding:15px; border:3px solid var(--text-color); box-shadow: 4px 4px 0 var(--border-color);"><div style="display:flex; gap:20px; align-items:center;"><img src="${item.product.img1}" style="width:60px; height:75px; object-fit:cover; mix-blend-mode: multiply; border:2px solid var(--text-color);"><div><div style="font-weight:800; font-family:var(--font-heading); font-size: 0.9rem; line-height: 1.2;">${item.product.name}</div><div style="font-size:0.8rem; color:var(--text-color); background: var(--secondary-bg); padding: 2px 6px; font-family:var(--font-body); font-weight: 700; margin-top:8px; display: inline-block;">SIZE: ${item.size} | QTY: ${item.qty}</div></div></div><div style="font-family:var(--font-heading); font-size:1.2rem; color: var(--accent-orange);">$${item.product.price * item.qty}</div></div>`;
+                    return `<div class="summary-item" style="align-items:center; background:#fff; padding:20px; border:4px solid var(--text-color); box-shadow: 6px 6px 0 var(--border-color);"><div style="display:flex; gap:25px; align-items:center;"><img src="${item.product.img1}" style="width:70px; height:90px; object-fit:cover; border:3px solid var(--text-color);"><div><div style="font-weight:800; font-family:var(--font-heading); font-size: 1.1rem; line-height: 1.2;">${item.product.name}</div><div style="font-size:0.9rem; color:var(--text-color); background: var(--accent-lime); padding: 4px 10px; font-family:var(--font-heading); font-weight: 700; margin-top:10px; display: inline-block; border: 2px solid var(--text-color);">SIZE: ${item.size} | QTY: ${item.qty}</div></div></div><div style="font-family:var(--font-heading); font-size:1.5rem; font-weight:800; color: var(--accent-orange);">$${item.product.price * item.qty}</div></div>`;
                 }).join('');
 
                 checkoutSubtotal.innerText = `$${total}.00`; checkoutTotal.innerText = `$${total}.00`;
