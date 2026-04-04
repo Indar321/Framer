@@ -30,7 +30,6 @@
             padding: 0; 
         }
         
-        /* STRICT OVERFLOW CONTROL TO FIX MOBILE CUT-OFF */
         html, body {
             width: 100%;
             max-width: 100%;
@@ -97,7 +96,7 @@
         @keyframes glitch-anim2 { 0% { clip-path: inset(10% 0 60% 0); } 50% { clip-path: inset(30% 0 20% 0); } 100% { clip-path: inset(80% 0 5% 0); } }
 
         /* ==========================================
-           3. HEADER & STRICT NAV
+           3. HEADER & PERFECTED NAV
            ========================================== */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
@@ -107,7 +106,7 @@
             transition: var(--transition);
         }
 
-        .logo { font-size: 2.8rem; font-weight: 800; letter-spacing: -2px; text-transform: uppercase; }
+        .logo { font-size: 2.8rem; font-weight: 800; letter-spacing: -2px; text-transform: uppercase; display: flex; align-items: center; }
 
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-link {
@@ -120,7 +119,8 @@
         }
         .nav-link:hover::after, .nav-link.active-link::after { transform: scaleX(1); transform-origin: left; }
 
-        .header-actions { display: flex; gap: 15px; align-items: center; }
+        .header-actions { display: flex; gap: 10px; align-items: center; height: 100%; }
+        
         .btn-action {
             font-family: var(--font-mono); font-weight: 800; font-size: 1rem;
             padding: 10px 20px; border: 4px solid var(--text-color); background: #fff;
@@ -128,20 +128,20 @@
         }
         .magnetic-btn:hover { background: var(--text-color); color: #fff; transform: translate(4px, 4px); box-shadow: 0 0 0 transparent; }
 
-        /* Perfected Mobile Icons */
+        /* Perfectly Sized & Aligned Mobile Icons */
         .mobile-icon-btn, .mobile-toggle { 
-            display: none; width: 45px; height: 45px; border: 4px solid var(--text-color); 
+            display: none; width: 40px; height: 40px; border: 3px solid var(--text-color); 
             background: #fff; position: relative; z-index: 90001; 
-            justify-content: center; align-items: center; transition: var(--transition);
+            justify-content: center; align-items: center; transition: var(--transition); padding: 0;
         }
         
         .mobile-toggle { background: var(--text-color); }
-        .mobile-toggle span { position: absolute; left: 8px; height: 4px; background: #fff; transition: var(--transition); pointer-events: none; width: 21px;}
+        .mobile-toggle span { position: absolute; left: 7px; height: 3px; background: #fff; transition: var(--transition); pointer-events: none; width: 20px;}
         .mobile-toggle span:nth-child(1) { top: 12px; }
-        .mobile-toggle span:nth-child(2) { top: 22px; }
+        .mobile-toggle span:nth-child(2) { top: 20px; }
         
         .mobile-toggle.active { background: #fff; border-color: var(--text-color); }
-        .mobile-toggle.active span { background: var(--text-color); top: 16px; left: 8px; width: 21px;}
+        .mobile-toggle.active span { background: var(--text-color); top: 16px; left: 7px; width: 20px;}
         .mobile-toggle.active span:nth-child(1) { transform: rotate(45deg); }
         .mobile-toggle.active span:nth-child(2) { transform: rotate(-45deg); }
 
@@ -193,7 +193,7 @@
         .hero-text-box { padding: 8% 5%; display: flex; flex-direction: column; justify-content: center; border-right: 6px solid var(--text-color); }
         .hero-title { font-size: clamp(4.5rem, 11vw, 12rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; margin-bottom: 30px; letter-spacing: -4px;}
         
-        .hero-img-box { position: relative; background: var(--text-color); overflow: hidden; min-height: 35vh;}
+        .hero-img-box { position: relative; background: var(--text-color); overflow: hidden; min-height: 40vh;}
         .hero-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: transform 1.2s;}
         .hero-img-box:hover img { transform: scale(1.05); opacity: 1;}
 
@@ -247,7 +247,7 @@
         .size-btn:hover:not(.active) { background: var(--text-color); color: #fff; transform: translate(2px,2px); box-shadow: 0 0 0 transparent;}
 
         /* ==========================================
-           8. TEXT, JOURNAL, & MISC PAGES
+           8. TEXT & MISC PAGES
            ========================================== */
         .text-layout { max-width: 1000px; margin: 0 auto; background: #fff; padding: 40px 20px; border: 6px solid var(--text-color); box-shadow: 12px 12px 0 var(--text-color); width: 100%; box-sizing: border-box;}
         @media(min-width: 768px){ .text-layout { padding: 60px; border-width: 8px; box-shadow: 16px 16px 0 var(--text-color); } }
@@ -292,7 +292,7 @@
         .cart-total { display: flex; justify-content: space-between; font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; font-family: var(--font-mono);}
 
         .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 15px; pointer-events: none; }
-        .toast { background: var(--text-color); color: #fff; padding: 15px 25px; font-family: var(--font-mono); font-weight: 800; font-size: 0.9rem; border: 3px solid #fff; box-shadow: -6px 6px 0 #000; text-transform: uppercase; transform: translateX(150%); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .toast { background: var(--text-color); color: #fff; padding: 15px 25px; font-family: var(--font-mono); font-weight: 800; font-size: 0.9rem; border: 3px solid #fff; box-shadow: -6px 6px 0 #000; text-transform: uppercase; transform: translateX(150%); transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
         .toast.show { transform: translateX(0); }
 
         /* ==========================================
@@ -300,20 +300,19 @@
            ========================================== */
         @media(max-width: 1024px) {
             #nav-menu {
-                position: fixed; top: 0; left: -100%; width: 100%; height: 100vh;
-                background: #000; border: none; background-image: none;
+                position: fixed; top: 0; left: -100vw; width: 100vw; height: 100vh;
+                background: #000; border: none; 
                 flex-direction: column; justify-content: center; align-items: center;
                 z-index: 90000; transition: left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-                gap: 20px; padding: 0 5%; box-shadow: none;
+                gap: 20px; padding: 0 5vw; box-shadow: none;
                 display: flex; overflow-y: auto; overflow-x: hidden;
             }
             #nav-menu.active { left: 0; }
             #nav-menu .nav-link { 
-                font-family: var(--font-mono); font-size: 1.8rem; padding: 15px; 
-                width: calc(100% - 8px); max-width: 400px;
+                font-size: 2.2rem; padding: 15px; width: 100%; max-width: 400px;
                 border: 4px solid #fff; background: #000; color: #fff; 
                 box-shadow: 6px 6px 0 #fff; text-align: center; 
-                margin-right: 6px; /* Offsets shadow so it fits in 100% width */
+                margin-right: 6px; 
             }
             #nav-menu .nav-link::after { display: none; }
             #nav-menu .nav-link:hover, #nav-menu .nav-link.active-link { 
@@ -327,34 +326,33 @@
         @media(min-width: 1025px) { .mobile-icon-btn { display: none !important; } }
 
         /* ==========================================
-           11. FOOTER (STREAMLINED)
+           11. FOOTER (SCREENSHOT ACCURATE)
            ========================================== */
-        footer { background: #000; color: #fff; padding: 80px 5% 40px; border-top: 10px solid #fff; width: 100%; overflow-x: hidden; box-sizing: border-box;}
-        .footer-grid { display: flex; flex-direction: column; gap: 40px; margin-bottom: 60px; width: 100%;}
-        @media(min-width: 768px) { .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; } }
-        @media(min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 50px; } }
+        footer { background: #000; color: #fff; padding: 60px 5% 40px; border-top: 10px solid #fff; width: 100vw; overflow-x: hidden; box-sizing: border-box;}
+        .footer-grid { display: flex; flex-direction: column; gap: 40px; margin-bottom: 50px; width: 100%;}
+        @media(min-width: 768px) { .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; } }
         
-        .footer-logo { font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 20px; letter-spacing: -2px; text-transform: uppercase;}
-        .footer-title { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; border-bottom: 2px solid #fff; padding-bottom: 10px; display: inline-block; color: #fff;}
-        .footer-links li { margin-bottom: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase;}
+        .footer-logo { font-size: 3rem; font-weight: 800; line-height: 1; margin-bottom: 20px; letter-spacing: -1px; text-transform: uppercase;}
+        .footer-title { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; border-bottom: 2px solid #fff; padding-bottom: 10px; display: inline-block; color: #fff;}
+        .footer-links li { margin-bottom: 15px; font-weight: 800; font-size: 1.1rem; text-transform: uppercase;}
         .footer-links a { transition: transform 0.3s; display: inline-block;}
-        .footer-links a:hover { transform: translateX(6px); color: #ccc;}
+        .footer-links a:hover { transform: translateX(8px); color: #ccc;}
         
         .footer-newsletter-wrapper { margin-top: 15px; width: 100%; max-width: 400px;}
-        .newsletter-input-group { display: flex; border: 3px solid #fff; background: #000; width: 100%; align-items: stretch; height: 50px;}
+        .newsletter-input-group { display: flex; border: 4px solid #fff; background: #000; width: 100%; align-items: stretch; height: 55px;}
         .newsletter-input { flex-grow: 1; padding: 0 15px; color: #fff; font-family: var(--font-mono); font-size: 1rem; background: transparent; border: none; outline: none; text-transform: uppercase;}
         .newsletter-input::placeholder { color: #666; }
-        .newsletter-btn { width: 50px; background: #fff; color: #000; font-weight: 800; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; border-left: 3px solid #000; transition: var(--transition); cursor: pointer;}
+        .newsletter-btn { width: 55px; background: #fff; color: #000; font-weight: 800; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; border-left: 4px solid #000; transition: var(--transition); cursor: pointer;}
         .newsletter-btn:active { background: #ccc; }
 
-        .footer-bottom { border-top: 2px dashed #444; padding-top: 30px; display: flex; flex-direction: column; gap: 15px; font-family: var(--font-mono); font-size: 0.9rem; color: #aaa; font-weight: 700; width: 100%;}
+        .footer-bottom { border-top: 2px dashed #444; padding-top: 30px; display: flex; flex-direction: column; gap: 20px; font-family: var(--font-mono); font-size: 0.9rem; color: #aaa; font-weight: 700; width: 100%;}
         @media(min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; } }
         
         .footer-bottom-links { display: flex; gap: 20px; flex-wrap: wrap; }
         .footer-bottom-links a { color: #fff; transition: var(--transition); text-transform: uppercase;}
         .footer-bottom-links a:hover { color: #ccc;}
         
-        .footer-credit { border: 2px solid #fff; padding: 6px 12px; color: #fff; text-transform: uppercase; font-weight: 800; display: inline-block; white-space: nowrap;}
+        .footer-credit { border: 2px solid #fff; padding: 8px 15px; color: #fff; text-transform: uppercase; font-weight: 800; display: inline-block; white-space: nowrap;}
     </style>
 </head>
 <body>
@@ -374,10 +372,10 @@
             <a href="#journal" class="nav-link nav-btn scrambler" data-target="view-journal">LOGS</a>
             <a href="#about" class="nav-link nav-btn scrambler" data-target="view-about">CORE</a>
             
-            <div class="mobile-only-link" style="width: 100%; max-width: calc(100% - 10px); border-top: 2px dashed #444; margin-top: 10px; padding-top: 20px; display: flex; flex-direction: column; gap: 20px;">
+            <div class="mobile-only-link" style="width: 100%; border-top: 4px dashed var(--text-color); margin-top: 10px; padding-top: 20px;">
                 <a href="#faq" class="nav-link nav-btn scrambler" data-target="view-faq">INTEL / FAQ</a>
                 <a href="#contact" class="nav-link nav-btn scrambler" data-target="view-contact">TRANSMIT MSG</a>
-                <a href="#account" class="nav-link nav-btn scrambler" data-target="view-account" style="background: #fff; color: #000; text-align: center;">LOGIN / ACCESS</a>
+                <a href="#account" class="nav-link nav-btn scrambler" data-target="view-account" style="background: #fff; color: #000; text-align: center; margin-top: 10px;">LOGIN / ACCESS</a>
             </div>
         </nav>
 
@@ -388,7 +386,7 @@
             </button>
 
             <button class="mobile-icon-btn magnetic-btn" id="cart-toggle-mobile">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="square"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="square"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             </button>
 
             <button class="mobile-toggle magnetic-btn" id="mobile-toggle"><span></span><span></span></button>
@@ -399,7 +397,7 @@
     <div class="cart-drawer" id="cart-drawer">
         <div class="cart-header">
             <h2 class="glitch-text" data-text="MANIFEST">MANIFEST</h2>
-            <button class="magnetic-btn" id="cart-close" style="font-size: 2rem; font-weight:800; font-family: var(--font-mono); border: 3px solid var(--text-color); background: #fff; padding: 0 12px; box-shadow: 4px 4px 0 var(--text-color);">X</button>
+            <button class="magnetic-btn" id="cart-close" style="font-size: 2rem; font-weight:800; font-family: var(--font-mono); border: 3px solid var(--text-color); background: #fff; padding: 0 10px; box-shadow: 4px 4px 0 var(--text-color);">X</button>
         </div>
         <div class="cart-items" id="cart-items">
             </div>
@@ -417,7 +415,7 @@
         <section id="view-home" class="view-section active">
             <div class="hero">
                 <div class="hero-text-box">
-                    <span style="font-family: var(--font-mono); font-weight: 800; border: 3px solid var(--text-color); padding: 5px 12px; display: inline-block; margin-bottom: 20px; width: fit-content; font-size: 0.9rem; box-shadow: 4px 4px 0 var(--muted-bg);">DROP 002 LIVE</span>
+                    <span style="font-family: var(--font-mono); font-weight: 800; border: 2px solid var(--text-color); padding: 5px 10px; display: inline-block; margin-bottom: 20px; width: fit-content; font-size: 0.9rem; box-shadow: 4px 4px 0 var(--muted-bg);">DROP 002 LIVE</span>
                     <h1 class="hero-title glitch-text" data-text="VIROX SYSTEM">VIROX<br>SYSTEM</h1>
                     <p class="text-body" style="font-weight: 700; border-left: 6px solid var(--text-color); padding-left: 20px;">
                         Engineered streetwear for the modern grid. Heavyweight fabrics. Structural silhouettes. Strict monochromatic protocol.
@@ -653,46 +651,6 @@
             </div>
         </section>
 
-        <section id="view-shipping" class="view-section">
-            <div class="section-padding">
-                <div class="text-layout">
-                    <h2 class="section-title glitch-text" data-text="SHIPPING POLICY">SHIPPING POLICY</h2>
-                    <div class="data-block magnetic-btn">
-                        <h3>PROCESSING TIMES</h3>
-                        <p class="text-body">All orders are processed within 1-3 business days. Orders are not shipped or delivered on weekends or holidays.</p>
-                    </div>
-                    <div class="data-block magnetic-btn">
-                        <h3>DOMESTIC DISPATCH (INDIA)</h3>
-                        <p class="text-body">We offer standard shipping (3-5 business days) across India. Expedited options are available at checkout.</p>
-                    </div>
-                    <div class="data-block magnetic-btn">
-                        <h3>GLOBAL DISPATCH</h3>
-                        <p class="text-body">We ship worldwide. International shipping rates and delivery estimates are calculated dynamically at checkout. Custom duties are the sole responsibility of the customer.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="view-returns" class="view-section">
-            <div class="section-padding">
-                <div class="text-layout">
-                    <h2 class="section-title glitch-text" data-text="RETURNS POLICY">RETURNS POLICY</h2>
-                    <div class="data-block magnetic-btn">
-                        <h3>14-DAY PROTOCOL</h3>
-                        <p class="text-body">We accept returns and exchanges within 14 days of delivery. To be eligible, your item must be unworn, unwashed, and in the exact condition that you received it.</p>
-                    </div>
-                    <div class="data-block magnetic-btn">
-                        <h3>THE PROCESS</h3>
-                        <p class="text-body">To initiate a return, please contact our support team with your order number. A flat fee will be deducted from your refund to cover return shipping costs.</p>
-                    </div>
-                    <div class="data-block magnetic-btn">
-                        <h3>EXCEPTIONS</h3>
-                        <p class="text-body">Limited edition drop items and accessories (beanies, bags) are final sale and cannot be returned unless defective.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="view-contact" class="view-section">
             <div class="section-padding">
                 <div class="text-layout">
@@ -754,7 +712,7 @@
                 <ul class="footer-links">
                     <li><a href="#faq" class="nav-btn scrambler" data-target="view-faq">INTEL / FAQ</a></li>
                     <li><a href="#contact" class="nav-btn scrambler" data-target="view-contact">TRANSMIT MSG</a></li>
-                    <li><a href="#returns" class="nav-btn scrambler" data-target="view-returns">RETURNS POLICY</a></li>
+                    <li><a href="#legal" class="nav-btn scrambler" data-target="view-legal" onclick="document.getElementById('legal-title').innerText='RETURNS POLICY'">RETURNS POLICY</a></li>
                 </ul>
             </div>
             
@@ -812,7 +770,7 @@
                 const targetView = document.getElementById(targetId);
                 if(!targetView) return;
 
-                // INVERT GLITCH FLASH EFFECT (No blocking screen)
+                // INVERT GLITCH FLASH EFFECT
                 document.body.classList.add('glitch-flash');
                 
                 setTimeout(() => {
