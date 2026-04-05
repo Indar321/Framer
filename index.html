@@ -26,17 +26,31 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+
+html { 
+  scroll-behavior: smooth; 
+  overflow-x: hidden; 
+}
+
 body {
   background: var(--cream);
   color: var(--black);
   font-family: var(--body);
   cursor: crosshair;
   overflow-x: hidden;
-  display: flex; flex-direction: column; min-height: 100vh;
+  display: flex; 
+  flex-direction: column; 
+  min-height: 100vh;
+  width: 100vw;
 }
 
 body.no-scroll { overflow: hidden; }
+
+/* ── CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cream); border-left: 2px solid var(--black); }
+::-webkit-scrollbar-thumb { background: var(--black); }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
 
 /* ── NOISE TEXTURE ── */
 body::after {
@@ -54,11 +68,14 @@ img:hover { filter: grayscale(0%); }
 
 .rule-tag {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 9px;
+  font-family: var(--mono); font-size: 10px;
   letter-spacing: 0.25em; text-transform: uppercase;
   border: 1px solid currentColor;
   padding: 4px 12px; margin-bottom: 20px; font-weight: 700;
 }
+
+/* Fix for scrambler layout jumping */
+.scrambler { display: inline-block; white-space: nowrap; }
 
 /* ── BLINK EFFECT ── */
 @keyframes terminalBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -85,9 +102,9 @@ nav {
 .nav-link {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.25em;
   color: rgba(245,233,216,0.45); text-transform: uppercase;
-  padding: 0 20px; height: 100%; display: flex; align-items: center;
+  padding: 0 16px; height: 100%; display: flex; align-items: center;
   border-right: 1px solid rgba(255,255,255,0.06); transition: color 0.15s, background 0.15s;
-  white-space: nowrap; font-weight: 700;
+  font-weight: 700;
 }
 .nav-link:hover { color: var(--cream); background: rgba(255,255,255,0.05); }
 .nav-link.active-link { color: var(--red); }
@@ -172,7 +189,7 @@ main { flex: 1 0 auto; width: 100%; }
 /* ── MARQUEE ── */
 .marquee {
   background: var(--red); color: var(--white); padding: 15px 0;
-  border-bottom: var(--border); overflow: hidden; white-space: nowrap; display: flex;
+  border-bottom: var(--border); overflow: hidden; white-space: nowrap; display: flex; width: 100vw;
 }
 .marquee-content {
   display: flex; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
@@ -215,7 +232,7 @@ main { flex: 1 0 auto; width: 100%; }
   letter-spacing: 0.15em; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.1);
   text-decoration: none; display: block; text-transform: uppercase;
 }
-.content-main { padding: 60px 70px; background: var(--cream); }
+.content-main { padding: 60px 70px; background: var(--cream); overflow: hidden; }
 
 /* ── CARDS & BLOCKS ── */
 .box-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; border: var(--border); margin-bottom: 40px; }
@@ -227,7 +244,7 @@ main { flex: 1 0 auto; width: 100%; }
 
 .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: var(--border); margin-bottom: 40px; }
 .work-card { border-right: var(--border); border-bottom: var(--border); display: block; background: var(--black); transition: transform 0.2s;}
-.work-card:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0 var(--red); z-index: 2; position: relative;}
+.work-card:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--red); z-index: 2; position: relative;}
 .work-img { height: 350px; width: 100%; border-bottom: var(--border); }
 .work-card:hover .work-img { filter: grayscale(0%); }
 .work-meta { padding: 30px; }
@@ -248,8 +265,8 @@ main { flex: 1 0 auto; width: 100%; }
 .tier-list li { font-family: var(--body); font-size: 12px; margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; opacity: 0.8;}
 .tier-list li::before { content: '■'; color: var(--red); font-size: 10px; margin-top: 3px;}
 
-/* ── ACCORDION (FAQ) ── */
-.interactive-list { width: 100%; border: var(--border); border-bottom: none; }
+/* ── ACCORDION & TERMINAL ── */
+.interactive-list { width: 100%; border: var(--border); border-bottom: none; margin-bottom: 40px;}
 .interactive-item { border-bottom: var(--border); background: var(--cream); transition: background 0.3s; }
 .interactive-item:hover { background: var(--white); }
 .interactive-header { width: 100%; text-align: left; padding: 25px; font-family: var(--display); font-size: 26px; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; cursor: crosshair; color: var(--black); border: none; background: transparent;}
@@ -257,6 +274,12 @@ main { flex: 1 0 auto; width: 100%; }
 .interactive-content { max-height: 0; overflow: hidden; padding: 0 25px; transition: max-height 0.4s ease; background: var(--white); }
 .interactive-item.active .interactive-icon { transform: rotate(45deg); }
 .interactive-item.active .interactive-content { max-height: 800px; padding-bottom: 25px; border-top: 1px dashed var(--black); padding-top: 25px; }
+
+.terminal-block {
+  background: var(--gray); border: 2px solid rgba(255,255,255,0.1); padding: 20px;
+  font-family: var(--mono); font-size: 10px; color: var(--cream); line-height: 1.8; letter-spacing: 0.1em; width: 100%;
+}
+.terminal-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #333; padding: 10px 0; color: var(--cream); }
 
 /* ── UI ELEMENTS ── */
 .btn {
@@ -295,11 +318,6 @@ main { flex: 1 0 auto; width: 100%; }
 .footer-links a { font-family: var(--body); font-size: 12px; color: rgba(245,233,216,0.7); transition: color 0.2s; }
 .footer-links a:hover { color: var(--red); }
 
-.terminal-block {
-  background: var(--gray); border: 2px solid rgba(255,255,255,0.1); padding: 20px;
-  font-family: var(--mono); font-size: 10px; color: var(--cream); line-height: 1.8; letter-spacing: 0.1em;
-}
-
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
@@ -307,6 +325,7 @@ main { flex: 1 0 auto; width: 100%; }
 .brand-footer-logo { font-family: var(--display); font-size: 28px; color: var(--cream); }
 .brand-footer-logo span { color: var(--red); }
 .brand-footer-copy { font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em; color: rgba(245,233,216,0.3); text-transform: uppercase; }
+.brand-footer-badge { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--red); border: 1px solid var(--red); padding: 6px 14px; text-transform: uppercase; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
@@ -395,6 +414,23 @@ main { flex: 1 0 auto; width: 100%; }
         <div class="marquee-item">BRAND IDENTITY <span style="color:var(--black);">//</span></div>
       </div>
     </div>
+
+    <div class="content-grid" style="border-top: var(--border);">
+      <div class="content-sidebar">
+        <div class="sidebar-label scrambler">Global Roster</div>
+        <div class="sidebar-item scrambler">Virox Apparel</div>
+        <div class="sidebar-item scrambler">Athrex Energy</div>
+        <div class="sidebar-item scrambler">Nirvaan Store</div>
+        <div class="sidebar-item scrambler">Apparel Vault</div>
+      </div>
+      <div class="content-main">
+        <h2 style="font-family:var(--display); font-size: clamp(40px, 6vw, 80px); color:var(--black); line-height:1; margin-bottom: 30px;">CONSTRUCTING<br>DIGITAL DOMINANCE</h2>
+        <p class="rule-text" style="padding-left: 0; max-width: 800px; margin-bottom: 40px;">
+          At Digital Trade, we don't just create images; we build structural visual systems. Founded by Indrajeet Pisda and headquartered in Teknaar Chowk, Awarbhata Dantewada, our studio bridges the gap between raw creativity and engineered functionality.
+        </p>
+        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop" style="width:100%; border:var(--border);">
+      </div>
+    </div>
   </section>
 
   <section id="view-methodology" class="view-section">
@@ -406,11 +442,10 @@ main { flex: 1 0 auto; width: 100%; }
 
     <div class="content-grid">
       <div class="content-sidebar">
-        <div class="sidebar-label scrambler">Global Roster</div>
-        <div class="sidebar-item scrambler">Virox Apparel</div>
-        <div class="sidebar-item scrambler">Athrex Energy</div>
-        <div class="sidebar-item scrambler">Nirvaan Store</div>
-        <div class="sidebar-item scrambler">Apparel Vault</div>
+        <div class="sidebar-label scrambler">Core Philosophy</div>
+        <div class="sidebar-item scrambler">Form Follows Function</div>
+        <div class="sidebar-item scrambler">Radical Transparency</div>
+        <div class="sidebar-item scrambler">Relentless Iteration</div>
       </div>
       <div class="content-main">
         <div class="box-grid">
@@ -443,6 +478,10 @@ main { flex: 1 0 auto; width: 100%; }
               <div class="scrambler" style="font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;">Bespoke Design</div>
             </div>
             <div>
+              <div style="font-family:var(--display); font-size:60px; color:var(--red); line-height:1;">GLOBAL</div>
+              <div class="scrambler" style="font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;">Client Roster</div>
+            </div>
+            <div>
               <div style="font-family:var(--display); font-size:60px; color:var(--red); line-height:1;">24/7</div>
               <div class="scrambler" style="font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;">Creative Support</div>
             </div>
@@ -466,6 +505,9 @@ main { flex: 1 0 auto; width: 100%; }
         <div class="sidebar-item scrambler">Shopify Liquid</div>
         <div class="sidebar-item scrambler">Figma UI/UX</div>
         <div class="sidebar-item scrambler">Adobe CC</div>
+        <div class="sidebar-item scrambler">Blogger CMS</div>
+        <div class="sidebar-item scrambler">CorelDraw</div>
+        <div class="sidebar-item scrambler">Framer</div>
       </div>
       <div class="content-main">
         
@@ -511,6 +553,28 @@ main { flex: 1 0 auto; width: 100%; }
                 <li class="scrambler">> Brand Guidelines</li>
                 <li class="scrambler">> Color Systems</li>
               </ul>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-family:var(--display); font-size: 36px; margin: 60px 0 20px;">OPERATIONAL WORKFLOW</h3>
+        <div class="interactive-list">
+          <div class="interactive-item">
+            <button class="interactive-header scrambler">Phase 1: Blueprint <span class="interactive-icon">+</span></button>
+            <div class="interactive-content">
+              <p class="rule-text" style="padding-top: 20px; padding-left: 0;">We gather your raw data, business goals, and asset constraints. This phase establishes the exact timeline and structural requirements of the deliverables.</p>
+            </div>
+          </div>
+          <div class="interactive-item">
+            <button class="interactive-header scrambler">Phase 2: Construction <span class="interactive-icon">+</span></button>
+            <div class="interactive-content">
+              <p class="rule-text" style="padding-top: 20px; padding-left: 0;">Our architects begin drafting code and vectorizing layouts. You will receive milestone updates and staging links to review the progress in real-time.</p>
+            </div>
+          </div>
+          <div class="interactive-item">
+            <button class="interactive-header scrambler">Phase 3: Handover <span class="interactive-icon">+</span></button>
+            <div class="interactive-content">
+              <p class="rule-text" style="padding-top: 20px; padding-left: 0;">Final quality assurance. Once approved, the master files, root access, and operational documentation are transferred to your secure servers.</p>
             </div>
           </div>
         </div>
@@ -596,6 +660,21 @@ main { flex: 1 0 auto; width: 100%; }
       </div>
       <div class="content-main">
 
+        <div class="box-grid">
+          <div class="info-box">
+            <h3 style="font-size: 22px;">Zero Ghosting</h3>
+            <p>Direct line of communication via WhatsApp for rapid staging approvals and asset transfers. We maintain strict SLAs on all active projects.</p>
+          </div>
+          <div class="info-box">
+            <h3 style="font-size: 22px;">Asset Ownership</h3>
+            <p>Upon completion and final payment, you retain 100% intellectual property rights. All source files, vector formats, and codebases are yours.</p>
+          </div>
+          <div class="info-box">
+            <h3 style="font-size: 22px;">Fixed Quoting</h3>
+            <p>The price on the contract is the price you pay. Unless the scope dramatically changes via client request, we do not bill surprise overages.</p>
+          </div>
+        </div>
+
         <div class="tier-grid">
           <div class="tier-card">
             <div class="tier-name scrambler">Identity Starter</div>
@@ -641,6 +720,18 @@ main { flex: 1 0 auto; width: 100%; }
           <div class="rule-title">ENTERPRISE RETAINER</div>
           <p class="rule-text">For brands requiring constant architectural updates, high-volume graphic output, and ongoing web maintenance. We integrate directly into your workflow acting as your dedicated design department.</p>
           <a href="#contact" class="btn btn-outline nav-trigger scrambler" data-target="view-contact" style="margin-left: 20px; margin-top: 15px;">Request Proposal</a>
+        </div>
+
+        <h3 style="font-family:var(--display); font-size: 36px; margin: 60px 0 20px;">A LA CARTE MODULES</h3>
+        <div class="terminal-block">
+          <div class="terminal-row" style="color: var(--red); font-weight: 700; font-size: 12px; border-bottom: 2px solid var(--red);">
+            <span class="scrambler">MODULE</span><span class="scrambler">STARTING AT</span>
+          </div>
+          <div class="terminal-row"><span class="scrambler">Video Ad Production</span><span>₹2,500</span></div>
+          <div class="terminal-row"><span class="scrambler">T-Shirt Print Artwork</span><span>₹999</span></div>
+          <div class="terminal-row"><span class="scrambler">Logo Digitization</span><span>₹1,200</span></div>
+          <div class="terminal-row"><span class="scrambler">Web Banner Set (x3)</span><span>₹1,500</span></div>
+          <div class="terminal-row" style="border-bottom: none;"><span class="scrambler">Landing Page Dev</span><span>₹4,999</span></div>
         </div>
 
       </div>
@@ -720,6 +811,12 @@ main { flex: 1 0 auto; width: 100%; }
             <button class="interactive-header scrambler">HOW DOES COMMUNICATION WORK? <span class="interactive-icon">+</span></button>
             <div class="interactive-content">
               <p class="rule-text" style="padding-top: 20px; padding-left: 0;">Direct and efficient. We primarily utilize our secure WhatsApp line for quick updates, and formal email transmissions for asset delivery and milestone approvals.</p>
+            </div>
+          </div>
+          <div class="interactive-item">
+            <button class="interactive-header scrambler">DO YOU MANAGE HOSTING AND DOMAINS? <span class="interactive-icon">+</span></button>
+            <div class="interactive-content">
+              <p class="rule-text" style="padding-top: 20px; padding-left: 0;">We facilitate the initial setup, DNS configuration, and connection. However, hosting and domain registrar accounts are created entirely under your name to ensure you retain total legal ownership.</p>
             </div>
           </div>
         </div>
@@ -821,22 +918,35 @@ main { flex: 1 0 auto; width: 100%; }
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 1. SCRAMBLER EFFECT ---
-  const chars = '!<>-_\\\\/[]{}—=+*^?#_';
+  // --- 1. UNIFORM SCRAMBLER EFFECT ---
+  const chars = '!<>-_\\\\/[]{}—=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   document.querySelectorAll('.scrambler').forEach(el => {
       const originalText = el.innerText;
+      // Fixed width to prevent horizontal scrollbar glitches during scrambling
+      el.style.width = el.offsetWidth + 'px';
+      
       el.addEventListener('mouseover', () => {
+          if(el.dataset.animating === 'true') return;
+          el.dataset.animating = 'true';
+          
           let iterations = 0;
+          const maxIterations = originalText.length;
+          
+          // Calculate step so every word takes ~300ms total regardless of length
+          const step = Math.max(0.5, maxIterations / 10); 
+          
           const interval = setInterval(() => {
               el.innerText = originalText.split('').map((letter, index) => {
                   if(index < iterations) return originalText[index];
                   return chars[Math.floor(Math.random() * chars.length)];
               }).join('');
-              if(iterations >= originalText.length) {
+              
+              if(iterations >= maxIterations) {
                   clearInterval(interval);
                   el.innerText = originalText;
+                  el.dataset.animating = 'false';
               }
-              iterations += 1/2; // speed
+              iterations += step;
           }, 30);
       });
   });
@@ -899,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(document.getElementById(target)) { navigateTo(target); }
   }
 
-  // --- 4. ACCORDION (FAQ) ---
+  // --- 4. ACCORDION (FAQ & WORKFLOW) ---
   document.querySelectorAll('.interactive-header').forEach(btn => {
       btn.addEventListener('click', () => {
           const item = btn.parentElement;
