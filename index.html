@@ -48,6 +48,11 @@ body {
 
 body.no-scroll { overflow: hidden; }
 
+/* ── CUSTOM SCROLLBAR (NO HOVER EFFECT) ── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cream); border-left: 2px solid var(--black); }
+::-webkit-scrollbar-thumb { background: var(--black); }
+
 /* ── NOISE TEXTURE ── */
 body::after {
   content: '';
@@ -276,7 +281,7 @@ main { flex: 1 0 auto; width: 100%; }
 }
 .terminal-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #333; padding: 10px 0; color: var(--cream); }
 
-/* ── BUTTONS (FIXED) ── */
+/* ── BUTTONS ── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
