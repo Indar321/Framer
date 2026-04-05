@@ -186,16 +186,18 @@ main { flex: 1 0 auto; width: 100%; }
 .index-num { font-size: 10px; color: rgba(0,0,0,0.4); letter-spacing: 0.2em; width: 32px; font-weight: 700;}
 .cover-meta { font-size: 9px; font-family: var(--mono); letter-spacing: 0.25em; opacity: 0.4; line-height: 2; text-transform: uppercase; font-weight: 700;}
 
-/* ── MARQUEE ── */
+/* ── MARQUEE (BULLETPROOFED) ── */
 .marquee {
   background: var(--red); color: var(--white); padding: 15px 0;
-  border-bottom: var(--border); overflow: hidden; white-space: nowrap; display: flex; width: 100vw;
+  border-bottom: var(--border); overflow: hidden; white-space: nowrap; display: block; width: 100vw;
 }
 .marquee-content {
-  display: flex; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
-  animation: scrollMarquee 20s linear infinite;
+  display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+  animation: scrollMarquee 20s linear infinite; white-space: nowrap;
 }
-.marquee-item { padding: 0 40px; }
+.marquee-item { 
+  display: inline-block; padding: 0 40px; white-space: nowrap; 
+}
 @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* ── SECTION HEADER & GRID ── */
@@ -277,7 +279,7 @@ main { flex: 1 0 auto; width: 100%; }
 
 .terminal-block {
   background: var(--gray); border: 2px solid rgba(255,255,255,0.1); padding: 20px;
-  font-family: var(--mono); font-size: 10px; color: var(--cream); line-height: 1.8; letter-spacing: 0.1em; width: 100%;
+  font-family: var(--mono); font-size: 10px; color: var(--cream); line-height: 1.8; letter-spacing: 0.1em; width: 100%; box-sizing: border-box;
 }
 .terminal-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #333; padding: 10px 0; color: var(--cream); }
 
@@ -404,7 +406,7 @@ main { flex: 1 0 auto; width: 100%; }
     </div>
     
     <div class="marquee">
-      <div class="marquee-content scrambler">
+      <div class="marquee-content">
         <div class="marquee-item">WEB DESIGN <span style="color:var(--black);">//</span></div>
         <div class="marquee-item">GRAPHIC SYSTEMS <span style="color:var(--black);">//</span></div>
         <div class="marquee-item">E-COMMERCE ARCHITECTURE <span style="color:var(--black);">//</span></div>
