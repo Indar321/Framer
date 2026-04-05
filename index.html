@@ -41,16 +41,12 @@ body {
   display: flex; 
   flex-direction: column; 
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body.no-scroll { overflow: hidden; }
-
-/* ── CUSTOM SCROLLBAR ── */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--cream); border-left: 2px solid var(--black); }
-::-webkit-scrollbar-thumb { background: var(--black); }
-::-webkit-scrollbar-thumb:hover { background: var(--red); }
 
 /* ── NOISE TEXTURE ── */
 body::after {
@@ -74,8 +70,7 @@ img:hover { filter: grayscale(0%); }
   padding: 4px 12px; margin-bottom: 20px; font-weight: 700;
 }
 
-/* Fix for scrambler layout jumping */
-.scrambler { display: inline-block; white-space: nowrap; }
+.scrambler { display: inline-block; }
 
 /* ── BLINK EFFECT ── */
 @keyframes terminalBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -281,11 +276,12 @@ main { flex: 1 0 auto; width: 100%; }
 }
 .terminal-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #333; padding: 10px 0; color: var(--cream); }
 
-/* ── UI ELEMENTS ── */
+/* ── BUTTONS (FIXED) ── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-  padding: 16px 32px; cursor: crosshair; transition: all 0.15s; border: none; width: fit-content;
+  padding: 16px 32px; cursor: crosshair; transition: all 0.15s; border: none;
+  min-width: 180px; text-align: center; white-space: nowrap;
 }
 .btn-primary { background: var(--black); color: var(--cream); }
 .btn-primary:hover { background: var(--red); color: var(--white); }
@@ -307,7 +303,7 @@ main { flex: 1 0 auto; width: 100%; }
 /* ── FOOTER ── */
 .brand-footer {
   background: var(--black); border-top: 3px solid var(--red);
-  padding: 60px 70px 40px; margin-top: auto;
+  padding: 60px 70px 40px; margin-top: auto; width: 100%;
 }
 .footer-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 60px;
@@ -686,7 +682,7 @@ main { flex: 1 0 auto; width: 100%; }
               <li>Typography Selection</li>
               <li>High-Res Vector Export</li>
             </ul>
-            <a href="#contact" class="btn btn-outline nav-trigger scrambler" data-target="view-contact" style="width:100%;">Select Tier</a>
+            <a href="#contact" class="btn btn-outline nav-trigger scrambler" data-target="view-contact">Select Tier</a>
           </div>
           
           <div class="tier-card featured">
@@ -699,7 +695,7 @@ main { flex: 1 0 auto; width: 100%; }
               <li>Responsive UI/UX Design</li>
               <li>CMS Training Handover</li>
             </ul>
-            <a href="#contact" class="btn btn-red nav-trigger scrambler" data-target="view-contact" style="width:100%;">Select Tier</a>
+            <a href="#contact" class="btn btn-red nav-trigger scrambler" data-target="view-contact">Select Tier</a>
           </div>
 
           <div class="tier-card">
@@ -712,7 +708,7 @@ main { flex: 1 0 auto; width: 100%; }
               <li>Ongoing Graphic Support</li>
               <li>Priority 24/7 SLA</li>
             </ul>
-            <a href="#contact" class="btn btn-primary nav-trigger scrambler" data-target="view-contact" style="width:100%;">Consult Sales</a>
+            <a href="#contact" class="btn btn-primary nav-trigger scrambler" data-target="view-contact">Consult Sales</a>
           </div>
         </div>
 
@@ -858,7 +854,7 @@ main { flex: 1 0 auto; width: 100%; }
               <span class="field-label scrambler">Project Parameters</span>
               <textarea id="wa-message" class="field" style="height: 150px; resize: vertical;" placeholder="DESCRIBE STRUCTURAL REQUIREMENTS..." required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary scrambler" style="width:100%;">Transmit via WhatsApp</button>
+            <button type="submit" class="btn btn-primary scrambler">Transmit via WhatsApp</button>
           </form>
         </div>
 
@@ -919,11 +915,11 @@ main { flex: 1 0 auto; width: 100%; }
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- 1. UNIFORM SCRAMBLER EFFECT ---
-  const chars = '!<>-_\\\\/[]{}—=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  // Using strict monospaced shapes to prevent width expansion bugs
+  const chars = '!<>-_/[]{}*^?#';
+  
   document.querySelectorAll('.scrambler').forEach(el => {
       const originalText = el.innerText;
-      // Fixed width to prevent horizontal scrollbar glitches during scrambling
-      el.style.width = el.offsetWidth + 'px';
       
       el.addEventListener('mouseover', () => {
           if(el.dataset.animating === 'true') return;
@@ -931,13 +927,14 @@ document.addEventListener('DOMContentLoaded', () => {
           
           let iterations = 0;
           const maxIterations = originalText.length;
-          
-          // Calculate step so every word takes ~300ms total regardless of length
-          const step = Math.max(0.5, maxIterations / 10); 
+          // Calculate step so every word takes the exact same duration (~300ms)
+          const step = Math.max(0.3, maxIterations / 12); 
           
           const interval = setInterval(() => {
               el.innerText = originalText.split('').map((letter, index) => {
                   if(index < iterations) return originalText[index];
+                  // Keep spaces intact so words don't merge
+                  if(originalText[index] === ' ') return ' ';
                   return chars[Math.floor(Math.random() * chars.length)];
               }).join('');
               
